@@ -18,7 +18,7 @@
   padding: 0;
   font-weight: 900;
   position: relative;
-  color: #ffffff;
+  color: #4b73d4;
 }
 
 .top-menu ul {
@@ -36,14 +36,14 @@
 
 .top-menu ul li a {
   position: relative;
-  font-size: 15px;
-  padding: 30px 12px;
-  color: #ffffff;
+  font-size: 16px;
+  padding: 30px 20px;
+  color: #4b73d4;
   /*-webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;*/
 }
 
 .top-menu ul li a:hover {
-  color: #DC2F2F;
+  color: #F24976;
 }

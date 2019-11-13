@@ -2,6 +2,7 @@ import React from 'react';
 
 import TopMenuBar from "./components/TopMenuBar";
 import HomeSlider from "./components/HomeSlider";
+import SignIn from "./SignIn"
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <TopMenuBar />
       <HomeSlider />
     </div>
+    /**/
 
   );
 }

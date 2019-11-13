@@ -2,6 +2,7 @@
 @import './styles/HomeSlider.css';
 @import './styles/animate.css';
 @import '/node_modules/flexslider/flexslider.css';
+@import './styles/SignInForm.css';
 @import 'SignIn.css';
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900');
 
