@@ -1,0 +1,53 @@
+@import './styles/TopMenuBar.css';
+@import './styles/HomeSlider.css';
+@import './styles/animate.css';
+@import '/node_modules/flexslider/flexslider.css';
+@import 'SignIn.css';
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900');
+
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.5;
+  color: gray;
+  background: #fff;
+}
+/*body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}*/
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+a {
+  color: #DC2F2F;
+  /*-webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;*/
+}
+
+a:hover, a:active, a:focus {
+  color: #DC2F2F;
+  outline: none;
+  text-decoration: none;
+}
+
+p {
+  margin-bottom: 20px;
+}
+
+h1, h2, h3, h4, h5, h6, figure {
+  color: #000;
+  font-family: "Poppins", Arial, sans-serif;
+  font-weight: 400;
+  margin: 0 0 20px 0;
+  line-height: 1.5;
+}
