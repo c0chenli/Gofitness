@@ -1,0 +1,45 @@
+@import '/node_modules/flexslider/flexslider.css';
+
+#home-slider {
+  min-height: 600px;
+  width: 100%;
+  float: left;
+}
+
+#home-slider .btn {
+  font-size: 18px;
+}
+
+#home-slider .btn.btn-primary {
+  padding: 14px 30px !important;
+}
+
+.sliderpic {
+  height: 600px;
+  width: 100%;
+}
+
+.btn {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  padding: 20px 30px !important;
+  border: none;
+}
+
+.btn.btn-learn {
+  color: #fff;
+  background: #9870FC;
+  /* Old browsers */
+  background: -moz-linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: -o-linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  background: linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DC2F2F', endColorstr='#9870FC', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
+}
+
