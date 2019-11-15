@@ -1,0 +1,31 @@
+.footer {
+  background-color: rgba(69, 105, 246, 0.8);
+  font-size: 0.8em;
+  position: relative;
+}
+
+.footer p {
+  text-align: center;
+  color: white;
+}
+
+.title {
+  font-size: 1.4em;
+  font-weight: bold;
+  padding: 45px 0 15px 0;
+}
+
+.footer ul {
+  align-items: center;
+  display: flex;
+  padding: 10px;
+  list-style: none;
+}
+
+.footer ul li {
+  flex: 1;
+}
+
+.copyright {
+  padding-bottom: 20px;
+}

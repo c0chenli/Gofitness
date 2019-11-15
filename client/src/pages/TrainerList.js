@@ -1,9 +1,12 @@
 import React from "react";
+import TopMenuBar from "../components/TopMenuBar"
+import Footer from "../components/Footer"
 
 const TrainerList = () =>{
     return (
         <div>
-            TrainerList
+            <TopMenuBar/>
+            <Footer/>
         </div>
     );
 };

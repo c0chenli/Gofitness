@@ -2,6 +2,7 @@ import React from "react";
 import TopMenuBarAuth from "../components/TopMenuBarAuth"
 import TraineeBanner from "../components/TraineeBanner"
 import TrainerFilter from "../components/TrainerFilter"
+import Footer from "../components/Footer"
 
 const TraineeHome = () =>{
     return (
@@ -9,6 +10,7 @@ const TraineeHome = () =>{
             <TopMenuBarAuth/>
             <TraineeBanner/>
             <TrainerFilter/>
+            <Footer/>
         </div>
     );
 };
