@@ -12,6 +12,8 @@
 @import './styles/AvailableTrainers.css';
 @import './styles/Filter.css';
 @import './styles/Footer.css';
+@import './styles/HomeClasses.css';
+@import './assets/flaticon/font/flaticon.css';
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900');
 
 body {
