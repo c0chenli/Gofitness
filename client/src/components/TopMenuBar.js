@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Container, Row, Col, Navbar, NavbarBrand, Nav, NavItem, NavLink, Card, CardBody, CardTitle, CardSubtitle, CardText, Button
-} from 'reactstrap';
+import {Col} from 'reactstrap';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
