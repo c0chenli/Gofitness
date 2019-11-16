@@ -59,6 +59,7 @@ public class TraineeController {
             map.put("status", "invalid password");
         } else {
             map.put("status", "OK");
+            map.put("role", "trainee");
         }
         return map;
     }

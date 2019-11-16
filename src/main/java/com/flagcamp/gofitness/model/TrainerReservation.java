@@ -5,8 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class TrainerReservation {
 
-    @Field("coach_id")
-    private String coachId;
+    @Field("trainee_id")
+    private String traineeId;
     @DateTimeFormat
     @Field("start_time")
     private String startTime;
@@ -17,18 +17,18 @@ public class TrainerReservation {
     public TrainerReservation() {
 
     }
-    public TrainerReservation(String coachId, String startTime, String endTime) {
-        this.coachId = coachId;
+    public TrainerReservation(String traineeId, String startTime, String endTime) {
+        this.traineeId = traineeId;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public String getCoachId() {
-        return coachId;
+    public String getTraineeId() {
+        return traineeId;
     }
 
-    public void setCoachId(String coachId) {
-        this.coachId = coachId;
+    public void setTraineeId(String traineeId) {
+        this.traineeId = traineeId;
     }
 
     public String getStartTime() {

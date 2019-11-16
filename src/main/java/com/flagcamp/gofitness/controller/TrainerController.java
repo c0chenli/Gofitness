@@ -27,6 +27,11 @@ public class TrainerController {
         return trainerRepository.findTrainerByEmail(email);
     }
 
+    @RequestMapping(value = "/getAllTrainer", method = RequestMethod.GET)
+    public List<Trainer> getAllTrainer() {
+        return trainerRepository.findAll();
+    }
+
     @PostMapping(value = "/register")
     @ResponseBody
     public Map<String, String> userRegister(@RequestBody @Valid Trainer trainer, BindingResult result) throws JSONException {
@@ -61,6 +66,7 @@ public class TrainerController {
             map.put("status", "invalid password");
         } else {
             map.put("status", "OK");
+            map.put("role", "trainer");
         }
         return map;
     }
