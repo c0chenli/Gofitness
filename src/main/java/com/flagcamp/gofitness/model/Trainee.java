@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @Component
@@ -22,15 +23,29 @@ public class Trainee {
     private String password;
     private Set<String> categories;
     private Set<String> tags;
+    private Set<TraineeReservation> traineeReservations;
 
     public Trainee() {
-
+        traineeReservations = new HashSet<>();
     }
     public Trainee(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
+        traineeReservations = new HashSet<>();
+    }
+
+    public void addTraineeReservation(TraineeReservation traineeReservation) {
+        this.traineeReservations.add(traineeReservation);
+    }
+
+    public Set<TraineeReservation> getTraineeReservations() {
+        return traineeReservations;
+    }
+
+    public void setTraineeReservations(Set<TraineeReservation> traineeReservations) {
+        this.traineeReservations = traineeReservations;
     }
 
     public Set<String> getCategories() {

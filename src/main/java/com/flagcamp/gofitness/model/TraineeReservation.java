@@ -3,9 +3,9 @@ package com.flagcamp.gofitness.model;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class TrainerReservation {
+public class TraineeReservation {
 
-    @Field("trainee_email")
+    @Field("trainer_email")
     private String traineeEmail;
     @DateTimeFormat
     @Field("start_time")
@@ -13,15 +13,6 @@ public class TrainerReservation {
     @DateTimeFormat
     @Field("end_time")
     private String endTime;
-
-    public TrainerReservation() {
-
-    }
-    public TrainerReservation(String traineeEmail, String startTime, String endTime) {
-        this.traineeEmail = traineeEmail;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
 
     public String getTraineeEmail() {
         return traineeEmail;
@@ -47,4 +38,3 @@ public class TrainerReservation {
         this.endTime = endTime;
     }
 }
-

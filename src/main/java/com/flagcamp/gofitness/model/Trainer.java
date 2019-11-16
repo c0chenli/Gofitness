@@ -37,6 +37,10 @@ public class Trainer {
         this.trainerReservations = new HashSet<>();
     }
 
+    public void addUserReservation(TrainerReservation trainerReservation) {
+        this.trainerReservations.add(trainerReservation);
+    }
+
     public Set<String> getCategories() {
         return categories;
     }
@@ -59,10 +63,6 @@ public class Trainer {
 
     public Set<TrainerReservation> getTrainerReservations() {
         return trainerReservations;
-    }
-
-    public void addUserReservations(TrainerReservation trainerReservation) {
-        this.trainerReservations.add(trainerReservation);
     }
 
     public String getFirstname() {

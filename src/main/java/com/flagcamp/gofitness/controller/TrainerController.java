@@ -3,12 +3,15 @@ package com.flagcamp.gofitness.controller;
 
 import com.flagcamp.gofitness.model.Trainer;
 import com.flagcamp.gofitness.repository.TrainerRepository;
+import com.flagcamp.gofitness.service.TrainerService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -52,8 +55,9 @@ public class TrainerController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, String> userLogin(@RequestBody Map<String, String> param) throws JSONException {
+    public Map<String, String> userLogin(@RequestBody Map<String, String> param, HttpServletRequest request) throws JSONException {
         Map<String, String> map = new HashMap<>();
+        HttpSession session = request.getSession();
         String email = param.get("email");
         String password = param.get("password");
         if (email == null || email.length() == 0) {
@@ -65,6 +69,9 @@ public class TrainerController {
         } else if (trainerRepository.findTrainerByEmailAndPassword(email, password) == null) {
             map.put("status", "invalid password");
         } else {
+            session.setAttribute("trainee", email);
+            //set session duration 60 minutes.
+            session.setMaxInactiveInterval(3600);
             map.put("status", "OK");
             map.put("role", "trainer");
         }
