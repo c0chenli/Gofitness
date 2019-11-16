@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Container, Row, Col, Navbar, NavbarBrand, Nav, NavItem, NavLink, Card, CardBody, CardTitle, CardSubtitle, CardText, Button
-} from 'reactstrap';
+import {Col} from 'reactstrap';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -21,10 +19,13 @@ class TopMenuBarAuth extends React.Component {
             </div>
             <Col className="col-md-10 text-right menu">
               <ul>
-                <li className="active"><Link to="/">{'Home'}</Link></li>
+                <li><Link to="/">{'Home'}</Link></li>
+                <li><Link to="/classes">{'Classes'}</Link></li>
+                <li><Link to="/trainerinfo">{'Trainers'}</Link></li>
                 <li><Link to="/chat">{'Chats'}</Link></li>
                 <li><Link to="/classroom">{'Classroom'}</Link></li>
                 <li><Link to="/about">{'About'}</Link></li>
+                <li><Link to="/">{'My Account'}</Link></li>
               </ul>
             </Col>
           </div>

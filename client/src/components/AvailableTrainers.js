@@ -17,7 +17,7 @@ class AvailableTrainers extends React.Component {
           />
           <h4 className="trainerName">Trainer's Name</h4>
           <p className="trainerState">Trainer's Statement</p>
-          <p><Link to="/chat" className="chatBtn btn-primary btn-learn">Chat</Link></p>
+          <p><Link to="/chat" className="chatBtn btn-learn">Chat</Link></p>
         </Col>
         <Col xs={6} sm={4} md={3} className="trainerInfo">
           <img
@@ -27,7 +27,7 @@ class AvailableTrainers extends React.Component {
           />
           <h4 className="trainerName">Trainer's Name</h4>
           <p className="trainerState">Trainer's Statement</p>
-          <p><Link to="/chat" className="chatBtn btn-primary btn-learn">Chat</Link></p>
+          <p><Link to="/chat" className="chatBtn btn-learn">Chat</Link></p>
         </Col>
         <Col xs={6} sm={4} md={3} className="trainerInfo">
           <img
@@ -37,7 +37,7 @@ class AvailableTrainers extends React.Component {
           />
           <h4 className="trainerName">Trainer's Name</h4>
           <p className="trainerState">Trainer's Statement</p>
-          <p><Link to="/chat" className="chatBtn btn-primary btn-learn">Chat</Link></p>
+          <p className="btnPad"><Link to="/chat" className="chatBtn btn-learn">Chat</Link></p>
         </Col>
         <Col xs={6} sm={4} md={3} className="trainerInfo">
           <img

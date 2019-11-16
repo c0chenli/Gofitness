@@ -1,0 +1,56 @@
+.container {
+  padding: 4em 0;
+}
+
+.container h2 {
+  padding-bottom: 2em;
+  color: #4b73d4;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.classes {
+  margin-bottom: 30px;
+  position: relative;
+  background: #f2f3f7;
+  padding: 20px;
+  z-index: 0;
+}
+
+.icon {
+  position: relative;
+}
+
+.icon i {
+  font-size: 50px;
+  color: #000;
+  z-index: 1;
+  background: #9870FC;
+  /* Chrome10-25,Safari5.1-6 */
+  background: -o-linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  background: linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -ms-background-clip: text;
+  -o-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  -ms-text-fill-color: transparent;
+  -o-text-fill-color: transparent;
+  text-fill-color: transparent;
+}
+
+.classes .classdes h3 {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.classdes p {
+  font-size: 14px;
+}

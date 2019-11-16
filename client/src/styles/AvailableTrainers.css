@@ -2,6 +2,11 @@
   display: table;
   width: 100%;
   text-align: center;
+  padding-bottom: 30px;
+}
+
+.btnPad {
+  padding-bottom: 20px;
 }
 
 .trainerImg {
