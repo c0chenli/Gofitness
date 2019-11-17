@@ -1,7 +1,4 @@
 import React from 'react';
-
-import TopMenuBar from "./components/TopMenuBar";
-import HomeSlider from "./components/HomeSlider";
 import {BrowserRouter, Route} from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -14,13 +11,23 @@ import TrainerHome from "./pages/TrainerHome";
 import TraineeHome from "./pages/TraineeHome";
 import TrainerList from "./pages/TrainerList";
 import Classroom from "./pages/Classroom"
+import {TOKEN_KEY} from "./constants";
 
 
-function App() {
-  return (
-    <div>
+class App extends React.Component {
+  state = {
+    isLoggedIn: Boolean(localStorage.getItem(TOKEN_KEY)),
+  }
 
-      <BrowserRouter>
+  handleSuccessfulLogin = (token) => {
+    localStorage.setItem(TOKEN_KEY, token);
+    this.setState({ isLoggedIn: true });
+  }
+
+  render() {
+    return (
+      <div>
+        <BrowserRouter>
           <Route path={'/'} exact component={Home}/>
           <Route path={'/classes'} exact component={Classes}/>
           <Route path={'/about'} exact component={About}/>
@@ -31,11 +38,14 @@ function App() {
           <Route path={'/trainee'} exact component={TraineeHome}/>
           <Route path={'/trainerinfo'} exact component={TrainerList}/>
           <Route path={'/classroom'} exact component={Classroom}/>
-    </BrowserRouter>
-    </div>
-    /**/
+        </BrowserRouter>
+      </div>
+      /**/
 
-  );
+    );
+  }
+
+
 }
 
 export default App;
