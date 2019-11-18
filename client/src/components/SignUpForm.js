@@ -158,22 +158,22 @@ class SignUpForm extends React.Component {
             })(
               <Checkbox.Group style={{ width: '100%' }}>
                 <Row>
-                  <Col span={8}>
+                  <Col span={10}>
                     <Checkbox value="0">Fitness</Checkbox>
                   </Col>
-                  <Col span={8}>
+                  <Col span={10}>
                     <Checkbox value="1">Yoga</Checkbox>
                   </Col>
-                  <Col span={8}>
+                  <Col span={10}>
                     <Checkbox value="2">Boxing</Checkbox>
                   </Col>
-                  <Col span={8}>
+                  <Col span={10}>
                     <Checkbox value="3">Palates</Checkbox>
                   </Col>
-                  <Col span={8}>
+                  <Col span={10}>
                     <Checkbox value="4">HIIT</Checkbox>
                   </Col>
-                  <Col span={8}>
+                  <Col span={10}>
                     <Checkbox value="5">Taichi</Checkbox>
                   </Col>
                 </Row>
