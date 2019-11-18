@@ -37,10 +37,6 @@ public class Trainee implements Serializable {
         traineeReservations = new HashSet<>();
     }
 
-    public void addTraineeReservation(TraineeReservation traineeReservation) {
-        this.traineeReservations.add(traineeReservation);
-    }
-
     public Set<TraineeReservation> getTraineeReservations() {
         return traineeReservations;
     }

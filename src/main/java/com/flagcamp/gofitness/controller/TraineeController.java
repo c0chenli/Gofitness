@@ -2,8 +2,10 @@ package com.flagcamp.gofitness.controller;
 
 
 import com.flagcamp.gofitness.model.Trainee;
+import com.flagcamp.gofitness.model.Trainer;
 import com.flagcamp.gofitness.service.ClassService;
 import com.flagcamp.gofitness.service.TraineeService;
+import com.flagcamp.gofitness.service.TrainerService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @RestController
 @RequestMapping("/trainee")
@@ -21,12 +24,19 @@ public class TraineeController {
     private ClassService classService;
     @Autowired
     private TraineeService traineeService;
+    @Autowired
+    private TrainerService trainerService;
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public Trainee getTraineeInfo(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String traineeEmail = session.getAttribute("trainee").toString();
         return traineeService.findTraineeByEmail(traineeEmail);
+    }
+
+    @RequestMapping(value = "/getAllTrainer", method = RequestMethod.GET)
+    public List<Trainer> getAllTrainer() {
+        return trainerService.getAllTrainers();
     }
 
     @PostMapping(value = "/reserve")

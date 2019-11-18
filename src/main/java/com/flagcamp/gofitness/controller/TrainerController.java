@@ -26,11 +26,4 @@ public class TrainerController {
         return trainerService.findTrainerByEmail(trainerEmail);
     }
 
-    @RequestMapping(value = "/getAllTrainer", method = RequestMethod.GET)
-    public List<Trainer> getAllTrainer() {
-        return trainerService.getAllTrainers();
-    }
-
-
-
 }
