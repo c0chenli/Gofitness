@@ -35,9 +35,11 @@ public class Trainer implements Serializable {
         this.email = email;
         this.password = password;
         this.trainerReservations = new HashSet<>();
+        this.categories = new HashSet<>();
     }
     public Trainer() {
         this.trainerReservations = new HashSet<>();
+        this.categories = new HashSet<>();
     }
 
 
