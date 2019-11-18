@@ -22,9 +22,11 @@ public class TraineeController {
     @Autowired
     private TraineeService traineeService;
 
-    @RequestMapping(value = "/{email}", method = RequestMethod.GET)
-    public Trainee getCoachByEmail(@PathVariable String email) {
-        return traineeService.findTraineeByEmail(email);
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+    public Trainee getTraineeInfo(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String traineeEmail = session.getAttribute("trainee").toString();
+        return traineeService.findTraineeByEmail(traineeEmail);
     }
 
     @PostMapping(value = "/reserve")
