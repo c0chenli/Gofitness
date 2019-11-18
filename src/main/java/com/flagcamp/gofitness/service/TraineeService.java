@@ -3,6 +3,10 @@ package com.flagcamp.gofitness.service;
 import com.flagcamp.gofitness.model.Trainee;
 
 public interface TraineeService {
+	
+	void addTrainee(Trainee trainee);
+	
+	void deleteTraineeByEmail(String email);
 
     /**
      * @param trainee
