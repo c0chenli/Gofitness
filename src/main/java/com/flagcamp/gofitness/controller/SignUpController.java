@@ -30,9 +30,7 @@ public class SignUpController {
 		String lastName = (String) jsonParam.get("lastname");
 		String email = (String) jsonParam.get("email");
 		List<String> categories = null;
-		List<String> tags = null;
 		Set<String> categorySet = new HashSet<>();
-		Set<String> tagSet = new HashSet<>();
 		Trainee exist1 = traineeService.findTraineeByEmail(email);
 		if (exist1 != null) {
 			map.put("status", "email already exist");
@@ -46,9 +44,6 @@ public class SignUpController {
 		String password = (String) jsonParam.get("password");
 		if (jsonParam.containsKey("categories")) {
 			categories = (List<String>) jsonParam.get("categories");
-		}
-		if (jsonParam.containsKey("tags")) {
-			tags = (List<String>) jsonParam.get("tags");
 		}
 
 		if (jsonParam.containsKey("role") && jsonParam.get("role").equals("trainee")) {
@@ -68,8 +63,6 @@ public class SignUpController {
 			trainer.setPassword(password);
 			categorySet.addAll(categories);
 			trainer.setCategories(categorySet);
-			tagSet.addAll(tags);
-			trainer.setTags(tagSet);
 			trainerService.addNewTrainer(trainer);
 			map.put("status", "OK");
 			return map;

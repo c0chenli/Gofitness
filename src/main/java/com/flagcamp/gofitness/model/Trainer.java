@@ -26,7 +26,6 @@ public class Trainer implements Serializable {
     @NotEmpty(message = "password cannot be empty!")
     private String password;
     private Set<String> categories;
-    private Set<String> tags;
     private Set<TrainerReservation> trainerReservations;
     //@TODO add schedule field
 
@@ -52,14 +51,6 @@ public class Trainer implements Serializable {
 
     public void setCategories(Set<String> categories) {
         this.categories = categories;
-    }
-
-    public Set<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<String> tags) {
-        this.tags = tags;
     }
 
     public Set<TrainerReservation> getTrainerReservations() {
