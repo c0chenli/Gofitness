@@ -5,7 +5,6 @@
 @import './styles/SignInForm.css';
 @import './styles/SignIn.css';
 @import './styles/SignUp.css';
-@import '/node_modules/antd/dist/antd.css';
 @import './styles/TopMenuBarAuth.css';
 @import './styles/TraineeBanner.css';
 @import './styles/TrainerFilter.css';
@@ -13,8 +12,10 @@
 @import './styles/Filter.css';
 @import './styles/Footer.css';
 @import './styles/HomeClasses.css';
+@import './styles/SignUpForm.css';
 @import './assets/flaticon/font/flaticon.css';
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900');
+
 
 body {
   font-family: "Poppins", Arial, sans-serif;

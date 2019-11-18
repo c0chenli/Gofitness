@@ -1,12 +1,16 @@
 .signInForm {
   position: absolute;
   width: 400px;
-  height: 300px;
+  height: auto;
   z-index: 15;
-  top: 50%;
+  top: 60%;
   left: 50%;
   margin: -100px 0 0 -150px;
   background-color: rgba(121, 162, 242, 0.4);
+}
+
+.formInput.ant-input-affix-wrapper {
+  width: 60%;
 }
 
 #form-logo {
@@ -36,10 +40,10 @@
   margin-bottom: 10px;
   margin-top: 10px;
   padding: 8px;
-  width: 100%;
+  width: 70%;
 }
 
-.login-form-button {
+.ant-btn.login-form-button.ant-btn-submit {
   position: relative;
   margin-top: 10px;
   left: 40%;
@@ -64,6 +68,20 @@
 }
 
 .register-link p{
-  margin: 10px 0 0 130px;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
 }
+
+.register-link a {
+  color: #4b73d4;
+  text-transform: uppercase;
+}
+
+.register-link a:hover {
+  color: #F24976;
+}
+
+
+
 
