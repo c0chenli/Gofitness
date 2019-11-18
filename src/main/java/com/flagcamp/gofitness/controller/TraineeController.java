@@ -46,4 +46,23 @@ public class TraineeController {
         return map;
     }
 
+    @PostMapping(value = "/cancel")
+    public Map<String, String> cancelClass(@RequestBody Map<String, String> param, HttpServletRequest request) throws JSONException {
+        Map<String, String> map = new HashMap<>();
+        HttpSession session = request.getSession();
+        String traineeEmail = session.getAttribute("trainee").toString();
+        if (traineeEmail == null || traineeEmail.length() == 0) {
+            map.put("status", "error");
+            map.put("msg", "user login expired");
+            return map;
+        }
+        String trainerEmail = param.get("trainer_email");
+        String startTime = param.get("start_time");
+        String endTime = param.get("end_time");
+        classService.cancelClass(traineeEmail, trainerEmail, startTime, endTime);
+        map.put("status", "OK");
+        map.put("msg", "You have cancelled the class.");
+        return map;
+    }
+
 }

@@ -32,6 +32,13 @@ public class ClassDaoImpl implements ClassDao {
 
     @Override
     public void cancelClass(String traineeEmail, String trainerEmail, TraineeReservation traineeReservation, TrainerReservation trainerReservation) {
-
+        //step 1. remove class from trainee
+        Query query = new Query(Criteria.where("email").is(traineeEmail));
+        Update update = new Update().pull("traineeReservations", traineeReservation);
+        mongoTemplate.upsert(query, update, Trainee.class);
+        //step 2. remove class from trainer
+        query = new Query(Criteria.where("email").is(trainerEmail));
+        update = new Update().pull("trainerReservations", trainerReservation);
+        mongoTemplate.upsert(query, update, Trainer.class);
     }
 }

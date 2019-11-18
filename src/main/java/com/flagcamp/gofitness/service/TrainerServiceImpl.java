@@ -1,7 +1,6 @@
 package com.flagcamp.gofitness.service;
 
 import com.flagcamp.gofitness.model.Trainer;
-import com.flagcamp.gofitness.model.TrainerReservation;
 import com.flagcamp.gofitness.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
