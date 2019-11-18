@@ -30,8 +30,8 @@ public class SignInController {
         HttpSession session = request.getSession();
         String email = param.get("email");
         String password = param.get("password");
-        boolean isTrainee = false;
-        boolean isTrainer = false;
+//        boolean isTrainee = false;
+//        boolean isTrainer = false;
         
         if (email == null || email.length() == 0) {
             map.put("status", "email cannot be empty!");
@@ -48,12 +48,14 @@ public class SignInController {
                 session.setMaxInactiveInterval(3600);
                 map.put("status", "OK");
                 map.put("role", "trainee");
+                map.put("full_name", traineeService.getFullName(email));
         	} else if (trainerService.findTrainerByEmailAndPassword(email, password) != null) {
                 session.setAttribute("trainer", email);
                 //set session duration 60 minutes.
                 session.setMaxInactiveInterval(3600);
                 map.put("status", "OK");
                 map.put("role", "trainer");
+                map.put("full_name", trainerService.getFullName(email));
         	}
         }
         return map;
