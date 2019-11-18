@@ -5,19 +5,26 @@ import com.flagcamp.gofitness.model.Trainee;
 public interface TraineeService {
 
     /**
-     * @param trainee
+     *
+     * @param traineeEmail
      * @param trainerEmail
      * @param startTime
-     * @param endTime (discuss duration of each class)
-     * @return true: reserve successful
-     *         false: reserve failed
+     * @param endTime
      */
-    boolean reserveClass(Trainee trainee, String trainerEmail, String startTime, String endTime);
+    void reserveClass(String traineeEmail, String trainerEmail, String startTime, String endTime);
+
     /**
-     * @param trainee
-     * @param trainerEmail
-     * @param startTime
+     *
+     * @param traineeEmail
      * @return
      */
-    boolean cancelClass(Trainee trainee, String trainerEmail, String startTime);
+    String getFullName(String traineeEmail);
+
+    /**
+     *
+     * @param trainee
+     * @param trainerEmail
+     * @param startTime
+     */
+    void cancelClass(Trainee trainee, String trainerEmail, String startTime);
 }

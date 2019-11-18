@@ -4,10 +4,16 @@ public interface TrainerService {
 
     /**
      *
+     * @param trainerEmail
+     * @return
+     */
+    String getFullName(String trainerEmail);
+
+    /**
+     *
      * @param traineeEmail
      * @param startTime
      * @param endTime
-     * @return
      */
-    boolean addClass(String traineeEmail, String startTime, String endTime);
+    void addClass(String traineeEmail, String startTime, String endTime);
 }

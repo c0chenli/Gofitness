@@ -3,7 +3,7 @@ package com.flagcamp.gofitness.controller;
 
 import com.flagcamp.gofitness.model.Trainee;
 import com.flagcamp.gofitness.repository.TraineeRepository;
-import com.flagcamp.gofitness.service.TrainerService;
+import com.flagcamp.gofitness.service.TraineeService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -22,6 +22,8 @@ public class TraineeController {
 
     @Autowired
     private TraineeRepository traineeRepository;
+    @Autowired
+    private TraineeService traineeService;
 
     @RequestMapping(value = "/{email}", method = RequestMethod.GET)
     public Trainee getCoachByEmail(@PathVariable String email) {
@@ -30,7 +32,7 @@ public class TraineeController {
 
     @PostMapping(value = "/register")
     @ResponseBody
-    public Map<String, String> userRegister(@RequestBody @Valid Trainee trainee, BindingResult result) throws JSONException {
+    public Map<String, String> traineeRegister(@RequestBody @Valid Trainee trainee, BindingResult result) throws JSONException {
         Map<String, String> map = new HashMap<>();
         if (result.hasErrors()) {
             FieldError error = (FieldError) result.getAllErrors().get(0);
@@ -48,7 +50,7 @@ public class TraineeController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, String> userLogin(@RequestBody Map<String, String> param, HttpServletRequest request) throws JSONException {
+    public Map<String, String> traineeLogin(@RequestBody Map<String, String> param, HttpServletRequest request) throws JSONException {
         Map<String, String> map = new HashMap<>();
         HttpSession session = request.getSession();
         String email = param.get("email");
@@ -67,7 +69,27 @@ public class TraineeController {
             session.setMaxInactiveInterval(3600);
             map.put("status", "OK");
             map.put("role", "trainee");
+            map.put("full_name", traineeService.getFullName(email));
         }
+        return map;
+    }
+
+    @PostMapping(value = "/reserve")
+    public Map<String, String> reserveClass(@RequestBody Map<String, String> param, HttpServletRequest request) throws JSONException {
+        Map<String, String> map = new HashMap<>();
+        HttpSession session = request.getSession();
+        Trainee trainee = traineeRepository.findTraineeByEmail(session.getAttribute("trainee").toString());
+        if (trainee == null) {
+            map.put("status", "error");
+            map.put("msg", "user login expired");
+            return map;
+        }
+        String trainerEmail = map.get("trainer_email");
+        String startTime = map.get("start_time");
+        String endTime = map.get("end_time");
+        traineeService.reserveClass(trainee, trainerEmail, startTime, endTime);
+        map.put("status", "OK");
+        map.put("msg", "You have reserved successfully.");
         return map;
     }
 

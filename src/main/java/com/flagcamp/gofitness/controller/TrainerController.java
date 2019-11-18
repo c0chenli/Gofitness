@@ -24,6 +24,8 @@ public class TrainerController {
 
     @Autowired
     private TrainerRepository trainerRepository;
+    @Autowired
+    private TrainerService trainerService;
 
     @RequestMapping(value = "/{email}", method = RequestMethod.GET)
     public Trainer getUserByEmail(@PathVariable String email) {
@@ -74,6 +76,7 @@ public class TrainerController {
             session.setMaxInactiveInterval(3600);
             map.put("status", "OK");
             map.put("role", "trainer");
+            map.put("full_name", trainerService.getFullName(email));
         }
         return map;
     }
