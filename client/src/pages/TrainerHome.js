@@ -38,7 +38,7 @@ const TrainerHome = () =>{
                 step={30}
                 defaultView="week"
                 views={{week:true, agenda:true}}
-                defaultDate={new Date(2019, 11, 17)}
+                defaultDate={new Date(2019, 10, 17)}
                 startAccessor="start"
                 endAccessor="end"
             />
