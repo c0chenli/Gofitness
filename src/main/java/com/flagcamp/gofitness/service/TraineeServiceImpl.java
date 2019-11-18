@@ -1,8 +1,8 @@
 package com.flagcamp.gofitness.service;
 
+import com.flagcamp.gofitness.dao.TraineeDao;
 import com.flagcamp.gofitness.model.Trainee;
 import com.flagcamp.gofitness.repository.TraineeRepository;
-import com.flagcamp.gofitness.repository.TraineeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

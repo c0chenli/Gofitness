@@ -15,8 +15,6 @@ import java.util.List;
 public class TrainerController {
 
     @Autowired
-    private ClassService classService;
-    @Autowired
     private TrainerService trainerService;
 
     @RequestMapping(value = "/{email}", method = RequestMethod.GET)
