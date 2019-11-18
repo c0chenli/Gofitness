@@ -28,6 +28,7 @@ public class Trainer implements Serializable {
     private Set<String> categories;
     private Set<String> tags;
     private Set<TrainerReservation> trainerReservations;
+    //@TODO add schedule field
 
     public Trainer(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
@@ -40,9 +41,6 @@ public class Trainer implements Serializable {
         this.trainerReservations = new HashSet<>();
     }
 
-    public void addUserReservation(TrainerReservation trainerReservation) {
-        this.trainerReservations.add(trainerReservation);
-    }
 
     public Set<String> getCategories() {
         return categories;

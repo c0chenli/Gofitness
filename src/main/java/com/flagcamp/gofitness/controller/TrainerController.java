@@ -7,6 +7,8 @@ import com.flagcamp.gofitness.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -17,16 +19,11 @@ public class TrainerController {
     @Autowired
     private TrainerService trainerService;
 
-    @RequestMapping(value = "/{email}", method = RequestMethod.GET)
-    public Trainer getUserByEmail(@PathVariable String email) {
-        return trainerService.findTrainerByEmail(email);
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+    public Trainer getUserByEmail(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String trainerEmail = session.getAttribute("trainer").toString();
+        return trainerService.findTrainerByEmail(trainerEmail);
     }
-
-    @RequestMapping(value = "/getAllTrainer", method = RequestMethod.GET)
-    public List<Trainer> getAllTrainer() {
-        return trainerService.getAllTrainers();
-    }
-
-
 
 }
