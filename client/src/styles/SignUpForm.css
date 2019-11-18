@@ -26,7 +26,7 @@
   width: 75%;
 }
 
-.register-btn {
+.ant-btn.register-btn.ant-btn-primary {
   position: relative;
   margin-top: 5px;
   left: 10%;

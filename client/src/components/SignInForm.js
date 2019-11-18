@@ -61,26 +61,35 @@ class SignInForm extends React.Component {
   }
 
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
       <div className="signInForm">
         <Form className="login-form">
           <div id="form-logo"><a href="/flagcamp/gofitness-web/">{'Welcome Back!'}</a></div>
           <Form.Item>
-            <Input
-              className="formInput"
-              prefix={<Icon type="user" className="signInIcon" />}
-              placeholder="Username"
-              type="text" onChange={this.emailChange}
-            />
+            {getFieldDecorator('email', {
+              rules: [{ required: true, message: 'Please input your Email!' }],
+            })(
+              <Input
+                className="formInput"
+                prefix={<Icon type="user" className="signInIcon" />}
+                placeholder="Email"
+                type="text" onChange={this.emailChange}
+              />,
+            )}
           </Form.Item>
           <Form.Item>
-            <Input
-              className="formInput"
-              prefix={<Icon type="lock" className="signInIcon" />}
-              type="password" onChange={this.passwordChange}
-              placeholder="Password"
+            {getFieldDecorator('password', {
+              rules: [{ required: true, message: 'Please input your Password!' }],
+            })(
+              <Input
+                className="formInput"
+                prefix={<Icon type="lock" className="signInIcon" />}
+                type="password" onChange={this.passwordChange}
+                placeholder="Password"
 
-            />
+              />,
+            )}
           </Form.Item>
           <Form.Item className="register-link">
             <Button type="submit" onClick={this.submit}
@@ -96,4 +105,5 @@ class SignInForm extends React.Component {
   }
 }
 
-export default withRouter(SignInForm);
+const LoginForm = Form.create({ name: 'normal_login' })(SignInForm);
+export default withRouter(LoginForm);

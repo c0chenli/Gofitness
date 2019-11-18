@@ -1,7 +1,7 @@
 import React from 'react';
 import pagebg from '../assets/img/pagebg.jpg';
 import TopMenuBar from "../components/TopMenuBar";
-import SignInForm from "../components/SignInForm"
+import LoginForm from "../components/SignInForm"
 import GoogleAuth from "../components/GoogleAuth"
 import Footer from "../components/Footer"
 import FormBackground from "./FormBackground"
@@ -11,7 +11,7 @@ function SignIn() {
     <div>
       <TopMenuBar />
       <FormBackground/>
-      <SignInForm />
+      <LoginForm />
       <Footer/>
     </div>
   );
