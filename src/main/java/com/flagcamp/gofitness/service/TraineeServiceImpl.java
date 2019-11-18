@@ -2,6 +2,7 @@ package com.flagcamp.gofitness.service;
 
 import com.flagcamp.gofitness.model.Trainee;
 import com.flagcamp.gofitness.repository.TraineeRepository;
+import com.flagcamp.gofitness.repository.TraineeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,16 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Autowired
     private TraineeRepository traineeRepository;
+    @Autowired
+    private TraineeDao traineeDao;
+
+    public void addTrainee(Trainee trainee) {   	 
+    	traineeDao.addTrainee(trainee);
+    }
+
+    public void deleteTraineeByEmail(String email) {
+    	traineeDao.deleteTraineeByEmail(email);
+    }
 
     /**
      * @param traineeEmail

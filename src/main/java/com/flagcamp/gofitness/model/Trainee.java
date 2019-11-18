@@ -27,6 +27,7 @@ public class Trainee implements Serializable {
     private Set<TraineeReservation> traineeReservations;
 
     public Trainee() {
+    	tags = new HashSet<>();
         traineeReservations = new HashSet<>();
     }
     public Trainee(String firstname, String lastname, String email, String password) {
