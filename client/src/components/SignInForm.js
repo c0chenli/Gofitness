@@ -37,16 +37,16 @@ class SignInForm extends React.Component {
     let text = {email: this.state.email, password: this.state.password}
     let send = JSON.stringify(text);
 
-    fetch(`${API_ROOT}/trainee/login`, {
+    fetch(`${API_ROOT}signin`, {
       method: 'POST',
-      headers: {'Content-Type':'application/json; charset=utf-8'},
+      headers: {'Content-Type':'application/json; charset=utf-8; Access-Control-Allow-Origin: *'},
       body: send
-    }).then((response) => {
-        console.log(response);
-        if (response.status === 'OK') {
-          this.props.history.push(`/${response.role}`);
+    }).then(res => res.json()).then(
+      data => {
+        if (data.status === 'OK') {
+          this.props.history.push(`/${data.role}`);
         } else {
-          return Promise.reject(response.status);
+          return Promise.reject(data.status);
         }
       }
     ).catch((status) => {
