@@ -57,8 +57,6 @@ public class SignUpController {
 			trainee.setLastname(lastName);
 			trainee.setEmail(email);
 			trainee.setPassword(password);
-			categorySet.addAll(categories);
-			trainee.setCategories(categorySet);
 			traineeService.addNewTrainee(trainee);
 			map.put("status", "OK");
 			return map;

@@ -23,7 +23,6 @@ public class Trainee implements Serializable {
     private String email;
     @NotEmpty(message = "password cannot be empty!")
     private String password;
-    private Set<String> categories;
     private Set<TraineeReservation> traineeReservations;
 
     public Trainee() {
@@ -43,14 +42,6 @@ public class Trainee implements Serializable {
 
     public void setTraineeReservations(Set<TraineeReservation> traineeReservations) {
         this.traineeReservations = traineeReservations;
-    }
-
-    public Set<String> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<String> categories) {
-        this.categories = categories;
     }
 
     public String getFirstname() {
