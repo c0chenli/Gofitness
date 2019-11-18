@@ -1,16 +1,18 @@
 package com.flagcamp.gofitness.model;
 
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
-public class Trainee {
+@Document
+public class Trainee implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Field(name = "first_name")
     private String firstname;

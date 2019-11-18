@@ -3,7 +3,11 @@ package com.flagcamp.gofitness.model;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class TrainerReservation {
+import java.io.Serializable;
+
+public class TrainerReservation implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Field("trainee_email")
     private String traineeEmail;

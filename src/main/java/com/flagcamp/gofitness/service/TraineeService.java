@@ -7,24 +7,29 @@ public interface TraineeService {
     /**
      *
      * @param traineeEmail
-     * @param trainerEmail
-     * @param startTime
-     * @param endTime
-     */
-    void reserveClass(String traineeEmail, String trainerEmail, String startTime, String endTime);
-
-    /**
-     *
-     * @param traineeEmail
      * @return
      */
     String getFullName(String traineeEmail);
 
     /**
      *
-     * @param trainee
-     * @param trainerEmail
-     * @param startTime
+     * @param email
+     * @return
      */
-    void cancelClass(Trainee trainee, String trainerEmail, String startTime);
+    Trainee findTraineeByEmail(String email);
+
+    /**
+     *
+     * @param email
+     * @param password
+     * @return
+     */
+    Trainee findTraineeByEmailAndPassword(String email, String password);
+
+    /**
+     *
+     * @param trainee
+     */
+    void addNewTrainee(Trainee trainee);
+
 }

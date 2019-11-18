@@ -7,11 +7,14 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Document
-public class Trainer {
+public class Trainer implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Field("first_name")
     private String firstname;
