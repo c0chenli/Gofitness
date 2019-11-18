@@ -9,7 +9,6 @@ import {
   Row,
   Col
 } from 'antd';
-import 'antd/dist/antd.css';
 
 class SignUpForm extends React.Component {
 
@@ -41,11 +40,11 @@ class SignUpForm extends React.Component {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 8 },
+        sm: { span: 8, offset: 1},
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 16 },
+        sm: { span: 14, offset: 1 },
       },
     };
     const tailFormItemLayout = {
@@ -63,16 +62,21 @@ class SignUpForm extends React.Component {
 
     return (
       <div className="signUpForm">
-        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-          <Form.Item label="I'm a">
+        <Form {...formItemLayout}>
+          <div id="form-message"><a href="/flagcamp/gofitness-web/">{'Great to have you!'}</a></div>
+          <Form.Item
+            className="input-field"
+            label="I'm a"
+          >
             {getFieldDecorator('radio-group')(
-              <Radio.Group className="inputField" >
+              <Radio.Group>
                 <Radio value="trainer">trainer</Radio>
                 <Radio value="trainee">trainee</Radio>
               </Radio.Group>,
             )}
           </Form.Item>
           <Form.Item
+            className="input-field"
             label="First Name"
           >
             {getFieldDecorator('firstname', {
@@ -84,6 +88,7 @@ class SignUpForm extends React.Component {
             )}
           </Form.Item>
           <Form.Item
+            className="input-field"
             label="Last Name"
           >
             {getFieldDecorator('lastname', {
@@ -94,7 +99,10 @@ class SignUpForm extends React.Component {
               />
             )}
           </Form.Item>
-          <Form.Item label="E-mail">
+          <Form.Item
+            className="input-field"
+            label="E-mail"
+          >
             {getFieldDecorator('email', {
               rules: [
                 {
@@ -114,6 +122,7 @@ class SignUpForm extends React.Component {
           </Form.Item>
           <Form.Item
             {...formItemLayout}
+            className="input-field"
             label="Password"
           >
             {getFieldDecorator('password', {
@@ -128,6 +137,7 @@ class SignUpForm extends React.Component {
           </Form.Item>
           <Form.Item
             {...formItemLayout}
+            className="input-field"
             label="Confirm Password"
           >
             {getFieldDecorator('confirm', {
@@ -140,7 +150,10 @@ class SignUpForm extends React.Component {
               <Input type="password" onBlur={this.handleConfirmBlur} placeholder="Password Again"/>
             )}
           </Form.Item>
-          <Form.Item label="Classes">
+          <Form.Item
+            className="input-field"
+            label="Classes"
+          >
             {getFieldDecorator('checkbox-group', {
             })(
               <Checkbox.Group style={{ width: '100%' }}>
@@ -167,8 +180,10 @@ class SignUpForm extends React.Component {
               </Checkbox.Group>,
             )}
           </Form.Item>
-          <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
+          <Form.Item {...tailFormItemLayout}
+                     className="input-field"
+          >
+            <Button className="register-btn" type="primary" htmlType="submit">
               Register
             </Button>
           </Form.Item>

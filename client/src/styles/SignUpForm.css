@@ -1,1 +1,51 @@
+.signUpForm {
+  padding-top: 10px;
+}
 
+#form-message {
+  position:relative;
+  left: 23%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#form-message a {
+  position: relative;
+  font-size: 30px;
+  font-weight: 600;
+  color: #4b73d4;
+}
+
+.input-field label {
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.ant-input {
+  font-size: 16px;
+  width: 75%;
+}
+
+.register-btn {
+  position: relative;
+  margin-top: 5px;
+  left: 10%;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  padding: 0 20px !important;
+  border: none;
+  color: #fff;
+  background: #9870FC;
+  /* Old browsers */
+  background: -moz-linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: -o-linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  background: linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DC2F2F', endColorstr='#9870FC', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
+}
