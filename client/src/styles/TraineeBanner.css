@@ -1,4 +1,6 @@
-
+.container.banner-div {
+  padding: 0;
+}
 .banner .banner-title {
   padding-top: 30px;
   float: left;

@@ -15,7 +15,7 @@ class TrainerBanner extends React.Component {
           backgroundPosition: "center",
           width: "100%",
         }}>
-        <Container>
+        <Container className="banner-div">
           <Row>
             <div className="col-sm-10">
               <h1 className="banner-title">Schedule</h1>
