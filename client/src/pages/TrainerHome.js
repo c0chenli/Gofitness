@@ -50,8 +50,8 @@ const TrainerHome = () =>{
         <div>
           <TopMenuBarAuth/>
           <TrainerBanner/>
-          <Footer/>
           {MyCalendar()}
+          <Footer/>
         </div>
     );
 };

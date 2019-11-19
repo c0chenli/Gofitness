@@ -2,7 +2,7 @@
   position: absolute;
   height: auto;
   z-index: 15;
-  top: 350px;
+  top: 250px;
   left: 46%;
   margin: -100px 0 0 -150px;
   padding: 0 0 10px;
@@ -59,4 +59,9 @@
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4569f9', endColorstr='#3e61ed', GradientType=1);
   /* IE6-9 fallback on horizontal gradient */
+}
+
+.avatar-uploader > .ant-upload {
+  width: 128px;
+  height: 128px;
 }
