@@ -45,3 +45,8 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4569f9', endColorstr='#3e61ed', GradientType=1);
   /* IE6-9 fallback on horizontal gradient */
 }
+
+.trainerInfo p {
+  display: inline-block;
+  padding: 10px;
+}

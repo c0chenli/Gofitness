@@ -3,52 +3,47 @@ import {Col, Row} from "react-bootstrap";
 import {Button} from "antd";
 import trainer1 from "../assets/img/trainer1.jpg";
 import {Link} from "react-router-dom"
+import {API_ROOT} from "../constants"
 
 class AvailableTrainers extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      trainers: [],
+    };
+  }
+
+  componentDidMount() {
+    fetch(`${API_ROOT}trainee/getAllTrainer`, {
+      method: 'GET',
+      headers: {'Content-Type':'application/json; charset=utf-8; Access-Control-Allow-Origin: *'},
+    }).then(res => res.json()).then(
+      data => {
+        this.setState({trainers: data});
+      }
+    ).catch((status) => {
+      window.alert(status);
+    });
+  }
 
   render() {
+    const {trainers} = this.state;
     return(
-      <Row>
-        <Col xs={6} sm={4} md={3} className="trainerInfo">
-          <img
-            className="trainerImg"
-            src={trainer1}
-            alt="Trainer 1"
-          />
-          <h4 className="trainerName">Trainer's Name</h4>
-          <p className="trainerState">Trainer's Statement</p>
-          <p><Link to="/chat" className="chatBtn btn-learn">Chat</Link></p>
-        </Col>
-        <Col xs={6} sm={4} md={3} className="trainerInfo">
-          <img
-            className="trainerImg"
-            src={trainer1}
-            alt="Trainer 1"
-          />
-          <h4 className="trainerName">Trainer's Name</h4>
-          <p className="trainerState">Trainer's Statement</p>
-          <p><Link to="/chat" className="chatBtn btn-learn">Chat</Link></p>
-        </Col>
-        <Col xs={6} sm={4} md={3} className="trainerInfo">
-          <img
-            className="trainerImg"
-            src={trainer1}
-            alt="Trainer 1"
-          />
-          <h4 className="trainerName">Trainer's Name</h4>
-          <p className="trainerState">Trainer's Statement</p>
-          <p className="btnPad"><Link to="/chat" className="chatBtn btn-learn">Chat</Link></p>
-        </Col>
-        <Col xs={6} sm={4} md={3} className="trainerInfo">
-          <img
-            className="trainerImg"
-            src={trainer1}
-            alt="Trainer 1"
-          />
-          <h4 className="trainerName">Trainer's Name</h4>
-          <p className="trainerState">Trainer's Statement</p>
-          <p><Link to="/chat" className="chatBtn btn-primary btn-learn">Chat</Link></p>
-        </Col>
+      <Row id="trainer-block">
+        {trainers.map(({firstname, lastname, categories}) =>
+          <Col xs={6} sm={4} md={3} className="trainerInfo">
+            <img
+              className="trainerImg"
+              src={trainer1}
+              alt="Trainer 1"
+            />
+            <h4 className="trainerName">{firstname} {lastname}</h4>
+            {categories.map(category =>
+              <p className="trainerState">{category}</p>
+            )}
+            <div><Link to="/chat" className="chatBtn btn-learn">Chat</Link></div>
+          </Col>
+        )}
       </Row>
     );
   }
