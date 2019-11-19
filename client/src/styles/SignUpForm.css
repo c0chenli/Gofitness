@@ -1,19 +1,30 @@
 .signUpForm {
-  padding-top: 10px;
+  position: absolute;
+  height: auto;
+  z-index: 15;
+  top: 350px;
+  left: 46%;
+  margin: -100px 0 0 -150px;
+  padding: 0 0 10px;
+  background-color: rgba(121, 162, 242, 0.5);
 }
 
 #form-message {
   position:relative;
-  left: 23%;
-  margin-top: 10px;
+  left: 28%;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 
 #form-message a {
   position: relative;
   font-size: 30px;
-  font-weight: 600;
-  color: #4b73d4;
+  font-weight: 300;
+  color: white;
+}
+
+.ant-form-item {
+  margin: 0 0 15px;
 }
 
 .input-field label {
@@ -39,13 +50,13 @@
   color: #fff;
   background: #9870FC;
   /* Old browsers */
-  background: -moz-linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  background: -moz-linear-gradient(45deg, #4569f9 0%, #3e61ed 100%);
   /* FF3.6-15 */
-  background: -webkit-linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  background: -webkit-linear-gradient(45deg, #4569f9 0%, #3e61ed 100%);
   /* Chrome10-25,Safari5.1-6 */
-  background: -o-linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
-  background: linear-gradient(45deg, #DC2F2F 0%, #9870FC 100%);
+  background: -o-linear-gradient(45deg, #4569f9 0%, #3e61ed 100%);
+  background: linear-gradient(45deg, #4569f9 0%, #3e61ed 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DC2F2F', endColorstr='#9870FC', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4569f9', endColorstr='#3e61ed', GradientType=1);
   /* IE6-9 fallback on horizontal gradient */
 }
