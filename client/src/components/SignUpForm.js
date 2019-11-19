@@ -187,25 +187,7 @@ class SignUpForm extends React.Component {
               </Radio.Group>,
             )}
           </Form.Item>
-          <Form.Item
-            label="Image"
-          >
-            {getFieldDecorator("image",  {
-              rules: [{ required: true, message: 'Please upload your image!'}],
-            })(
-              <Upload
-                name="image"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                beforeUpload={beforeUpload}
-                onChange={this.handleChange}
-              >
-                {imageUrl ? <img src={imageUrl} alt="image" style={{ width: '100%' }} /> : uploadButton}
-              </Upload>,
-              )}
-          </Form.Item>
+          
           <Form.Item
             className="input-field"
             label="First Name"
