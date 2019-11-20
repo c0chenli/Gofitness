@@ -51,11 +51,9 @@ class PopupForm extends React.Component {
       if (!err) {
         const rangeTimeValue = fieldsValue['date'];
         const values = {
-          'date' : [
-            rangeTimeValue[0].format('YYYY,MM,DD,HH,mm,ss'),
-            rangeTimeValue[1].format('YYYY,MM,DD,HH,mm,ss'),
-          ]
-        }
+          "start": rangeTimeValue[0].format('YYYY,MM,DD,HH,mm,ss'),
+          "end": rangeTimeValue[1].format('YYYY,MM,DD,HH,mm,ss'),
+        };
         console.log('Received values of form: ', values);
       }
       this.setState({ loading: false });
