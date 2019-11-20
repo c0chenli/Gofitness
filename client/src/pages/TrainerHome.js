@@ -13,11 +13,12 @@ import {
     components,
 } from 'react-big-calendar'
 import events from './event'
+import eventu from "./UnavaliableTime";
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import {forEach} from "react-bootstrap/cjs/utils/ElementChildren";
 
 const TrainerHome = () =>{
-
 
     // Setup the localizer by providing the moment (or globalize) Object
     // to the correct localizer.
@@ -25,10 +26,23 @@ const TrainerHome = () =>{
     const allViews = Object
         .keys(Views)
         .map(k => {
-            console.log(Views[k]);
             return (Views[k]);
         });
+    const isBanned = (value) => {
+        let e;
+        for(e of eventu){
+            if ((value-e.start)*(value-e.end) <= 0) return true;
+        }
+        return false;
+    };
+    const TimeSlotWrapper = (props: { children: React.ReactNode, resource: null /* grid */ | undefined /* gutter */, value: Date }) => {
+        if (props.resource === undefined /* gutter */ || !isBanned(props.value.getTime())) {
+            return props.children;
+        }
 
+        const child = React.Children.only(props.children);
+        return React.cloneElement(child, { className: child.props.className + ' rbc-off-range-bg' });
+    };
     const eventStyles = {
         reject: {
             backgroundColor:'red',
@@ -64,8 +78,8 @@ const TrainerHome = () =>{
                 startAccessor="start"
                 endAccessor="end"
                 eventPropGetter={eventRenderProps}
+                components={{ timeSlotWrapper: TimeSlotWrapper }}
             />
-            {console.log(allViews)}
         </div>
     );
 

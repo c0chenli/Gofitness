@@ -13,8 +13,8 @@ export default [
 
     {
         'title': 'DTS STARTS',
-        'start': new Date(2019, 10, 13, 0, 0, 0),
-        'end': new Date(2019, 10, 20, 0, 0, 0)
+        'start': new Date(2019, 10, 17, 8, 0, 0),
+        'end': new Date(2019, 10, 17, 9, 0, 0)
     },
 
     {
@@ -80,13 +80,13 @@ export default [
     {
         'title': 'Late Night Event',
         'status': 0,
-        'start': new Date(2019, 10, 17, 19, 30, 0),
-        'end': new Date(2019, 10, 18, 2, 0, 0)
+        'start': new Date(2019, 10, 18, 2, 30, 0),
+        'end': new Date(2019, 10, 18, 10, 0, 0)
     },
     {
         'title': 'Multi-day Event',
         'status': 1,
-        'start': new Date(2019, 10, 20, 19, 30, 0),
-        'end': new Date(2019, 10, 22, 2, 0, 0)
+        'start': new Date(2019, 10, 20, 16, 30, 0),
+        'end': new Date(2019, 10, 20, 19, 0, 0)
     }
 ]
