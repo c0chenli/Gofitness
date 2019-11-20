@@ -13,6 +13,8 @@ import events from '../pages/event'
 import eventu from "../pages/UnavaliableTime";
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import '../styles/DisplayCalendar.css';
+import WrappedPopupForm from "./PopupForm"
 
 const DisplayCalendar = () =>{
 
@@ -62,8 +64,9 @@ const DisplayCalendar = () =>{
         }
     };
     const MyCalendar = props => (
-        <div style={{ height: 1200 }}>
-
+        <div className="calendar">
+          <WrappedPopupForm/>
+          <div className="calendar-wrapper">
             <Calendar
                 localizer={localizer}
                 events={events}
@@ -76,6 +79,7 @@ const DisplayCalendar = () =>{
                 eventPropGetter={eventRenderProps}
                 components={{ timeSlotWrapper: TimeSlotWrapper }}
             />
+          </div>
         </div>
     );
 
