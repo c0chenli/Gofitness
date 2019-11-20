@@ -50,3 +50,44 @@
   display: inline-block;
   padding: 10px;
 }
+
+.filterP {
+  display: table;
+  margin: 0 auto;
+}
+
+.trainer-filter {
+  list-style: none;
+  padding: 0;
+}
+.trainer-filter li {
+  padding: 0px;
+  margin: 35px;
+  display: inline-block;
+  color: #000000;
+  border-bottom: 2px solid;
+  border-color: transparent;
+  font-weight: 400;
+  text-align: center;
+  transition: all ease 0.4s;
+}
+
+.trainer-filter li.active {
+  color: #0851e2;
+  border-color: #4a73d4;
+}
+
+.trainer-filter li a {
+  border-radius: 0;
+  font-size: 18px;
+  font-weight: 300;
+  padding: 0 25px;
+  border: none;
+  text-align: left;
+}
+
+.trainer-filter li a:hover,
+.trainer-filter li a:focus {
+  background: transparent;
+  box-shadow: none;
+}
