@@ -79,11 +79,13 @@ export default [
     },
     {
         'title': 'Late Night Event',
+        'status': 0,
         'start': new Date(2019, 10, 17, 19, 30, 0),
         'end': new Date(2019, 10, 18, 2, 0, 0)
     },
     {
         'title': 'Multi-day Event',
+        'status': 1,
         'start': new Date(2019, 10, 20, 19, 30, 0),
         'end': new Date(2019, 10, 22, 2, 0, 0)
     }
