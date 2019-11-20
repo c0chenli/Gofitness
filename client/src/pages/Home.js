@@ -4,6 +4,7 @@ import TopMenuBar from "../components/TopMenuBar"
 import HomeSlider from "../components/HomeSlider"
 import Footer from "../components/Footer"
 import HomeClasses from "../components/HomeClasses"
+import HomeTrainers from "../components/HomeTrainers"
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
         <TopMenuBar />
         <HomeSlider />
         <HomeClasses/>
+        <HomeTrainers/>
         <Footer/>
       </div>
   );

@@ -187,7 +187,7 @@ class SignUpForm extends React.Component {
               </Radio.Group>,
             )}
           </Form.Item>
-          
+
           <Form.Item
             className="input-field"
             label="First Name"
