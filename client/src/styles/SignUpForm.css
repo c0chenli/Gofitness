@@ -2,11 +2,12 @@
   position: absolute;
   height: auto;
   z-index: 15;
-  top: 250px;
-  left: 46%;
+  top: 350px;
+  left: 48%;
   margin: -100px 0 0 -150px;
   padding: 0 0 10px;
   background-color: rgba(121, 162, 242, 0.5);
+  width: 450px;
 }
 
 #form-message {
