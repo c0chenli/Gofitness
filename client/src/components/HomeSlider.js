@@ -4,6 +4,7 @@ import bg2 from '../assets/img/bg2.jpg';
 import bg3 from '../assets/img/bg3.jpg';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
+import '../styles/HomeSlider.css';
 
 class HomeSlider extends React.Component {
 

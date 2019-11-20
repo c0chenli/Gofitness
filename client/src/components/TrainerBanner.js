@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 import bannerbg from '../assets/img/banner-bg.png';
+import '../styles/Banner.css';
 
 class TrainerBanner extends React.Component {
 

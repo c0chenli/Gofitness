@@ -4,6 +4,7 @@ import trainer1 from "../assets/img/trainer1.jpg";
 import trainer2 from "../assets/img/trainer2.jpg";
 import trainer3 from "../assets/img/trainer3.jpg";
 import trainer4 from "../assets/img/trainer4.jpg";
+import '../styles/HomeTrainers.css';
 
 class HomeTrainers extends React.Component {
   render() {

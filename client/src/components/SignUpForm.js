@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import { API_ROOT } from "../constants";
 import {withRouter} from "react-router";
+import '../styles/SignUpForm.css';
 
 function getBase64(img, callback) {
   const reader = new FileReader();

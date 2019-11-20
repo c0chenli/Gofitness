@@ -3,7 +3,7 @@ import { Form, Icon, Input, Button } from 'antd';
 import {Link} from "react-router-dom";
 import {withRouter} from "react-router";
 import { API_ROOT } from "../constants";
-import "../styles/SignInForm.css"
+import "../styles/SignInForm.css";
 
 import GoogleAuth from "./GoogleAuth";
 import $ from 'jquery';

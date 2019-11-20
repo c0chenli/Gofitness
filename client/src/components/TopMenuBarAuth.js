@@ -1,12 +1,7 @@
 import React from 'react';
 import {Col} from 'reactstrap';
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Icon from "@material-ui/core/Icon";
-//import Link from "@material-ui/core/Link";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import '../styles/TopMenuBarAuth.css';
 
 class TopMenuBarAuth extends React.Component {
   render() {
