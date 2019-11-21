@@ -3,6 +3,7 @@ import {Modal, Button, Form} from 'antd';
 import { DatePicker, TimePicker } from 'antd';
 import '../styles/PopupForm.css';
 import moment from "moment";
+import {API_ROOT} from "../constants"
 
 const { RangePicker } = DatePicker;
 
@@ -54,13 +55,28 @@ class PopupForm extends React.Component {
           "start": rangeTimeValue[0].format('YYYY,MM,DD,HH,mm'),
           "end": rangeTimeValue[1].format('YYYY,MM,DD,HH,mm'),
         };
-        console.log('Received values of form: ', values);
+        const send = JSON.stringify(values);
+        console.log(send);
+        fetch(`${API_ROOT}trainer/setSchedule`,{
+          method: 'POST',
+          headers: {'Content-Type':'application/json; charset=utf-8; Access-Control-Allow-Origin: *'},
+          body: send,
+        }).then(res => res.json()).then(
+          data => {
+            if (data.status === 'OK') {
+              window.alert('Schedule Added Successfully');
+              setTimeout(() => {
+                this.setState({ loading: false, visible: false });
+              }, 3000);
+            } else {
+              return Promise.reject(data);
+            }
+          }).catch((data) => {
+          window.alert(data);
+        });
       }
       this.setState({ loading: false });
     });
-    setTimeout(() => {
-      this.setState({ loading: false, visible: false });
-    }, 3000);
 
 
   };
