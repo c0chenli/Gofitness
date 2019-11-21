@@ -1,6 +1,6 @@
 import React from "react";
 import {Modal, Button, Form} from 'antd';
-import { DatePicker } from 'antd';
+import { DatePicker, TimePicker } from 'antd';
 import '../styles/PopupForm.css';
 import moment from "moment";
 
@@ -51,8 +51,8 @@ class PopupForm extends React.Component {
       if (!err) {
         const rangeTimeValue = fieldsValue['date'];
         const values = {
-          "start": rangeTimeValue[0].format('YYYY,MM,DD,HH,mm,ss'),
-          "end": rangeTimeValue[1].format('YYYY,MM,DD,HH,mm,ss'),
+          "start": rangeTimeValue[0].format('YYYY,MM,DD,HH,mm'),
+          "end": rangeTimeValue[1].format('YYYY,MM,DD,HH,mm'),
         };
         console.log('Received values of form: ', values);
       }
@@ -103,7 +103,11 @@ class PopupForm extends React.Component {
                   <RangePicker
                     disabledDate={disabledDate}
                     disabledTime={disabledDateTime}
-                    showTime={{ format: 'HH:mm' }}
+                    showTime={{
+                      format: 'HH:mm',
+                      minuteStep: 30,
+                      defaultValue: [moment('09:00', 'HH:mm'), moment('09:30', 'HH:mm')]
+                    } }
                     format="YYYY-MM-DD HH:mm"
                     placeholder={['Start Time', 'End Time']}
                     onChange={onChange}
