@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button, message } from 'antd';
 import {Link} from "react-router-dom";
 import {withRouter} from "react-router";
 import { API_ROOT } from "../constants";
@@ -48,22 +48,18 @@ class SignInForm extends React.Component {
     ).then(
       data => {
         if (data.status === 'OK') {
-          this.props.handleSuccessfulLogin(data);
+          message.success('Sign In Success!')
           this.props.history.push(`/${data.role}`);
         } else {
           return Promise.reject(data.status);
         }
       }
     ).catch((status) => {
-       window.alert(status);
+       message.error(status);
     });
   }
 
-  setUserInfo(event, key) {
-    let obj = {};
-    obj[key] = event.target.value;
-    this.setState(obj);
-  }
+
 
   render() {
     const { getFieldDecorator } = this.props.form;

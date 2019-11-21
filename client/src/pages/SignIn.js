@@ -6,15 +6,17 @@ import Footer from "../components/Footer"
 import FormBackground from "./FormBackground"
 import '../styles/SignIn.css';
 
-function SignIn() {
-  return(
-    <div>
-      <TopMenuBar />
-      <FormBackground/>
-      <LoginForm />
-      <Footer/>
-    </div>
-  );
+export class SignIn extends React.Component {
+  render() {
+    return(
+      <div>
+        <TopMenuBar />
+        <FormBackground/>
+        <LoginForm handleSuccessfulLogin={this.props.handleSuccessfulLogin}/>
+        <Footer/>
+      </div>
+    );
+  }
 }
 
-export default SignIn;
+

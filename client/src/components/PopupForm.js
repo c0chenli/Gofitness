@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal, Button, Form} from 'antd';
+import {Modal, Button, Form, message} from 'antd';
 import { DatePicker, TimePicker } from 'antd';
 import '../styles/PopupForm.css';
 import moment from "moment";
@@ -65,7 +65,7 @@ class PopupForm extends React.Component {
         }).then(res => res.json()).then(
           data => {
             if (data.status === 'OK') {
-              window.alert('Schedule Added Successfully');
+              message.success('Schedule Added Successfully');
               setTimeout(() => {
                 this.setState({ loading: false, visible: false });
               }, 3000);
@@ -73,7 +73,7 @@ class PopupForm extends React.Component {
               return Promise.reject(data.msg);
             }
           }).catch((msg) => {
-          window.alert(msg);
+          message.error(msg);
           this.props.history.push(`/signin`);
         });
       }
