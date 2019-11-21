@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Form, Icon, Input, Button } from 'antd';
 import {Link} from "react-router-dom";
 import {withRouter} from "react-router";
@@ -6,14 +6,14 @@ import { API_ROOT } from "../constants";
 import "../styles/SignInForm.css";
 
 import GoogleAuth from "./GoogleAuth";
-import $ from 'jquery';
+
 
 class SignInForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
     };
     this.emailChange = this.emailChange.bind(this);
     this.passwordChange = this.passwordChange.bind(this);
@@ -41,9 +41,14 @@ class SignInForm extends React.Component {
       method: 'POST',
       headers: {'Content-Type':'application/json; charset=utf-8; Access-Control-Allow-Origin: *'},
       body: send
-    }).then(res => res.json()).then(
+    }).then(
+      res => {
+        return res.json();
+      }
+    ).then(
       data => {
         if (data.status === 'OK') {
+          this.props.handleSuccessfulLogin(data);
           this.props.history.push(`/${data.role}`);
         } else {
           return Promise.reject(data.status);

@@ -1,7 +1,9 @@
 import React from 'react';
 import {TOKEN_KEY} from "./constants";
-import {Main} from "./pages/Main"
-
+import {Main} from "./pages/Main";
+import {createBrowserHistory} from "history";
+import Cookies from "js-cookie";
+import {getSessionCookie, SessionContext} from "./components/Session";
 
 class App extends React.Component {
   state = {

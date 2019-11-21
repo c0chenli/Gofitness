@@ -3,7 +3,8 @@ import {Modal, Button, Form} from 'antd';
 import { DatePicker, TimePicker } from 'antd';
 import '../styles/PopupForm.css';
 import moment from "moment";
-import {API_ROOT} from "../constants"
+import {API_ROOT} from "../constants";
+import {withRouter} from "react-router";
 
 const { RangePicker } = DatePicker;
 
@@ -69,10 +70,11 @@ class PopupForm extends React.Component {
                 this.setState({ loading: false, visible: false });
               }, 3000);
             } else {
-              return Promise.reject(data);
+              return Promise.reject(data.msg);
             }
-          }).catch((data) => {
-          window.alert(data);
+          }).catch((msg) => {
+          window.alert(msg);
+          this.props.history.push(`/signin`);
         });
       }
       this.setState({ loading: false });
@@ -140,4 +142,4 @@ class PopupForm extends React.Component {
 
 const WrappedPopupForm = Form.create({ name: 'popup' })(PopupForm);
 
-export default WrappedPopupForm;
+export default withRouter(WrappedPopupForm);
