@@ -33,12 +33,12 @@ public class TrainerController {
     public Map<String, String> setSchedule(@RequestBody Map<String, String> param, HttpServletRequest request) throws ParseException {
         Map<String, String> map = new HashMap<>();
         HttpSession session = request.getSession();
-        String trainerEmail = session.getAttribute("trainer").toString();
-        if (trainerEmail == null || trainerEmail.length() == 0) {
+        if (session == null || session.getAttribute("trainer") == null) {
             map.put("status", "error");
             map.put("msg", "user login expired.");
             return map;
         }
+        String trainerEmail = session.getAttribute("trainer").toString();
         String startTime = param.get("start").replaceAll(",", "");
         String endTime = param.get("end").replaceAll(",", "");
         long start = sf.parse(startTime).getTime();
