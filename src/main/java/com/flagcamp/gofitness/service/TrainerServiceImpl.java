@@ -1,17 +1,21 @@
 package com.flagcamp.gofitness.service;
 
+import com.flagcamp.gofitness.dao.TrainerDao;
+import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainer;
 import com.flagcamp.gofitness.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TrainerServiceImpl implements TrainerService {
 
     @Autowired
     private TrainerRepository trainerRepository;
+    @Autowired
+    private TrainerDao trainerDao;
 
     /**
      * @return
@@ -19,6 +23,33 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public List<Trainer> getAllTrainers() {
         return trainerRepository.findAll();
+    }
+
+    /**
+     * @param trainerEmail
+     * @return
+     */
+    @Override
+    public List<Schedule> getSchedule(String trainerEmail, String now) {
+        Trainer trainer = trainerRepository.findTrainerByEmail(trainerEmail);
+        List<Schedule> schedules = new ArrayList<>();
+        schedules.addAll(trainer.getSchedules());
+        Collections.sort(schedules, Comparator.comparing(Schedule::getStartTime));
+        for (Schedule schedule : schedules) {
+            if (schedule.getStartTime().compareTo(now) < 0) {
+                schedules.remove(schedule);
+            }
+        }
+        return schedules;
+    }
+
+    /**
+     * @param trainerEmail
+     * @param schedules
+     */
+    @Override
+    public void addSchedule(String trainerEmail, List<Schedule> schedules) {
+        trainerDao.addSchedule(trainerEmail, schedules);
     }
 
     /**

@@ -1,15 +1,14 @@
 package com.flagcamp.gofitness.dao;
 
-import com.flagcamp.gofitness.dao.TraineeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Component;
 
 import com.flagcamp.gofitness.model.Trainee;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class TraineeDaoImpl implements TraineeDao {
 	
 	 @Autowired

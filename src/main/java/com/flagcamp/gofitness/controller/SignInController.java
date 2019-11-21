@@ -52,7 +52,7 @@ public class SignInController {
         	} else if (trainerService.findTrainerByEmailAndPassword(email, password) != null) {
                 session.setAttribute("trainer", email);
                 //set session duration 60 minutes.
-                session.setMaxInactiveInterval(3600);
+                session.setMaxInactiveInterval(7200);
                 map.put("status", "OK");
                 map.put("role", "trainer");
                 map.put("full_name", trainerService.getFullName(email));

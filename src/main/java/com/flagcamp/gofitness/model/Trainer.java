@@ -26,19 +26,18 @@ public class Trainer implements Serializable {
     @NotEmpty(message = "password cannot be empty!")
     private String password;
     private Set<String> categories;
-    private Set<TrainerReservation> trainerReservations;
-    //@TODO add schedule field
+    private Set<Schedule> schedules;
 
     public Trainer(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
-        this.trainerReservations = new HashSet<>();
+        this.schedules = new HashSet<>();
         this.categories = new HashSet<>();
     }
     public Trainer() {
-        this.trainerReservations = new HashSet<>();
+        this.schedules = new HashSet<>();
         this.categories = new HashSet<>();
     }
 
@@ -47,16 +46,16 @@ public class Trainer implements Serializable {
         return categories;
     }
 
-    public void setTrainerReservations(Set<TrainerReservation> trainerReservations) {
-        this.trainerReservations = trainerReservations;
+    public Set<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<Schedule> schedules) {
+        this.schedules = schedules;
     }
 
     public void setCategories(Set<String> categories) {
         this.categories = categories;
-    }
-
-    public Set<TrainerReservation> getTrainerReservations() {
-        return trainerReservations;
     }
 
     public String getFirstname() {

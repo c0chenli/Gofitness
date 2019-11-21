@@ -1,8 +1,7 @@
 package com.flagcamp.gofitness.service;
 
+import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainer;
-import com.flagcamp.gofitness.model.TrainerReservation;
-
 import java.util.List;
 
 public interface TrainerService {
@@ -12,6 +11,20 @@ public interface TrainerService {
      * @return
      */
     List<Trainer> getAllTrainers();
+
+    /**
+     *
+     * @param trainerEmail
+     * @return
+     */
+    List<Schedule> getSchedule(String trainerEmail, String now);
+
+    /**
+     *
+     * @param trainerEmail
+     * @param schedules
+     */
+    void addSchedule(String trainerEmail, List<Schedule> schedules);
 
     /**
      *

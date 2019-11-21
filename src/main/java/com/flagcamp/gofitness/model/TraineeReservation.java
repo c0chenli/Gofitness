@@ -11,21 +11,42 @@ public class TraineeReservation implements Serializable {
 
     @Field("trainer_email")
     private String trainerEmail;
+    @Field("trainer_name")
+    private String trainerName;
     @DateTimeFormat
     @Field("start_time")
     private String startTime;
     @DateTimeFormat
     @Field("end_time")
     private String endTime;
+    private String status;
 
     public TraineeReservation() {
 
     }
 
-    public TraineeReservation(String trainerEmail, String startTime, String endTime) {
+    public TraineeReservation(String trainerEmail, String trainerName, String startTime, String endTime, String status) {
         this.trainerEmail = trainerEmail;
+        this.trainerName = trainerName;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTrainerName() {
+        return trainerName;
+    }
+
+    public void setTrainerName(String trainerName) {
+        this.trainerName = trainerName;
     }
 
     public String getTrainerEmail() {
