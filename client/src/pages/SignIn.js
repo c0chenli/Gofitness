@@ -1,10 +1,10 @@
 import React from 'react';
-import pagebg from '../assets/img/pagebg.jpg';
 import TopMenuBar from "../components/TopMenuBar";
 import LoginForm from "../components/SignInForm"
 import GoogleAuth from "../components/GoogleAuth"
 import Footer from "../components/Footer"
 import FormBackground from "./FormBackground"
+import '../styles/SignIn.css';
 
 function SignIn() {
   return(

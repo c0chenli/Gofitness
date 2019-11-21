@@ -1,0 +1,19 @@
+.popup-input .ant-col {
+  display: inline-block !important;
+}
+
+.ant-calendar-time-picker-btn {
+  color: #3e61ed!important;
+}
+
+.ant-calendar-time-picker-btn-disabled {
+  color: #bdbfc3!important;
+}
+
+.ant-calendar-footer-btn .ant-calendar-ok-btn {
+  color: white!important;
+}
+
+.ant-calendar-ok-btn-disabled {
+  color: #bdbfc3!important;
+}

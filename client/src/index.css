@@ -1,38 +1,24 @@
 @import '~antd/dist/antd.min.css';
-
-@import './styles/TopMenuBar.css';
-@import './styles/HomeSlider.css';
 @import './styles/animate.css';
-@import './styles/SignIn.css';
-@import './styles/SignUp.css';
-@import './styles/TopMenuBarAuth.css';
-@import './styles/TraineeBanner.css';
-@import './styles/TrainerFilter.css';
-@import './styles/AvailableTrainers.css';
-@import './styles/Filter.css';
-@import './styles/Footer.css';
-@import './styles/HomeClasses.css';
-@import './styles/SignUpForm.css';
 @import './assets/flaticon/font/flaticon.css';
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,900');
 
-
-body {
+/*body {
   font-family: "Poppins", Arial, sans-serif;
   font-weight: 300;
   font-size: 17px;
   line-height: 1.5;
   color: #000000;
   background: #fff;
-}
-/*body {
+}*/
+body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}*/
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -49,7 +35,7 @@ a {
 a:hover, a:active, a:focus {
   color: #DC2F2F;
   outline: none;
-  text-decoration: none;
+  text-decoration: none!important;
 }
 
 p {

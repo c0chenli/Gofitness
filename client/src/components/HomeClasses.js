@@ -1,6 +1,6 @@
 import React from "react";
 import {Col, Container, Row} from "react-bootstrap";
-import classicon1 from '../assets/img/classicon1.svg';
+import '../styles/HomeClasses.css';
 
 class HomeClasses extends React.Component {
 

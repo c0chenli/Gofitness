@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 import bannerbg from '../assets/img/banner-bg.png';
+import '../styles/Banner.css';
 
 class TrainerBanner extends React.Component {
 
@@ -15,7 +16,7 @@ class TrainerBanner extends React.Component {
           backgroundPosition: "center",
           width: "100%",
         }}>
-        <Container>
+        <Container className="banner-div">
           <Row>
             <div className="col-sm-10">
               <h1 className="banner-title">Schedule</h1>
