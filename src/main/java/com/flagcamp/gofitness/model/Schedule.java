@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Schedule implements Serializable {
 
@@ -12,33 +13,32 @@ public class Schedule implements Serializable {
 
     @DateTimeFormat
     @Field("start_time")
-    private String startTime;
+    private Date startTime;
     @DateTimeFormat
     @Field("end_time")
-    private String endTime;
+    private Date endTime;
 
     public Schedule() {
 
     }
-    public Schedule(String startTime, String endTime) {
+    public Schedule(Date startTime, Date endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 }

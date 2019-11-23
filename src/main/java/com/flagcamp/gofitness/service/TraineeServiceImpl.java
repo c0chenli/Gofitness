@@ -10,6 +10,7 @@ import com.flagcamp.gofitness.repository.TrainerRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,24 +83,24 @@ public class TraineeServiceImpl implements TraineeService {
      * @param endTime
      */
     @Override
-    public void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, String startTime, String endTime) {
+    public void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, Date startTime, Date endTime) {
         System.out.println(traineeEmail + " " + trainerEmail + " " + trainerName);
         TraineeReservation traineeReservation = new TraineeReservation();
         traineeReservation.setTrainerEmail(trainerEmail);
         traineeReservation.setTrainerName(trainerName);
         traineeReservation.setStartTime(startTime);
         traineeReservation.setEndTime(endTime);
-        traineeReservation.setStatus("0");
+        traineeReservation.setStatus(0);
         traineeDao.addTraineeReservation(traineeEmail, traineeReservation);
     }
 
 
     @Override
-    public List<TraineeReservation> getTraineeReservation(String traineeEmail, String now) throws ParseException {
+    public List<TraineeReservation> getTraineeReservation(String traineeEmail, Date now) throws ParseException {
     	Trainee trainee = traineeRepository.findTraineeByEmail(traineeEmail);
     	List<TraineeReservation> list = new ArrayList<>();
     	for (TraineeReservation traineeReservation: trainee.getTraineeReservations()) {
-    		if (sf.parse(traineeReservation.getStartTime()).getTime() >= sf.parse(now).getTime()) {
+    		if (traineeReservation.getStartTime().compareTo(now) >= 0) {
     			list.add(traineeReservation);
     		}
     	}
