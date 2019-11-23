@@ -23,34 +23,38 @@ public class TrainerController {
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public Trainer getUserByEmail(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String trainerEmail = session.getAttribute("trainer").toString();
+        String trainerEmail = request.getAttribute("userEmail").toString();
         return trainerService.findTrainerByEmail(trainerEmail);
     }
 
     @PostMapping(value = "/setSchedule")
     public Map<String, String> setSchedule(@RequestBody Map<String, String> param, HttpServletRequest request) throws ParseException {
         Map<String, String> map = new HashMap<>();
-        HttpSession session = request.getSession();
-        if (session == null || session.getAttribute("trainer") == null) {
+        String trainerEmail = (String) request.getAttribute("userEmail");
+        if (trainerEmail == null || trainerEmail.length() == 0) {
             map.put("status", "error");
             map.put("msg", "user login expired.");
             return map;
         }
-        String trainerEmail = session.getAttribute("trainer").toString();
         String startTime = param.get("start").replaceAll(",", "");
         String endTime = param.get("end").replaceAll(",", "");
         long start = sf.parse(startTime).getTime();
         long end = sf.parse(endTime).getTime();
         //24 hours
         long time = 60 * 24 * 60 * 1000;
+        int numOfDays = (int) ((end - start) / time);
+        end -= numOfDays * time;
+
+        System.out.println(sf.format(end));
+
         List<Schedule> schedules = new ArrayList<>();
-        while (start < end) {
+        for (int i = 0; i <= numOfDays; i++) {
             Schedule schedule = new Schedule();
             schedule.setStartTime(sf.format(start));
-            schedule.setEndTime(sf.format((start + time)));
+            schedule.setEndTime(sf.format(end));
             schedules.add(schedule);
             start += time;
+            end += time;
         }
         trainerService.addSchedule(trainerEmail, schedules);
         map.put("status", "OK");
@@ -60,8 +64,7 @@ public class TrainerController {
 
     @RequestMapping(value = "/getSchedule", method = RequestMethod.GET)
     public List<Schedule> getSchedule(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String trainerEmail = session.getAttribute("trainer").toString();
+        String trainerEmail = (String) request.getAttribute("userEmail");
         Date date = new Date();
         String now = sf.format(date);
         List<Schedule> schedules = trainerService.getSchedule(trainerEmail, now);
