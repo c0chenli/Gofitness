@@ -87,8 +87,30 @@ public class TraineeController {
         List<TraineeReservation> list = traineeService.getTraineeReservation(traineeEmail, now);
         return list;
     }
+    
 
-//    @PostMapping(value = "/cancel")
+
+    @PostMapping(value = "/cancelReservation")
+    public Map<String, String> cancelReservations(@RequestBody Map<String, String> param, HttpServletRequest request) throws ParseException {
+    	Map<String, String> map = new HashMap<>();
+        HttpSession session = request.getSession();
+        if (session == null || session.getAttribute("trainer") == null) {
+            map.put("status", "error");
+            map.put("msg", "user login expired.");
+            return map;
+        }
+        String traineeEmail = session.getAttribute("trainee").toString();
+        String startTime = param.get("start").replaceAll(",", "");
+        String endTime = param.get("end").replaceAll(",", "");
+        long start = sf.parse(startTime).getTime();
+        long end = sf.parse(endTime).getTime();
+        long time = 30 * 60 * 1000;
+        while (start < end) {
+        	traineeService.cancelReservation(traineeEmail, start);
+        	start += time;
+        }
+    	return map;
+    }
 //    public Map<String, String> cancelClass(@RequestBody Map<String, String> param, HttpServletRequest request) throws JSONException {
 //        Map<String, String> map = new HashMap<>();
 //        HttpSession session = request.getSession();

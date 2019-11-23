@@ -12,4 +12,6 @@ public interface TraineeDao {
 	
 	void addTraineeReservation(String traineeEmail, List<TraineeReservation> reservations);
 	
+	void cancelReservation(String traineeEmail, long start);
+	
 }
