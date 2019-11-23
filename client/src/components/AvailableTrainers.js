@@ -72,7 +72,7 @@ class AvailableTrainers extends React.Component {
           });
         }
     ).catch((status) => {
-      window.alert(status);
+        this.fetchDemoData();
     });
   }
 
