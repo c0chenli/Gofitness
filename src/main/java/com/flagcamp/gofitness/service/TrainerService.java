@@ -4,6 +4,7 @@ import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainer;
 import com.flagcamp.gofitness.model.TrainerReservation;
 
+import java.util.Date;
 import java.util.List;
 
 public interface TrainerService {
@@ -19,7 +20,7 @@ public interface TrainerService {
      * @param trainerEmail
      * @return
      */
-    List<Schedule> getSchedule(String trainerEmail, String now);
+    List<Schedule> getSchedule(String trainerEmail, Date now);
 
     /**
      *
@@ -27,7 +28,7 @@ public interface TrainerService {
      * @param now
      * @return
      */
-    List<TrainerReservation> getReservation(String trainerEmail, String now);
+    List<TrainerReservation> getReservation(String trainerEmail, Date now);
 
     /**
      *
@@ -37,7 +38,7 @@ public interface TrainerService {
      * @param startTime
      * @param endTime
      */
-    void addTrainerReservation(String trainerEmail, String traineeEmail, String traineeName, String startTime, String endTime);
+    void addTrainerReservation(String trainerEmail, String traineeEmail, String traineeName, Date startTime, Date endTime);
 
     /**
      *
