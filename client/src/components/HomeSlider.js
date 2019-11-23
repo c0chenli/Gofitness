@@ -8,6 +8,15 @@ import '../styles/HomeSlider.css';
 
 class HomeSlider extends React.Component {
 
+
+    loginButton (){
+        return (
+            <div className="loginBtn">
+                <h3><Link to="/signin" className="btn btn-primary btn-lg btn-learn">Login / Sign up</Link></h3>
+            </div>
+        );
+    }
+
   render() {
     return(
       <Carousel id="home-slider" fade='true'>
@@ -17,9 +26,7 @@ class HomeSlider extends React.Component {
             src={bg1}
             alt="First slide"
           />
-          <div className="loginBtn">
-            <h3><Link to="/signin" className="btn btn-primary btn-lg btn-learn">Login / Sign up</Link></h3>
-          </div>
+            {this.props.authenticated ? '': this.loginButton()}
         </Carousel.Item>
         <Carousel.Item>
           <img
@@ -27,10 +34,7 @@ class HomeSlider extends React.Component {
             src={bg2}
             alt="Second slide"
           />
-
-          <div className="loginBtn">
-            <p><Link to="/signin" className="btn btn-primary btn-lg btn-learn">Login / Sign up</Link></p>
-          </div>
+            {this.props.authenticated ? '': this.loginButton()}
         </Carousel.Item>
         <Carousel.Item>
           <img
@@ -38,10 +42,7 @@ class HomeSlider extends React.Component {
             src={bg3}
             alt="Third slide"
           />
-
-          <div className="loginBtn">
-            <p><Link to="/signin" className="btn btn-primary btn-lg btn-learn">Login / Sign up</Link></p>
-          </div>
+            {this.props.authenticated ? '': this.loginButton()}
         </Carousel.Item>
       </Carousel>
 

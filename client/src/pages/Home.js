@@ -10,8 +10,8 @@ export class Home extends React.Component {
   render() {
     return (
       <div>
-          {this.props.authenticated ? <TopMenuBarAuth/>:<TopMenuBar/>}
-        <HomeSlider />
+        {this.props.authenticated ? <TopMenuBarAuth/>:<TopMenuBar/>}
+        <HomeSlider authenticated = {this.props.authenticated }/>
         <HomeClasses/>
         <HomeTrainers/>
         <Footer/>
