@@ -6,6 +6,7 @@ import {Link} from "react-router-dom"
 import {API_ROOT} from "../constants"
 import _ from 'lodash';
 import '../styles/AvailableTrainers.css';
+import { sessionService } from 'redux-react-session';
 
 class AvailableTrainers extends React.Component {
 
@@ -28,20 +29,32 @@ class AvailableTrainers extends React.Component {
   }
 
   componentDidMount() {
+
+    sessionService.loadSession()
+        .then(currentSession => this.fetchData(currentSession.token))
+        .catch(err => console.log(err));
+
+  }
+
+  fetchData(token){
     fetch(`${API_ROOT}trainee/getAllTrainer`, {
       method: 'GET',
-      headers: {'Content-Type':'application/json; charset=utf-8; Access-Control-Allow-Origin: *'},
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8; Access-Control-Allow-Origin: *',
+        Authorization: token,
+      },
     }).then(res => res.json()).then(
-      data => {
-        this.setState({
-          trainerData: data,
-          trainers: this.filterTrainer(data, "")
-        });
-      }
+        data => {
+          this.setState({
+            trainerData: data,
+            trainers: this.filterTrainer(data, "")
+          });
+        }
     ).catch((status) => {
       window.alert(status);
     });
   }
+
 
   filterTrainer(trainerData, targetValue){
     const resultTrainers = [];

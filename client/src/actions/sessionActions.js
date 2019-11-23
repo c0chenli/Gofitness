@@ -28,7 +28,6 @@ export const login = (email, password, history) => {
                                 history.push(`/${data.data.role}`);
                             }).catch(err => console.error(err));
                     }).catch(err => console.error(err));
-
             } else {
                 return Promise.reject(data.status);
             }
