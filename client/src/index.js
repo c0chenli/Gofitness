@@ -15,11 +15,10 @@ const reducer = combineReducers({
     session: sessionReducer
 });
 
-const store = createStore(reducer, undefined, compose(applyMiddleware(thunkMiddleware)));
+export const store = createStore(reducer, undefined, compose(applyMiddleware(thunkMiddleware)));
 
 // Init the session service
-sessionService.initSessionService(store, { driver: 'COOKIES' });
-
+sessionService.initSessionService(store);
 
 ReactDOM.render((
     <Provider store={store}>
