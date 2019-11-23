@@ -63,7 +63,7 @@ public class TrainerController {
         Date date = new Date();
         String now = sf.format(date);
         List<Object> result = new ArrayList<>();
-        result.addAll(trainerService.getSchedule(trainerEmail, now));
+        result.addAll(trainerService.getReservation(trainerEmail, now));
         return result;
     }
     
