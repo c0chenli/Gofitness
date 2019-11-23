@@ -2,6 +2,7 @@ import React from 'react';
 import {Col} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import '../styles/TopMenuBarAuth.css';
+import LogoutButton from "./LogoutButton";
 
 class TopMenuBarAuth extends React.Component {
   render() {
@@ -21,6 +22,7 @@ class TopMenuBarAuth extends React.Component {
                 <li><Link to="/classroom">{'Classroom'}</Link></li>
                 <li><Link to="/about">{'About'}</Link></li>
                 <li><Link to="/">{'My Account'}</Link></li>
+                <li><LogoutButton /></li>
               </ul>
             </Col>
           </div>

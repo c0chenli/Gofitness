@@ -1,6 +1,7 @@
 import React from "react";
 import bg1 from '../assets/img/bg1.jpg';
 import TopMenuBar from '../components/TopMenuBar'
+import TopMenuBarAuth from "../components/TopMenuBarAuth";
 
 const bg = {
     backgroundImage: `url(${bg1})`,
@@ -37,7 +38,7 @@ class About extends React.Component {
         return (
             <div>
                 <div style={bg}>
-                    <TopMenuBar/>
+                    {this.props.authenticated ? <TopMenuBarAuth/>:<TopMenuBar/>}
                     <p style={text}>
                         GoFitness, provides one-on-one personal training online. Users could get a personalized training plan and instruction at a low cost, offering different solutions for different fitness groups.
                     </p>

@@ -1,12 +1,13 @@
 import React from "react";
-import TopMenuBar from "../components/TopMenuBarAuth"
+import TopMenuBar from "../components/TopMenuBar"
+import TopMenuBarAuth from "../components/TopMenuBarAuth";
 import ClassesBanner from "../components/ClassesBanner"
 import ClassesFilter from "../components/ClassesFilter"
 import Footer from "../components/Footer"
-const Classes = () =>{
+const Classes = (props) =>{
     return (
         <div>
-            <TopMenuBar/>
+            {props.authenticated ? <TopMenuBarAuth/>:<TopMenuBar/>}
             <ClassesBanner/>
             <ClassesFilter/>
             <Footer/>

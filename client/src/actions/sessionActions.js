@@ -36,3 +36,16 @@ export const login = (email, password, history) => {
         message.error(status);
     });
 };
+
+
+
+
+export const logout = (history) => {
+    return () => {
+
+            sessionService.deleteSession();
+            sessionService.deleteUser();
+            history.push('/');
+
+    };
+};

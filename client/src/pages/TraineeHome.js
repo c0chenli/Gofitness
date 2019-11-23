@@ -4,12 +4,12 @@ import TraineeBanner from "../components/TraineeBanner"
 import Footer from "../components/Footer"
 import AvailableTrainers from "../components/AvailableTrainers"
 
-const TraineeHome = () =>{
+const TraineeHome = (props) =>{
     return (
         <div>
             <TopMenuBarAuth/>
             <TraineeBanner/>
-            <AvailableTrainers/>
+            <AvailableTrainers authenticated = {props.authenticated}/>
             <Footer/>
         </div>
     );

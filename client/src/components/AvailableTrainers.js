@@ -30,10 +30,30 @@ class AvailableTrainers extends React.Component {
 
   componentDidMount() {
 
+    console.log('AVAT: ' +this.props.authenticated);
+    this.props.authenticated ?
     sessionService.loadSession()
         .then(currentSession => this.fetchData(currentSession.token))
-        .catch(err => console.log(err));
+        .catch(err => console.log(err)) : this.fetchDemoData();
 
+  }
+  fetchDemoData(){
+    fetch(`${API_ROOT}getAllTrainerDemo`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8; Access-Control-Allow-Origin: *',
+      },
+    }).then(res => res.json()).then(
+        data => {
+          console.log(data);
+          this.setState({
+            trainerData: data,
+            trainers: this.filterTrainer(data, "")
+          });
+        }
+    ).catch((status) => {
+      window.alert(status);
+    });
   }
 
   fetchData(token){
@@ -45,13 +65,14 @@ class AvailableTrainers extends React.Component {
       },
     }).then(res => res.json()).then(
         data => {
+          console.log(data);
           this.setState({
             trainerData: data,
             trainers: this.filterTrainer(data, "")
           });
         }
     ).catch((status) => {
-      window.alert(status);
+        this.fetchDemoData();
     });
   }
 
