@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -72,12 +74,25 @@ public class TrainerController {
     }
     
     @RequestMapping(value = "/availableTime", method = RequestMethod.GET)
-    public List<Object> getAvailableTime(HttpServletRequest request) {
+    public List<Map<String, Object>> getAvailableTime(HttpServletRequest request) throws ParseException {
+
         String trainerEmail = (String) request.getAttribute("userEmail");
         Date date = new Date();
         String now = sf.format(date);
-        List<Object> result = new ArrayList<>();
-        result.addAll(trainerService.getSchedule(trainerEmail, now));
+        List<Map<String, Object>> result = new ArrayList<>();
+        Map<String, Object> map;
+        long startTime;
+        long endTime;
+        List<Schedule> buffer = new ArrayList<>();
+        buffer.addAll(trainerService.getSchedule(trainerEmail, now));
+        for (Schedule schedule: buffer) {
+            startTime = sf.parse(schedule.getStartTime()).getTime();
+            endTime = sf.parse(schedule.getEndTime()).getTime();
+        	map = new HashMap<>();
+        	map.put("start", startTime);
+        	map.put("end", endTime);
+        	result.add(map);
+        }
         return result;
     }
 
