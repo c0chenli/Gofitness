@@ -1,5 +1,6 @@
 package com.flagcamp.gofitness.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import com.flagcamp.gofitness.model.Schedule;
@@ -41,5 +42,7 @@ public interface TraineeService {
     void addNewTrainee(Trainee trainee);
     
     void addTraineeReservation(String traineeEmail, List<TraineeReservation> reservations);
+    
+    List<TraineeReservation> getTraineeReservation(String traineeEmail, String now) throws ParseException;
 
 }

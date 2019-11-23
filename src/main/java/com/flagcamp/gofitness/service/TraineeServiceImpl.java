@@ -9,6 +9,9 @@ import com.flagcamp.gofitness.model.TraineeReservation;
 import com.flagcamp.gofitness.repository.TraineeRepository;
 import com.flagcamp.gofitness.repository.TrainerRepository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ public class TraineeServiceImpl implements TraineeService {
     private TraineeDao traineeDao;
     @Autowired
     private TrainerDao trainerDao;
+    
+    private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
 
     public void addTrainee(Trainee trainee) {   	 
     	traineeDao.addTrainee(trainee);
@@ -91,6 +96,19 @@ public class TraineeServiceImpl implements TraineeService {
     		trainerDao.addTrainerReservation(trainerEmail, trainerReservation);
     		
     	}
+    }
+    
+    @Override
+    public List<TraineeReservation> getTraineeReservation(String traineeEmail, String now) throws ParseException {
+    	Trainee trainee = traineeRepository.findTraineeByEmail(traineeEmail);
+    	List<TraineeReservation> list = new ArrayList<>();
+    	for (TraineeReservation raineeReservation: trainee.getTraineeReservations()) {
+    		if (sf.parse(raineeReservation.getStartTime()).getTime() >= sf.parse(now).getTime()) {
+    			list.add(raineeReservation);
+    		}
+    	}
+    	return list;
+    	
     }
     
     
