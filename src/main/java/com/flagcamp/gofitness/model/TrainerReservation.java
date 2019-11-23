@@ -16,17 +16,17 @@ public class TrainerReservation implements Serializable {
     private String traineeName;
     @DateTimeFormat
     @Field("start_time")
-    private Date startTime;
+    private String startTime;
     @DateTimeFormat
     @Field("end_time")
-    private Date endTime;
+    private String endTime;
     private int status;
 
     public TrainerReservation() {
 
     }
 
-    public TrainerReservation(String traineeEmail, String traineeName, Date startTime, Date endTime, int status) {
+    public TrainerReservation(String traineeEmail, String traineeName, String startTime, String endTime, int status) {
         this.traineeEmail = traineeEmail;
         this.traineeName = traineeName;
         this.startTime = startTime;
@@ -50,19 +50,19 @@ public class TrainerReservation implements Serializable {
 		this.traineeName = traineeName;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 

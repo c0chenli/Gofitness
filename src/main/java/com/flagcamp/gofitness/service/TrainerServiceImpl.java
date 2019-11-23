@@ -31,7 +31,7 @@ public class TrainerServiceImpl implements TrainerService {
      * @return
      */
     @Override
-    public List<Schedule> getSchedule(String trainerEmail, Date now) {
+    public List<Schedule> getSchedule(String trainerEmail, String now) {
         Trainer trainer = trainerRepository.findTrainerByEmail(trainerEmail);
         List<Schedule> schedules = new ArrayList<>();
         schedules.addAll(trainer.getSchedules());
@@ -50,7 +50,7 @@ public class TrainerServiceImpl implements TrainerService {
      * @return
      */
     @Override
-    public List<TrainerReservation> getReservation(String trainerEmail, Date now) {
+    public List<TrainerReservation> getReservation(String trainerEmail, String now) {
         Trainer trainer = trainerRepository.findTrainerByEmail(trainerEmail);
         List<TrainerReservation> reservations = new ArrayList<>();
         reservations.addAll(trainer.getTrainerReservations());
@@ -71,7 +71,7 @@ public class TrainerServiceImpl implements TrainerService {
      * @param endTime
      */
     @Override
-    public void addTrainerReservation(String trainerEmail, String traineeEmail, String traineeName, Date startTime, Date endTime) {
+    public void addTrainerReservation(String trainerEmail, String traineeEmail, String traineeName, String startTime, String endTime) {
         TrainerReservation trainerReservation = new TrainerReservation();
         trainerReservation.setTraineeEmail(traineeEmail);
         trainerReservation.setTraineeName(traineeName);

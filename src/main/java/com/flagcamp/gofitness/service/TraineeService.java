@@ -50,7 +50,7 @@ public interface TraineeService {
      * @param startTime
      * @param endTime
      */
-    void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, Date startTime, Date endTime);
+    void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, String startTime, String endTime);
 
     /**
      *
@@ -59,7 +59,7 @@ public interface TraineeService {
      * @return
      * @throws ParseException
      */
-    List<TraineeReservation> getTraineeReservation(String traineeEmail, Date now) throws ParseException;
+    List<TraineeReservation> getTraineeReservation(String traineeEmail, String now) throws ParseException;
 
     /**
      *

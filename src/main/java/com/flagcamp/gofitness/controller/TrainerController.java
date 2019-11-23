@@ -45,11 +45,11 @@ public class TrainerController {
         List<Schedule> schedules = new ArrayList<>();
         for (int i = 0; i <= numOfDays; i++) {
             Schedule schedule = new Schedule();
-            schedule.setStartTime(new Date(start));
+            schedule.setStartTime(sf.format(start));
 
-            System.out.println("date: " + new Date(start));
+            System.out.println("date: " + sf.format(start));
 
-            schedule.setEndTime(new Date(end));
+            schedule.setEndTime(sf.format(end));
             System.out.println("date: " + schedule.getStartTime());
             schedules.add(schedule);
             start += TWENTY_FOUR_HOUR;
@@ -64,7 +64,8 @@ public class TrainerController {
     @RequestMapping(value = "/getSchedule", method = RequestMethod.GET)
     public List<Object> getSchedule(HttpServletRequest request) {
         String trainerEmail = (String) request.getAttribute("userEmail");
-        Date now = new Date();
+        Date date = new Date();
+        String now = sf.format(date);
         List<Object> result = new ArrayList<>();
         result.addAll(trainerService.getReservation(trainerEmail, now));
         return result;
@@ -73,7 +74,8 @@ public class TrainerController {
     @RequestMapping(value = "/availableTime", method = RequestMethod.GET)
     public List<Object> getAvailableTime(HttpServletRequest request) {
         String trainerEmail = (String) request.getAttribute("userEmail");
-        Date now = new Date();
+        Date date = new Date();
+        String now = sf.format(date);
         List<Object> result = new ArrayList<>();
         result.addAll(trainerService.getSchedule(trainerEmail, now));
         return result;

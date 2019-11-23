@@ -20,7 +20,7 @@ public interface TrainerService {
      * @param trainerEmail
      * @return
      */
-    List<Schedule> getSchedule(String trainerEmail, Date now);
+    List<Schedule> getSchedule(String trainerEmail, String now);
 
     /**
      *
@@ -28,7 +28,7 @@ public interface TrainerService {
      * @param now
      * @return
      */
-    List<TrainerReservation> getReservation(String trainerEmail, Date now);
+    List<TrainerReservation> getReservation(String trainerEmail, String now);
 
     /**
      *
@@ -38,7 +38,7 @@ public interface TrainerService {
      * @param startTime
      * @param endTime
      */
-    void addTrainerReservation(String trainerEmail, String traineeEmail, String traineeName, Date startTime, Date endTime);
+    void addTrainerReservation(String trainerEmail, String traineeEmail, String traineeName, String startTime, String endTime);
 
     /**
      *

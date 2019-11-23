@@ -83,7 +83,7 @@ public class TraineeServiceImpl implements TraineeService {
      * @param endTime
      */
     @Override
-    public void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, Date startTime, Date endTime) {
+    public void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, String startTime, String endTime) {
         System.out.println(traineeEmail + " " + trainerEmail + " " + trainerName);
         TraineeReservation traineeReservation = new TraineeReservation();
         traineeReservation.setTrainerEmail(trainerEmail);
@@ -96,7 +96,7 @@ public class TraineeServiceImpl implements TraineeService {
 
 
     @Override
-    public List<TraineeReservation> getTraineeReservation(String traineeEmail, Date now) throws ParseException {
+    public List<TraineeReservation> getTraineeReservation(String traineeEmail, String now) throws ParseException {
     	Trainee trainee = traineeRepository.findTraineeByEmail(traineeEmail);
     	List<TraineeReservation> list = new ArrayList<>();
     	for (TraineeReservation traineeReservation: trainee.getTraineeReservations()) {
