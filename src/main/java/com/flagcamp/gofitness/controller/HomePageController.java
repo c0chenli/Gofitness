@@ -27,7 +27,8 @@ public class HomePageController {
         List<Trainer> trainers = trainerService.getAllTrainers();
         for (Trainer trainer : trainers) {
             map = new HashMap<>();
-            map.put("name", trainerService.getFullName(trainer.getEmail()));
+            map.put("firstname", trainer.getFirstname());
+            map.put("lastname", trainer.getLastname());
             map.put("categories", trainer.getCategories());
             map.put("email", trainer.getEmail());
             result.add(map);
