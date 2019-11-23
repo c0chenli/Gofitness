@@ -64,12 +64,28 @@ public class TrainerController {
     }
 
     @RequestMapping(value = "/getSchedule", method = RequestMethod.GET)
-    public List<Object> getSchedule(HttpServletRequest request) {
+    public List<Map<String, Object>> getReservation(HttpServletRequest request) throws ParseException {
         String trainerEmail = (String) request.getAttribute("userEmail");
+        List<Map<String, Object>> result = new ArrayList<>();
+        Map<String, Object> map;
         Date date = new Date();
         String now = sf.format(date);
-        List<Object> result = new ArrayList<>();
-        result.addAll(trainerService.getReservation(trainerEmail, now));
+        List<TrainerReservation> reservations = new ArrayList<>();
+        reservations.addAll(trainerService.getReservation(trainerEmail, now));
+        long startTime;
+        long endTime;
+        for (TrainerReservation trainerReservation : reservations) {
+            map = new HashMap<>();
+            map.put("title", trainerReservation.getTraineeName());
+            startTime = sf.parse(trainerReservation.getStartTime()).getTime();
+            endTime = sf.parse(trainerReservation.getEndTime()).getTime();
+            map.put("start", startTime);
+            map.put("end", endTime);
+            map.put("status", trainerReservation.getStatus());
+
+            System.out.println(map.get("start"));
+            result.add(map);
+        }
         return result;
     }
     
