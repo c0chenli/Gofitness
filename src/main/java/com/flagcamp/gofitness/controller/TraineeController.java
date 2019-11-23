@@ -2,6 +2,7 @@ package com.flagcamp.gofitness.controller;
 
 
 import com.flagcamp.gofitness.model.TraineeReservation;
+import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainee;
 import com.flagcamp.gofitness.model.Trainer;
 
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,10 +81,17 @@ public class TraineeController {
         traineeService.addTraineeReservation(traineeEmail, reservations);
         map.put("status", "OK");
         map.put("msg", "add schedule successful.");
-//        classService.reserveClass(traineeEmail, trainerEmail, startTime, endTime);
-//        map.put("status", "OK");
-//        map.put("msg", "You have reserved successfully.");
         return map;
+    }
+    
+    @RequestMapping(value = "/getReservation", method = RequestMethod.GET)
+    public List<TraineeReservation> getReservation(HttpServletRequest request) throws ParseException {
+        HttpSession session = request.getSession();
+        String traineeEmail = session.getAttribute("trainee").toString();
+        Date date = new Date();
+        String now = sf.format(date);
+        List<TraineeReservation> list = traineeService.getTraineeReservation(traineeEmail, now);
+        return list;
     }
 
 //    @PostMapping(value = "/cancel")
