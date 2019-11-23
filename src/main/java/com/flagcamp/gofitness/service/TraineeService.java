@@ -1,6 +1,7 @@
 package com.flagcamp.gofitness.service;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import com.flagcamp.gofitness.model.Schedule;
@@ -49,7 +50,7 @@ public interface TraineeService {
      * @param startTime
      * @param endTime
      */
-    void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, String startTime, String endTime);
+    void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, Date startTime, Date endTime);
 
     /**
      *
@@ -58,7 +59,7 @@ public interface TraineeService {
      * @return
      * @throws ParseException
      */
-    List<TraineeReservation> getTraineeReservation(String traineeEmail, String now) throws ParseException;
+    List<TraineeReservation> getTraineeReservation(String traineeEmail, Date now) throws ParseException;
 
     /**
      *

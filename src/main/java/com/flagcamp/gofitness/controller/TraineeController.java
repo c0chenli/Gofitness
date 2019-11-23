@@ -53,6 +53,8 @@ public class TraineeController {
         String trainerEmail = param.get("trainer_email");
         String startTime = param.get("start").replaceAll(",", "");
         String endTime = param.get("end").replaceAll(",", "");
+        Date start = new Date(startTime);
+        Date end = new Date(endTime);
 //        long start = sf.parse(startTime).getTime();
 //        long end = sf.parse(endTime).getTime();
 //        long time = 30 * 60 * 1000;
@@ -68,8 +70,8 @@ public class TraineeController {
 //        }
         String traineeName = traineeService.getFullName(traineeEmail);
         String trainerName = trainerService.getFullName(trainerEmail);
-        traineeService.addTraineeReservation(traineeEmail, trainerEmail, trainerName, startTime, endTime);
-        trainerService.addTrainerReservation(trainerEmail, traineeEmail, traineeName, startTime, endTime);
+        traineeService.addTraineeReservation(traineeEmail, trainerEmail, trainerName, start, end);
+        trainerService.addTrainerReservation(trainerEmail, traineeEmail, traineeName, start, end);
         map.put("status", "OK");
         map.put("msg", "add schedule successful.");
         return map;
@@ -78,8 +80,7 @@ public class TraineeController {
     @RequestMapping(value = "/getReservation", method = RequestMethod.GET)
     public List<TraineeReservation> getReservation(HttpServletRequest request) throws ParseException {
         String traineeEmail = (String) request.getAttribute("trainee");
-        Date date = new Date();
-        String now = sf.format(date);
+        Date now = new Date();
         List<TraineeReservation> list = traineeService.getTraineeReservation(traineeEmail, now);
         return list;
     }
@@ -107,8 +108,8 @@ public class TraineeController {
         }
     	return map;
     }
+ 
     
-    //TODO trainee get trainer's calendar
     
     
 //    public Map<String, String> cancelClass(@RequestBody Map<String, String> param, HttpServletRequest request) throws JSONException {

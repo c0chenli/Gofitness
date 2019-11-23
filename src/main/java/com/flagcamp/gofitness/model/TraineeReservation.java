@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class TraineeReservation implements Serializable {
 
@@ -16,17 +17,17 @@ public class TraineeReservation implements Serializable {
     private String trainerName;
     @DateTimeFormat
     @Field("start_time")
-    private String startTime;
+    private Date startTime;
     @DateTimeFormat
     @Field("end_time")
-    private String endTime;
-    private String status;
+    private Date endTime;
+    private int status;
 
     public TraineeReservation() {
 
     }
 
-    public TraineeReservation(String trainerEmail, String trainerName, String startTime, String endTime, String status) {
+    public TraineeReservation(String trainerEmail, String trainerName, Date startTime, Date endTime, int status) {
         this.trainerEmail = trainerEmail;
         this.trainerName = trainerName;
         this.startTime = startTime;
@@ -34,11 +35,11 @@ public class TraineeReservation implements Serializable {
         this.status = status;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -58,19 +59,19 @@ public class TraineeReservation implements Serializable {
         this.trainerEmail = trainerEmail;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 }

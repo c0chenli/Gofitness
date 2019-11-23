@@ -1,10 +1,10 @@
 package com.flagcamp.gofitness.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class TrainerReservation implements Serializable {
 
@@ -16,17 +16,17 @@ public class TrainerReservation implements Serializable {
     private String traineeName;
     @DateTimeFormat
     @Field("start_time")
-    private String startTime;
+    private Date startTime;
     @DateTimeFormat
     @Field("end_time")
-    private String endTime;
-    private String status;
+    private Date endTime;
+    private int status;
 
     public TrainerReservation() {
 
     }
 
-    public TrainerReservation(String traineeEmail, String traineeName, String startTime, String endTime, String status) {
+    public TrainerReservation(String traineeEmail, String traineeName, Date startTime, Date endTime, int status) {
         this.traineeEmail = traineeEmail;
         this.traineeName = traineeName;
         this.startTime = startTime;
@@ -50,28 +50,27 @@ public class TrainerReservation implements Serializable {
 		this.traineeName = traineeName;
 	}
 
-	public String getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
-
 }
