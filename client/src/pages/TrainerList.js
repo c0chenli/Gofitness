@@ -5,12 +5,12 @@ import TrainerListBanner from "../components/TrainerListBanner";
 import AvailableTrainers from "../components/AvailableTrainers";
 import TopMenuBarAuth from "../components/TopMenuBarAuth";
 
-const TrainerList = () =>{
+const TrainerList = (props) =>{
     return (
         <div>
-            {this.props.authenticated ? <TopMenuBarAuth/>:<TopMenuBar/>}
+            {props.authenticated ? <TopMenuBarAuth/>:<TopMenuBar/>}
             <TrainerListBanner/>
-            <AvailableTrainers/>
+            <AvailableTrainers authenticated = {props.authenticated}/>
             <Footer/>
         </div>
     );

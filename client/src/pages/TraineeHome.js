@@ -9,7 +9,7 @@ const TraineeHome = () =>{
         <div>
             <TopMenuBarAuth/>
             <TraineeBanner/>
-            <AvailableTrainers/>
+            <AvailableTrainers authenticated = {this.props.authenticated}/>
             <Footer/>
         </div>
     );
