@@ -5,6 +5,7 @@ import com.flagcamp.gofitness.model.TraineeReservation;
 import com.flagcamp.gofitness.model.Trainee;
 import com.flagcamp.gofitness.model.Trainer;
 
+import com.flagcamp.gofitness.service.TokenService;
 import com.flagcamp.gofitness.service.TraineeService;
 import com.flagcamp.gofitness.service.TrainerService;
 import org.json.JSONException;
@@ -28,6 +29,8 @@ public class TraineeController {
     private TraineeService traineeService;
     @Autowired
     private TrainerService trainerService;
+    @Autowired
+    private TokenService tokenService;
     private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
@@ -38,8 +41,12 @@ public class TraineeController {
     }
 
     @RequestMapping(value = "/getAllTrainer", method = RequestMethod.GET)
-    public List<Trainer> getAllTrainer() {
+    public List<Trainer> getAllTrainer(HttpServletRequest request) {
         //@TODO add session
+        Map<String, String> map = tokenService.getUserInfoFromToken(request.getHeader("Authorization"));
+        if (!map.get("role").equals("trainee")) {
+            return null;
+        }
         return trainerService.getAllTrainers();
     }
 
