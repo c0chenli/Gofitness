@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 
-@Document
 public class TrainerReservation implements Serializable {
 
     private static final long serialVersionUID = 1L;

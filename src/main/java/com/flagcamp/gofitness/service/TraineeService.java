@@ -40,11 +40,31 @@ public interface TraineeService {
      * @param trainee
      */
     void addNewTrainee(Trainee trainee);
-    
-    void addTraineeReservation(String traineeEmail, List<TraineeReservation> reservations);
-    
+
+    /**
+     *
+     * @param traineeEmail
+     * @param trainerEmail
+     * @param trainerName
+     * @param startTime
+     * @param endTime
+     */
+    void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, String startTime, String endTime);
+
+    /**
+     *
+     * @param traineeEmail
+     * @param now
+     * @return
+     * @throws ParseException
+     */
     List<TraineeReservation> getTraineeReservation(String traineeEmail, String now) throws ParseException;
-    
+
+    /**
+     *
+     * @param traineeEmail
+     * @param start
+     */
     void cancelReservation(String traineeEmail, long start);
 
 }

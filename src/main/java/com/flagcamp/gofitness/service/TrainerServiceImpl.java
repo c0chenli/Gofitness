@@ -65,6 +65,24 @@ public class TrainerServiceImpl implements TrainerService {
 
     /**
      * @param trainerEmail
+     * @param traineeEmail
+     * @param traineeName
+     * @param startTime
+     * @param endTime
+     */
+    @Override
+    public void addTrainerReservation(String trainerEmail, String traineeEmail, String traineeName, String startTime, String endTime) {
+        TrainerReservation trainerReservation = new TrainerReservation();
+        trainerReservation.setTraineeEmail(traineeEmail);
+        trainerReservation.setTraineeName(traineeName);
+        trainerReservation.setStartTime(startTime);
+        trainerReservation.setEndTime(endTime);
+        trainerReservation.setStatus("0");
+        trainerDao.addTrainerReservation(trainerEmail, trainerReservation);
+    }
+
+    /**
+     * @param trainerEmail
      * @param schedules
      */
     @Override

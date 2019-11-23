@@ -19,39 +19,37 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class TraineeDaoImpl implements TraineeDao {
-	
-	 @Autowired
-	 MongoTemplate mongoTemplate;
-	 private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
-	 
-	 @Override
-	 public void addTrainee(Trainee trainee) {
-		 mongoTemplate.save(trainee);
-	 }
-	 
-	 @Override
-	 public void deleteTraineeByEmail(String email) {
-		 Query query=new Query(Criteria.where("email").is(email));
-		 mongoTemplate.remove(query,Trainee.class);
-	 }
-	 
-	@Override
-	public void addTraineeReservation(String traineeEmail, List<TraineeReservation> reservations) {
-		Query query = new Query(Criteria.where("email").is(traineeEmail));
-		Update update = new Update();
-		for (TraineeReservation reservation : reservations) {
-			update.addToSet("traineeReservations", reservation);
-			mongoTemplate.upsert(query, update, Trainee.class);
-		}
-	}
-	
-	@Override
-	public void cancelReservation(String traineeEmail, long start) {
-		Query query = new Query();
-		query.addCriteria(Criteria.where("email").is(traineeEmail).and("traineeReservations").elemMatch(Criteria.where("startTime").is(sf.format(start))));
-		Update update = new Update();
-		update.pull("traineeReservations", new Query().addCriteria(Criteria.where("startTime").is(sf.format(start))));
-	    mongoTemplate.upsert(query, update, Trainee.class);
-	}
+
+    @Autowired
+    MongoTemplate mongoTemplate;
+    private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
+
+    @Override
+    public void addTrainee(Trainee trainee) {
+        mongoTemplate.save(trainee);
+    }
+
+    @Override
+    public void deleteTraineeByEmail(String email) {
+        Query query = new Query(Criteria.where("email").is(email));
+        mongoTemplate.remove(query, Trainee.class);
+    }
+
+    @Override
+    public void addTraineeReservation(String traineeEmail, TraineeReservation traineeReservation) {
+        Query query = new Query(Criteria.where("email").is(traineeEmail));
+        Update update = new Update();
+        update.addToSet("traineeReservations", traineeReservation);
+        mongoTemplate.upsert(query, update, Trainee.class);
+    }
+
+    @Override
+    public void cancelReservation(String traineeEmail, long start) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is(traineeEmail).and("traineeReservations").elemMatch(Criteria.where("startTime").is(sf.format(start))));
+        Update update = new Update();
+        update.pull("traineeReservations", new Query().addCriteria(Criteria.where("startTime").is(sf.format(start))));
+        mongoTemplate.upsert(query, update, Trainee.class);
+    }
 
 }

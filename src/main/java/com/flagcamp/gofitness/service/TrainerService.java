@@ -32,6 +32,16 @@ public interface TrainerService {
     /**
      *
      * @param trainerEmail
+     * @param traineeEmail
+     * @param traineeName
+     * @param startTime
+     * @param endTime
+     */
+    void addTrainerReservation(String trainerEmail, String traineeEmail, String traineeName, String startTime, String endTime);
+
+    /**
+     *
+     * @param trainerEmail
      * @param schedules
      */
     void addSchedule(String trainerEmail, List<Schedule> schedules);

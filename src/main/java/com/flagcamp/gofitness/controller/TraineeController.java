@@ -2,14 +2,11 @@ package com.flagcamp.gofitness.controller;
 
 
 import com.flagcamp.gofitness.model.TraineeReservation;
-import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainee;
 import com.flagcamp.gofitness.model.Trainer;
 
-import com.flagcamp.gofitness.service.TokenService;
 import com.flagcamp.gofitness.service.TraineeService;
 import com.flagcamp.gofitness.service.TrainerService;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
@@ -17,7 +14,6 @@ import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,14 +27,12 @@ public class TraineeController {
     private TraineeService traineeService;
     @Autowired
     private TrainerService trainerService;
-    @Autowired
-    private TokenService tokenService;
+
     private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public Trainee getTraineeInfo(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        String traineeEmail = session.getAttribute("trainee").toString();
+        String traineeEmail = (String) request.getAttribute("userEmail");
         return traineeService.findTraineeByEmail(traineeEmail);
     }
 
@@ -54,31 +48,28 @@ public class TraineeController {
     @PostMapping(value = "/reserve")
     public Map<String, String> reserveClass(@RequestBody Map<String, String> param, HttpServletRequest request) throws ParseException {
         Map<String, String> map = new HashMap<>();
-        HttpSession session = request.getSession();
-        if (session == null || session.getAttribute("trainee") == null) {
-            map.put("status", "error");
-            map.put("msg", "user login expired");
-            return map;
-        }
-        String traineeEmail = session.getAttribute("trainee").toString();
+        String traineeEmail = (String) request.getAttribute("userEmail");
         
         String trainerEmail = param.get("trainer_email");
         String startTime = param.get("start").replaceAll(",", "");
         String endTime = param.get("end").replaceAll(",", "");
-        long start = sf.parse(startTime).getTime();
-        long end = sf.parse(endTime).getTime();
-        long time = 30 * 60 * 1000;
-        List<TraineeReservation> reservations = new ArrayList<>();
-        while (start < end) {
-            TraineeReservation reservation = new TraineeReservation();
-            reservation.setTrainerEmail(trainerEmail);
-            //reservation.setTrainerName(trainerService.getFullName(trainerEmail));
-            reservation.setStartTime(sf.format(start));
-            reservation.setEndTime(sf.format((start + time)));
-            reservations.add(reservation);
-            start += time;
-        }
-        traineeService.addTraineeReservation(traineeEmail, reservations);
+//        long start = sf.parse(startTime).getTime();
+//        long end = sf.parse(endTime).getTime();
+//        long time = 30 * 60 * 1000;
+//        List<TraineeReservation> reservations = new ArrayList<>();
+//        while (start < end) {
+//            TraineeReservation reservation = new TraineeReservation();
+//            reservation.setTrainerEmail(trainerEmail);
+//            //reservation.setTrainerName(trainerService.getFullName(trainerEmail));
+//            reservation.setStartTime(sf.format(start));
+//            reservation.setEndTime(sf.format((start + time)));
+//            reservations.add(reservation);
+//            start += time;
+//        }
+        String traineeName = traineeService.getFullName(traineeEmail);
+        String trainerName = trainerService.getFullName(trainerEmail);
+        traineeService.addTraineeReservation(traineeEmail, trainerEmail, trainerName, startTime, endTime);
+        trainerService.addTrainerReservation(trainerEmail, traineeEmail, traineeName, startTime, endTime);
         map.put("status", "OK");
         map.put("msg", "add schedule successful.");
         return map;
@@ -86,8 +77,7 @@ public class TraineeController {
     
     @RequestMapping(value = "/getReservation", method = RequestMethod.GET)
     public List<TraineeReservation> getReservation(HttpServletRequest request) throws ParseException {
-        HttpSession session = request.getSession();
-        String traineeEmail = session.getAttribute("trainee").toString();
+        String traineeEmail = (String) request.getAttribute("trainee");
         Date date = new Date();
         String now = sf.format(date);
         List<TraineeReservation> list = traineeService.getTraineeReservation(traineeEmail, now);

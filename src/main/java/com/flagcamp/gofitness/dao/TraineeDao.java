@@ -10,7 +10,7 @@ public interface TraineeDao {
 	
 	void deleteTraineeByEmail(String email);
 	
-	void addTraineeReservation(String traineeEmail, List<TraineeReservation> reservations);
+	void addTraineeReservation(String traineeEmail, TraineeReservation traineeReservation);
 	
 	void cancelReservation(String traineeEmail, long start);
 	

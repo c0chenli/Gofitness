@@ -24,7 +24,7 @@ public class TrainerController {
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public Trainer getUserByEmail(HttpServletRequest request) {
-        String trainerEmail = request.getAttribute("userEmail").toString();
+        String trainerEmail = (String) request.getAttribute("userEmail");
         return trainerService.findTrainerByEmail(trainerEmail);
     }
 
@@ -32,11 +32,6 @@ public class TrainerController {
     public Map<String, String> setSchedule(@RequestBody Map<String, String> param, HttpServletRequest request) throws ParseException {
         Map<String, String> map = new HashMap<>();
         String trainerEmail = (String) request.getAttribute("userEmail");
-        if (trainerEmail == null || trainerEmail.length() == 0) {
-            map.put("status", "error");
-            map.put("msg", "user login expired.");
-            return map;
-        }
         String startTime = param.get("start").replaceAll(",", "");
         String endTime = param.get("end").replaceAll(",", "");
         long start = sf.parse(startTime).getTime();
@@ -62,8 +57,8 @@ public class TrainerController {
         return map;
     }
 
-    @RequestMapping(value = "/getAvailableTime", method = RequestMethod.GET)
-    public List<Object> getAvailableTime(HttpServletRequest request) {
+    @RequestMapping(value = "/getSchedule", method = RequestMethod.GET)
+    public List<Object> getSchedule(HttpServletRequest request) {
         String trainerEmail = (String) request.getAttribute("userEmail");
         Date date = new Date();
         String now = sf.format(date);

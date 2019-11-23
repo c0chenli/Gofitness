@@ -3,8 +3,6 @@ package com.flagcamp.gofitness.service;
 import com.flagcamp.gofitness.dao.TraineeDao;
 import com.flagcamp.gofitness.dao.TrainerDao;
 import com.flagcamp.gofitness.model.Trainee;
-import com.flagcamp.gofitness.model.Trainer;
-import com.flagcamp.gofitness.model.TrainerReservation;
 import com.flagcamp.gofitness.model.TraineeReservation;
 import com.flagcamp.gofitness.repository.TraineeRepository;
 import com.flagcamp.gofitness.repository.TrainerRepository;
@@ -23,11 +21,7 @@ public class TraineeServiceImpl implements TraineeService {
     @Autowired
     private TraineeRepository traineeRepository;
     @Autowired
-    private TrainerRepository trainerRepository;
-    @Autowired
     private TraineeDao traineeDao;
-    @Autowired
-    private TrainerDao trainerDao;
     
     private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
 
@@ -79,32 +73,34 @@ public class TraineeServiceImpl implements TraineeService {
     public void addNewTrainee(Trainee trainee) {
         traineeRepository.save(trainee);
     }
-    
+
+    /**
+     * @param traineeEmail
+     * @param trainerEmail
+     * @param trainerName
+     * @param startTime
+     * @param endTime
+     */
     @Override
-    public void addTraineeReservation(String traineeEmail, List<TraineeReservation> reservations) {
-    	traineeDao.addTraineeReservation(traineeEmail, reservations);
-    	for (TraineeReservation traineeReservation: reservations) {
-    		String trainerEmail = traineeReservation.getTrainerEmail();
-    		
-    		Trainer trainer = trainerRepository.findTrainerByEmail(trainerEmail);
-    		
-    		TrainerReservation trainerReservation = new TrainerReservation();
-    		trainerReservation.setTraineeEmail(traineeEmail);
-    		trainerReservation.setStartTime(traineeReservation.getStartTime());
-    		trainerReservation.setEndTime(traineeReservation.getEndTime());
-    		
-    		trainerDao.addTrainerReservation(trainerEmail, trainerReservation);
-    		
-    	}
+    public void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, String startTime, String endTime) {
+        System.out.println(traineeEmail + " " + trainerEmail + " " + trainerName);
+        TraineeReservation traineeReservation = new TraineeReservation();
+        traineeReservation.setTrainerEmail(trainerEmail);
+        traineeReservation.setTrainerName(trainerName);
+        traineeReservation.setStartTime(startTime);
+        traineeReservation.setEndTime(endTime);
+        traineeReservation.setStatus("0");
+        traineeDao.addTraineeReservation(traineeEmail, traineeReservation);
     }
-    
+
+
     @Override
     public List<TraineeReservation> getTraineeReservation(String traineeEmail, String now) throws ParseException {
     	Trainee trainee = traineeRepository.findTraineeByEmail(traineeEmail);
     	List<TraineeReservation> list = new ArrayList<>();
-    	for (TraineeReservation raineeReservation: trainee.getTraineeReservations()) {
-    		if (sf.parse(raineeReservation.getStartTime()).getTime() >= sf.parse(now).getTime()) {
-    			list.add(raineeReservation);
+    	for (TraineeReservation traineeReservation: trainee.getTraineeReservations()) {
+    		if (sf.parse(traineeReservation.getStartTime()).getTime() >= sf.parse(now).getTime()) {
+    			list.add(traineeReservation);
     		}
     	}
     	return list;
