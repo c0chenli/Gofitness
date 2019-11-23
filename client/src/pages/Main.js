@@ -11,6 +11,7 @@ import TraineeHome from "./TraineeHome";
 import TrainerList from "./TrainerList";
 import Classroom from "./Classroom";
 import PrivateRoute from '../components/PrivateRoute';
+import { sessionService } from 'redux-react-session';
 
 
 
@@ -42,7 +43,11 @@ export class Main extends React.Component {
 
   render() {
 
-    console.log('check status: ' + this.props.authenticated);
+    console.log(this.props);
+
+    sessionService.loadSession()
+        .then(currentSession => console.log(currentSession.token))
+        .catch(err => console.log(err));
 
     return (
       <div>
@@ -52,7 +57,7 @@ export class Main extends React.Component {
           <Route path={'/about'} exact component={About}/>
           <Route path={'/chat'} exact component={Chat}/>
           <Route path={'/signin'} exact component={SignIn}/>
-          <Route path={'/signup'} exact component={SignUp}/>
+          <Route path={'/signup'} exact component={SignUp} />
           {this.props.checked && <PrivateRoute exact path="/trainer" component={TrainerHome} authenticated={this.props.authenticated}/>}
           <Route path={'/trainee'} exact component={TraineeHome}/>
           <Route path={'/trainerinfo'} exact component={TrainerList}/>
