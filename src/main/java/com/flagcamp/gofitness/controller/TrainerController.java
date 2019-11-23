@@ -67,7 +67,16 @@ public class TrainerController {
         Date now = new Date();
         List<Object> result = new ArrayList<>();
         result.addAll(trainerService.getSchedule(trainerEmail, now));
-        result.addAll(trainerService.getReservation(trainerEmail, now));
+        return result;
+    }
+    
+    @RequestMapping(value = "/availableTime", method = RequestMethod.GET)
+    public List<Object> getAvailableTime(HttpServletRequest request) {
+        String trainerEmail = (String) request.getAttribute("userEmail");
+        Date date = new Date();
+        String now = sf.format(date);
+        List<Object> result = new ArrayList<>();
+        result.addAll(trainerService.getSchedule(trainerEmail, now));
         return result;
     }
 

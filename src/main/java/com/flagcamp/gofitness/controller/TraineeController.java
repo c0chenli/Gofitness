@@ -108,8 +108,8 @@ public class TraineeController {
         }
     	return map;
     }
+ 
     
-    //TODO trainee get trainer's calendar
     
     
 //    public Map<String, String> cancelClass(@RequestBody Map<String, String> param, HttpServletRequest request) throws JSONException {
