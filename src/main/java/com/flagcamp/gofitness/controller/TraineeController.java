@@ -42,9 +42,8 @@ public class TraineeController {
 
     @RequestMapping(value = "/getAllTrainer", method = RequestMethod.GET)
     public List<Trainer> getAllTrainer(HttpServletRequest request) {
-        //@TODO add session
-        Map<String, String> map = tokenService.getUserInfoFromToken(request.getHeader("Authorization"));
-        if (!map.get("role").equals("trainee")) {
+        String role = (String) request.getAttribute("role");
+        if (!role.equals("trainee")) {
             return null;
         }
         return trainerService.getAllTrainers();
