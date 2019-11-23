@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import com.flagcamp.gofitness.model.Trainee;
 import com.flagcamp.gofitness.model.Trainer;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,12 +35,16 @@ public class SignInController {
         String password = param.get("password");
         if (email == null || email.length() == 0) {
             map.put("msg", "email cannot be empty!");
+            map.put("status", HttpStatus.METHOD_NOT_ALLOWED);
         } else if (password == null || password.length() == 0) {
             map.put("msg", "password cannot be empty!");
+            map.put("status", HttpStatus.METHOD_NOT_ALLOWED);
         } else if (traineeService.findTraineeByEmail(email) == null && trainerService.findTrainerByEmail(email) == null) {
             map.put("msg", "invalid email");
+            map.put("status", HttpStatus.BAD_REQUEST);
         } else if (traineeService.findTraineeByEmailAndPassword(email, password) == null && trainerService.findTrainerByEmailAndPassword(email, password) == null) {
             map.put("msg", "invalid password");
+            map.put("status", HttpStatus.BAD_REQUEST);
         } else {
             Trainer trainer = trainerService.findTrainerByEmailAndPassword(email, password);
             Trainee trainee = traineeService.findTraineeByEmailAndPassword(email, password);
