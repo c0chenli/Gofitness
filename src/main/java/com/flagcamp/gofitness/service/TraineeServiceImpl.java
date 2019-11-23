@@ -1,8 +1,16 @@
 package com.flagcamp.gofitness.service;
 
 import com.flagcamp.gofitness.dao.TraineeDao;
+import com.flagcamp.gofitness.dao.TrainerDao;
 import com.flagcamp.gofitness.model.Trainee;
+import com.flagcamp.gofitness.model.Trainer;
+import com.flagcamp.gofitness.model.TrainerReservation;
+import com.flagcamp.gofitness.model.TraineeReservation;
 import com.flagcamp.gofitness.repository.TraineeRepository;
+import com.flagcamp.gofitness.repository.TrainerRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +20,11 @@ public class TraineeServiceImpl implements TraineeService {
     @Autowired
     private TraineeRepository traineeRepository;
     @Autowired
+    private TrainerRepository trainerRepository;
+    @Autowired
     private TraineeDao traineeDao;
+    @Autowired
+    private TrainerDao trainerDao;
 
     public void addTrainee(Trainee trainee) {   	 
     	traineeDao.addTrainee(trainee);
@@ -62,5 +74,25 @@ public class TraineeServiceImpl implements TraineeService {
     public void addNewTrainee(Trainee trainee) {
         traineeRepository.save(trainee);
     }
+    
+    @Override
+    public void addTraineeReservation(String traineeEmail, List<TraineeReservation> reservations) {
+    	traineeDao.addTraineeReservation(traineeEmail, reservations);
+    	for (TraineeReservation traineeReservation: reservations) {
+    		String trainerEmail = traineeReservation.getTrainerEmail();
+    		
+    		Trainer trainer = trainerRepository.findTrainerByEmail(trainerEmail);
+    		
+    		TrainerReservation trainerReservation = new TrainerReservation();
+    		trainerReservation.setTraineeEmail(traineeEmail);
+    		trainerReservation.setStartTime(traineeReservation.getStartTime());
+    		trainerReservation.setEndTime(traineeReservation.getEndTime());
+    		
+    		trainerDao.addTrainerReservation(trainerEmail, trainerReservation);
+    		
+    	}
+    }
+    
+    
 
 }

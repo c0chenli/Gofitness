@@ -1,6 +1,10 @@
 package com.flagcamp.gofitness.service;
 
+import java.util.List;
+
+import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainee;
+import com.flagcamp.gofitness.model.TraineeReservation;
 
 public interface TraineeService {
 	
@@ -35,5 +39,7 @@ public interface TraineeService {
      * @param trainee
      */
     void addNewTrainee(Trainee trainee);
+    
+    void addTraineeReservation(String traineeEmail, List<TraineeReservation> reservations);
 
 }

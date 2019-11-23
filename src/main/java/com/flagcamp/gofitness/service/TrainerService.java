@@ -53,4 +53,5 @@ public interface TrainerService {
      * @param trainer
      */
     void addNewTrainer(Trainer trainer);
+    
 }

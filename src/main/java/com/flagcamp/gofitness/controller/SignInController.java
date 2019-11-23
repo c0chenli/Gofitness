@@ -30,8 +30,6 @@ public class SignInController {
         HttpSession session = request.getSession();
         String email = param.get("email");
         String password = param.get("password");
-//        boolean isTrainee = false;
-//        boolean isTrainer = false;
         
         if (email == null || email.length() == 0) {
             map.put("status", "email cannot be empty!");

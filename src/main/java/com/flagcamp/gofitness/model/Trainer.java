@@ -27,6 +27,7 @@ public class Trainer implements Serializable {
     private String password;
     private Set<String> categories;
     private Set<Schedule> schedules;
+    private Set<TrainerReservation> trainerReservations;
 
     public Trainer(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
@@ -35,14 +36,22 @@ public class Trainer implements Serializable {
         this.password = password;
         this.schedules = new HashSet<>();
         this.categories = new HashSet<>();
+        this.trainerReservations = new HashSet<>();
     }
     public Trainer() {
         this.schedules = new HashSet<>();
         this.categories = new HashSet<>();
+        this.trainerReservations = new HashSet<>();
     }
 
 
-    public Set<String> getCategories() {
+    public Set<TrainerReservation> getTrainerReservations() {
+		return trainerReservations;
+	}
+	public void setTrainerReservations(Set<TrainerReservation> trainerReservations) {
+		this.trainerReservations = trainerReservations;
+	}
+	public Set<String> getCategories() {
         return categories;
     }
 

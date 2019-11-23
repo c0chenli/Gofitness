@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import com.flagcamp.gofitness.model.Trainer;
+import com.flagcamp.gofitness.model.TrainerReservation;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -37,6 +39,14 @@ public class TrainerDaoImpl implements TrainerDao {
 			update.addToSet("schedules", schedule);
 			mongoTemplate.upsert(query, update, Trainer.class);
 		}
+	}
+	
+	@Override
+	public void addTrainerReservation(String trainerEmail, TrainerReservation trainerReservation) {
+		Query query = new Query(Criteria.where("email").is(trainerEmail));
+		Update update = new Update();
+		update.addToSet("trainerReservations", trainerReservation);
+		mongoTemplate.upsert(query, update, Trainer.class);
 	}
 
 
