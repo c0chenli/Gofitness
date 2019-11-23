@@ -45,6 +45,7 @@ class AvailableTrainers extends React.Component {
       },
     }).then(res => res.json()).then(
         data => {
+          console.log(data);
           this.setState({
             trainerData: data,
             trainers: this.filterTrainer(data, "")

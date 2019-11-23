@@ -52,15 +52,15 @@ export class Main extends React.Component {
     return (
       <div>
         <BrowserRouter>
-          <Route exact path={'/'} component={Home}/>
-          <Route path={'/classes'} exact component={Classes}/>
-          <Route path={'/about'} exact component={About}/>
-          <Route path={'/chat'} exact component={Chat}/>
+          <Route exact path={'/'} render={()=><Home authenticated={this.props.authenticated}/>}/>
+          <Route path={'/classes'} exact render={()=><Classes authenticated={this.props.authenticated}/>}/>
+          <Route path={'/trainerinfo'} exact render={()=><TrainerList authenticated={this.props.authenticated}/>}/>
+          <Route path={'/about'} exact render={()=><About authenticated={this.props.authenticated}/>}/>
           <Route path={'/signin'} exact component={SignIn}/>
           <Route path={'/signup'} exact component={SignUp} />
           {this.props.checked && <PrivateRoute exact path="/trainer" component={TrainerHome} authenticated={this.props.authenticated}/>}
           <Route path={'/trainee'} exact component={TraineeHome}/>
-          <Route path={'/trainerinfo'} exact component={TrainerList}/>
+          <Route path={'/chat'} exact component={Chat}/>
           <Route path={'/classroom'} exact component={Classroom}/>
         </BrowserRouter>
       </div>

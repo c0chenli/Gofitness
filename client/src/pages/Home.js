@@ -4,12 +4,13 @@ import HomeSlider from "../components/HomeSlider"
 import Footer from "../components/Footer"
 import HomeClasses from "../components/HomeClasses"
 import HomeTrainers from "../components/HomeTrainers"
+import TopMenuBarAuth from "../components/TopMenuBarAuth";
 
 export class Home extends React.Component {
   render() {
     return (
       <div>
-        <TopMenuBar />
+          {this.props.authenticated ? <TopMenuBarAuth/>:<TopMenuBar/>}
         <HomeSlider />
         <HomeClasses/>
         <HomeTrainers/>
