@@ -26,14 +26,14 @@ public class Trainee implements Serializable {
     private Set<TraineeReservation> traineeReservations;
 
     public Trainee() {
-        traineeReservations = new HashSet<>();
+    	this.traineeReservations = new HashSet<>();
     }
     public Trainee(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
-        traineeReservations = new HashSet<>();
+        this.traineeReservations = new HashSet<>();
     }
 
     public Set<TraineeReservation> getTraineeReservations() {

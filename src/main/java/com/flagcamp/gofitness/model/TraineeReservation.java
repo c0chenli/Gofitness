@@ -1,10 +1,12 @@
 package com.flagcamp.gofitness.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 
+@Document
 public class TraineeReservation implements Serializable {
 
     private static final long serialVersionUID = 1L;
