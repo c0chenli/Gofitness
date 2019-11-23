@@ -3,6 +3,7 @@ package com.flagcamp.gofitness.service;
 import com.flagcamp.gofitness.dao.TrainerDao;
 import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainer;
+import com.flagcamp.gofitness.model.TrainerReservation;
 import com.flagcamp.gofitness.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,25 @@ public class TrainerServiceImpl implements TrainerService {
             }
         }
         return schedules;
+    }
+
+    /**
+     * @param trainerEmail
+     * @param now
+     * @return
+     */
+    @Override
+    public List<TrainerReservation> getReservation(String trainerEmail, String now) {
+        Trainer trainer = trainerRepository.findTrainerByEmail(trainerEmail);
+        List<TrainerReservation> reservations = new ArrayList<>();
+        reservations.addAll(trainer.getTrainerReservations());
+        Collections.sort(reservations, Comparator.comparing(TrainerReservation::getStartTime));
+        for (TrainerReservation reservation : reservations) {
+            if (reservation.getStartTime().compareTo(now) < 0) {
+                reservations.remove(reservation);
+            }
+        }
+        return reservations;
     }
 
     /**

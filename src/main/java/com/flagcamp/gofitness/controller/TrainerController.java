@@ -2,12 +2,12 @@ package com.flagcamp.gofitness.controller;
 
 import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainer;
+import com.flagcamp.gofitness.model.TrainerReservation;
 import com.flagcamp.gofitness.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,6 +20,7 @@ public class TrainerController {
     @Autowired
     private TrainerService trainerService;
     private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
+    private static final long TWENTY_FOUR_HOUR = 60 * 24 * 60 * 1000;
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public Trainer getUserByEmail(HttpServletRequest request) {
@@ -41,9 +42,8 @@ public class TrainerController {
         long start = sf.parse(startTime).getTime();
         long end = sf.parse(endTime).getTime();
         //24 hours
-        long time = 60 * 24 * 60 * 1000;
-        int numOfDays = (int) ((end - start) / time);
-        end -= numOfDays * time;
+        int numOfDays = (int) ((end - start) / TWENTY_FOUR_HOUR);
+        end -= numOfDays * TWENTY_FOUR_HOUR;
 
         System.out.println(sf.format(end));
 
@@ -53,8 +53,8 @@ public class TrainerController {
             schedule.setStartTime(sf.format(start));
             schedule.setEndTime(sf.format(end));
             schedules.add(schedule);
-            start += time;
-            end += time;
+            start += TWENTY_FOUR_HOUR;
+            end += TWENTY_FOUR_HOUR;
         }
         trainerService.addSchedule(trainerEmail, schedules);
         map.put("status", "OK");
@@ -62,13 +62,15 @@ public class TrainerController {
         return map;
     }
 
-    @RequestMapping(value = "/getSchedule", method = RequestMethod.GET)
-    public List<Schedule> getSchedule(HttpServletRequest request) {
+    @RequestMapping(value = "/getAvailableTime", method = RequestMethod.GET)
+    public List<Object> getAvailableTime(HttpServletRequest request) {
         String trainerEmail = (String) request.getAttribute("userEmail");
         Date date = new Date();
         String now = sf.format(date);
-        List<Schedule> schedules = trainerService.getSchedule(trainerEmail, now);
-        return schedules;
+        List<Object> result = new ArrayList<>();
+        result.addAll(trainerService.getSchedule(trainerEmail, now));
+        result.addAll(trainerService.getReservation(trainerEmail, now));
+        return result;
     }
 
 }
