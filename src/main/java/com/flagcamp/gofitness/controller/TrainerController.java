@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.SessionException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -43,7 +42,8 @@ public class TrainerController {
         String endTime = param.get("end").replaceAll(",", "");
         long start = sf.parse(startTime).getTime();
         long end = sf.parse(endTime).getTime();
-        long time = 30 * 60 * 1000;
+        //24 hours
+        long time = 60 * 24 * 60 * 1000;
         List<Schedule> schedules = new ArrayList<>();
         while (start < end) {
             Schedule schedule = new Schedule();

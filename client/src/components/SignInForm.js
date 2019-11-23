@@ -3,9 +3,14 @@ import { Form, Icon, Input, Button, message } from 'antd';
 import {Link} from "react-router-dom";
 import {withRouter} from "react-router";
 import { API_ROOT } from "../constants";
+import { sessionService } from 'redux-react-session';
 import "../styles/SignInForm.css";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as sessionActions from '../actions/sessionActions';
 
 import GoogleAuth from "./GoogleAuth";
+import {login} from "../actions/sessionActions";
 
 
 class SignInForm extends React.Component {
@@ -18,7 +23,6 @@ class SignInForm extends React.Component {
     this.emailChange = this.emailChange.bind(this);
     this.passwordChange = this.passwordChange.bind(this);
     this.submit = this.submit.bind(this);
-    this.getConnection = this.getConnection.bind(this);
   }
 
   emailChange(e) {
@@ -29,40 +33,21 @@ class SignInForm extends React.Component {
     this.setState({password : e.target.value})
   }
 
-  submit() {
-    this.getConnection();
+  submit(history) {
+    login(this.state.email,this.state.password,history)
   }
-
-  getConnection() {
-    let text = {email: this.state.email, password: this.state.password}
-    let send = JSON.stringify(text);
-
-    fetch(`${API_ROOT}signin`, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json; charset=utf-8; Access-Control-Allow-Origin: *'},
-      body: send
-    }).then(
-      res => {
-        return res.json();
-      }
-    ).then(
-      data => {
-        if (data.status === 'OK') {
-          message.success('Sign In Success!')
-          this.props.history.push(`/${data.role}`);
-        } else {
-          return Promise.reject(data.status);
-        }
-      }
-    ).catch((status) => {
-       message.error(status);
-    });
-  }
-
 
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    const SubmitButton = withRouter(({ history }) => (
+        <Button type="submit" onClick={() => this.submit(history)}
+                className="login-form-button">
+          Log in
+        </Button>
+    ));
+
+
     return (
       <div className="signInForm">
         <Form className="login-form">
@@ -93,11 +78,7 @@ class SignInForm extends React.Component {
             )}
           </Form.Item>
           <Form.Item className="register-link">
-            <Button type="submit" onClick={this.submit}
-                    className="login-form-button">
-              Log in
-            </Button>
-
+            <SubmitButton />
             <p> or <Link to="/signup">register now!</Link> </p>
           </Form.Item>
         </Form>
@@ -107,4 +88,12 @@ class SignInForm extends React.Component {
 }
 
 const LoginForm = Form.create({ name: 'normal_login' })(SignInForm);
-export default withRouter(LoginForm);
+
+const mapDispatch = (dispatch) => {
+  return {
+    actions: bindActionCreators(sessionActions, dispatch)
+  };
+};
+
+export default connect(null, mapDispatch)(LoginForm);
+
