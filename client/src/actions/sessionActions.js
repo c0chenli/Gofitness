@@ -17,24 +17,15 @@ export const login = (email, password, history) => {
     ).then(
         data => {
             if (data.status === 'OK') {
+                console.log(data);
                 message.success('Sign In Success!');
-                const response = {
-                    token: '1a2b3c4d',
-                    data: {
-                        email: 'gg',
-                        Name: 'test',
-                        role: 'trainee'
-                    },
-                    status: 200
-                };
-                const response1 = new Promise(resolve => setTimeout(resolve(response), 1000));
                 //Session
-                const { token } = response1;
+                const { token } = data;
                 sessionService.saveSession({ token })
                     .then(() => {
                         sessionService.saveUser(data.data)
                             .then(() => {
-                                history.push(`/${data.role}`);
+                                history.push(`/${data.data.role}`);
                             }).catch(err => console.error(err));
                     }).catch(err => console.error(err));
 
