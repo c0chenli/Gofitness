@@ -39,6 +39,7 @@ public class TraineeController {
 
     @RequestMapping(value = "/getAllTrainer", method = RequestMethod.GET)
     public List<Trainer> getAllTrainer() {
+        //@TODO add session
         return trainerService.getAllTrainers();
     }
 
