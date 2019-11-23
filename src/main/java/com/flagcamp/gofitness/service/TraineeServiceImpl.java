@@ -111,6 +111,11 @@ public class TraineeServiceImpl implements TraineeService {
     	
     }
     
+    @Override
+    public void cancelReservation(String traineeEmail, long start) {
+    	traineeDao.cancelReservation(traineeEmail, start);
+    }
+    
     
 
 }

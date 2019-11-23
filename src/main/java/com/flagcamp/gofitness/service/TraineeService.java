@@ -44,5 +44,7 @@ public interface TraineeService {
     void addTraineeReservation(String traineeEmail, List<TraineeReservation> reservations);
     
     List<TraineeReservation> getTraineeReservation(String traineeEmail, String now) throws ParseException;
+    
+    void cancelReservation(String traineeEmail, long start);
 
 }
