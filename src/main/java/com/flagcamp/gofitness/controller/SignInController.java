@@ -33,10 +33,6 @@ public class SignInController {
         Map<String, Object> map = new HashMap<>();
         String email = param.get("email");
         String password = param.get("password");
-<<<<<<< HEAD
-        
-=======
->>>>>>> bf442b040ed7e504481071adf4e4109a667b46a6
         if (email == null || email.length() == 0) {
             map.put("msg", "email cannot be empty!");
             map.put("status", HttpStatus.METHOD_NOT_ALLOWED);
