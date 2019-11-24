@@ -2,6 +2,7 @@ package com.flagcamp.gofitness.service;
 
 import com.flagcamp.gofitness.dao.TraineeDao;
 import com.flagcamp.gofitness.dao.TrainerDao;
+import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainee;
 import com.flagcamp.gofitness.model.TraineeReservation;
 import com.flagcamp.gofitness.repository.TraineeRepository;
@@ -11,7 +12,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,13 +101,36 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     public List<TraineeReservation> getTraineeReservation(String traineeEmail, String now) throws ParseException {
     	Trainee trainee = traineeRepository.findTraineeByEmail(traineeEmail);
-    	List<TraineeReservation> list = new ArrayList<>();
-    	for (TraineeReservation traineeReservation: trainee.getTraineeReservations()) {
-    		if (traineeReservation.getStartTime().compareTo(now) >= 0) {
-    			list.add(traineeReservation);
-    		}
+        System.out.println(traineeEmail);
+        System.out.println(now);
+    	Set<TraineeReservation> set = trainee.getTraineeReservations();
+    	if (set == null || set.size() == 0) {
+    		System.out.println("Oops, Set<TraineeReservation> is null");
     	}
-    	return list;
+    	System.out.println("set is fine");
+    	Iterator<TraineeReservation> iter = set.iterator();
+        long curTime = sf.parse(now).getTime();
+        while (iter.hasNext()) {
+        	TraineeReservation cur = iter.next();
+        	String time = cur.getStartTime();
+        	long start = sf.parse(time).getTime();
+        	if (start < curTime) {
+        		iter.remove();
+        	}
+        }
+        List<TraineeReservation> result = new ArrayList<>(set);
+        if (result == null || result.size() == 0) {
+        	System.out.println("Oops, list<TraineeReservation> is null");
+        }
+        System.out.println("list is fine");
+        return result;
+//    	List<TraineeReservation> list = new ArrayList<>();
+//    	for (TraineeReservation traineeReservation: trainee.getTraineeReservations()) {
+//    		if (traineeReservation.getStartTime().compareTo(now) >= 0) {
+//    			list.add(traineeReservation);
+//    		}
+//    	}
+//    	return list;
     	
     }
     

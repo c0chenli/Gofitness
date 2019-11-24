@@ -49,7 +49,7 @@ public class TrainerServiceImpl implements TrainerService {
         	}
         }
         List<Schedule> result = new ArrayList<>(schedules); 
-        
+        return result;
         
         
 //        List<Schedule> schedules = new ArrayList<>();     		
@@ -61,7 +61,6 @@ public class TrainerServiceImpl implements TrainerService {
 //                schedules.remove(schedule);
 //            }
 //        }
-        return result;
     }
 
     /**

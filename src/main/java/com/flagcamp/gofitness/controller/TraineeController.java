@@ -4,7 +4,7 @@ package com.flagcamp.gofitness.controller;
 import com.flagcamp.gofitness.model.TraineeReservation;
 import com.flagcamp.gofitness.model.Trainee;
 import com.flagcamp.gofitness.model.Trainer;
-
+import com.flagcamp.gofitness.model.TrainerReservation;
 import com.flagcamp.gofitness.service.TraineeService;
 import com.flagcamp.gofitness.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import java.text.ParseException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -63,57 +64,53 @@ public class TraineeController {
     }
     
     @RequestMapping(value = "/getReservation", method = RequestMethod.GET)
-    public List<TraineeReservation> getReservation(HttpServletRequest request) throws ParseException {
-        String traineeEmail = (String) request.getAttribute("trainee");
+    public List<Map<String, Object>> getReservation(HttpServletRequest request) throws ParseException {
+    	//System.out.println("here");
+        String traineeEmail = (String) request.getAttribute("userEmail");
+        //System.out.println("No trainee");
+        List<Map<String, Object>> result = new ArrayList<>();
+        Map<String, Object> map;
         Date date = new Date();
         String now = sf.format(date);
-        List<TraineeReservation> list = traineeService.getTraineeReservation(traineeEmail, now);
-        return list;
+        //List<TraineeReservation> reservations = new ArrayList<>();
+        List<TraineeReservation> reservations = traineeService.getTraineeReservation(traineeEmail, now);
+        //reservations.addAll(traineeService.getTraineeReservation(traineeEmail, now));
+        long startTime;
+        long endTime;
+        for (TraineeReservation traineeReservation : reservations) {
+            map = new HashMap<>();
+            map.put("title", traineeReservation.getTrainerName());
+            startTime = sf.parse(traineeReservation.getStartTime()).getTime();
+            endTime = sf.parse(traineeReservation.getEndTime()).getTime();
+            map.put("start", startTime);
+            map.put("end", endTime);
+            map.put("status", traineeReservation.getStatus());
+
+            System.out.println(map.get("start"));
+            result.add(map);
+        }
+        return result;
+        //List<TraineeReservation> list = traineeService.getTraineeReservation(traineeEmail, now);
+//        return list;
     }
     
 
 
     @PostMapping(value = "/cancelReservation")
     public Map<String, String> cancelReservations(@RequestBody Map<String, String> param, HttpServletRequest request) throws ParseException {
+    	String traineeEmail = (String) request.getAttribute("userEmail");
     	Map<String, String> map = new HashMap<>();
-        HttpSession session = request.getSession();
-        if (session == null || session.getAttribute("trainer") == null) {
-            map.put("status", "error");
-            map.put("msg", "user login expired.");
-            return map;
-        }
-        String traineeEmail = session.getAttribute("trainee").toString();
-        String startTime = param.get("start").replaceAll(",", "");
-        String endTime = param.get("end").replaceAll(",", "");
-        long start = sf.parse(startTime).getTime();
-        long end = sf.parse(endTime).getTime();
-        long time = 30 * 60 * 1000;
-        while (start < end) {
-        	traineeService.cancelReservation(traineeEmail, start);
-        	start += time;
-        }
-    	return map;
+	  String startTime = param.get("start").replaceAll(",", "");
+	  //String endTime = param.get("end").replaceAll(",", "");
+	  long start = sf.parse(startTime).getTime();
+	  traineeService.cancelReservation(traineeEmail, start);
+	  //TODO 教练
+	  map.put("status", "success");
+      return map;
     }
  
     
     
     
-//    public Map<String, String> cancelClass(@RequestBody Map<String, String> param, HttpServletRequest request) throws JSONException {
-//        Map<String, String> map = new HashMap<>();
-//        HttpSession session = request.getSession();
-//        String traineeEmail = session.getAttribute("trainee").toString();
-//        if (traineeEmail == null || traineeEmail.length() == 0) {
-//            map.put("status", "error");
-//            map.put("msg", "user login expired");
-//            return map;
-//        }
-//        String trainerEmail = param.get("trainer_email");
-//        String startTime = param.get("start_time");
-//        String endTime = param.get("end_time");
-//        classService.cancelClass(traineeEmail, trainerEmail, startTime, endTime);
-//        map.put("status", "OK");
-//        map.put("msg", "You have cancelled the class.");
-//        return map;
-//    }
 
 }
