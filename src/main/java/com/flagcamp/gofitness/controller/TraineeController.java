@@ -53,19 +53,6 @@ public class TraineeController {
         String trainerEmail = param.get("trainer_email");
         String startTime = param.get("start").replaceAll(",", "");
         String endTime = param.get("end").replaceAll(",", "");
-//        long start = sf.parse(startTime).getTime();
-//        long end = sf.parse(endTime).getTime();
-//        long time = 30 * 60 * 1000;
-//        List<TraineeReservation> reservations = new ArrayList<>();
-//        while (start < end) {
-//            TraineeReservation reservation = new TraineeReservation();
-//            reservation.setTrainerEmail(trainerEmail);
-//            //reservation.setTrainerName(trainerService.getFullName(trainerEmail));
-//            reservation.setStartTime(sf.format(start));
-//            reservation.setEndTime(sf.format((start + time)));
-//            reservations.add(reservation);
-//            start += time;
-//        }
         String traineeName = traineeService.getFullName(traineeEmail);
         String trainerName = trainerService.getFullName(trainerEmail);
         traineeService.addTraineeReservation(traineeEmail, trainerEmail, trainerName, startTime, endTime);

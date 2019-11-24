@@ -8,6 +8,8 @@ import com.flagcamp.gofitness.repository.TrainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -17,6 +19,7 @@ public class TrainerServiceImpl implements TrainerService {
     private TrainerRepository trainerRepository;
     @Autowired
     private TrainerDao trainerDao;
+    private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
 
     /**
      * @return
@@ -29,19 +32,36 @@ public class TrainerServiceImpl implements TrainerService {
     /**
      * @param trainerEmail
      * @return
+     * @throws ParseException 
      */
     @Override
-    public List<Schedule> getSchedule(String trainerEmail, String now) {
+    public List<Schedule> getSchedule(String trainerEmail, String now) throws ParseException {
         Trainer trainer = trainerRepository.findTrainerByEmail(trainerEmail);
-        List<Schedule> schedules = new ArrayList<>();
-        schedules.addAll(trainer.getSchedules());
-        Collections.sort(schedules, Comparator.comparing(Schedule::getStartTime));
-        for (Schedule schedule : schedules) {
-            if (schedule.getStartTime().compareTo(now) < 0) {
-                schedules.remove(schedule);
-            }
+        Set<Schedule> schedules = trainer.getSchedules();
+        Iterator<Schedule> iter = schedules.iterator();
+        long curTime = sf.parse(now).getTime();
+        while (iter.hasNext()) {
+        	Schedule cur = iter.next();
+        	String time = cur.getStartTime();
+        	long start = sf.parse(time).getTime();
+        	if (start < curTime) {
+        		iter.remove();
+        	}
         }
-        return schedules;
+        List<Schedule> result = new ArrayList<>(schedules); 
+        
+        
+        
+//        List<Schedule> schedules = new ArrayList<>();     		
+        //TODO 这里有时候会报错。不知道为什么
+//        schedules.addAll(trainer.getSchedules());
+//        Collections.sort(schedules, Comparator.comparing(Schedule::getStartTime));
+//        for (Schedule schedule : schedules) {
+//            if (schedule.getStartTime().compareTo(now) < 0) {
+//                schedules.remove(schedule);
+//            }
+//        }
+        return result;
     }
 
     /**

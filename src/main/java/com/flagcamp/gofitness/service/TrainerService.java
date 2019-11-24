@@ -4,6 +4,7 @@ import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainer;
 import com.flagcamp.gofitness.model.TrainerReservation;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +20,9 @@ public interface TrainerService {
      *
      * @param trainerEmail
      * @return
+     * @throws ParseException 
      */
-    List<Schedule> getSchedule(String trainerEmail, String now);
+    List<Schedule> getSchedule(String trainerEmail, String now) throws ParseException;
 
     /**
      *
