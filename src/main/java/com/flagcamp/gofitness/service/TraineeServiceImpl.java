@@ -138,12 +138,12 @@ public class TraineeServiceImpl implements TraineeService {
     
     @Override
     public void cancelReservation(String traineeEmail, long start) throws ParseException {
-    	traineeDao.cancelReservation(traineeEmail, start);
     	//如何能直接保证同时删除：利用traineeEmail和start得到traineeReservation的信息中的教练邮箱
     	Trainee trainee = traineeRepository.findTraineeByEmail(traineeEmail);
     	Set<TraineeReservation> set = trainee.getTraineeReservations();
     	String trainerEmail = "";
     	Iterator<TraineeReservation> iter = set.iterator();
+    	//TODO 这里没拿到email
     	while (iter.hasNext()) {
     		TraineeReservation cur = iter.next();
     		if (start == sf.parse(cur.getStartTime()).getTime()) {
@@ -152,8 +152,8 @@ public class TraineeServiceImpl implements TraineeService {
     	}
     	System.out.println("trainerEmail for cancel");
     	System.out.println(trainerEmail);
+    	traineeDao.cancelReservation(traineeEmail, start);
     	trainerDao.cancelReservation(trainerEmail, start);
-    	
     }
     
     
