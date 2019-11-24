@@ -17,13 +17,15 @@ import '../styles/DisplayCalendar.css';
 import WrappedPopupForm from "./PopupForm"
 import {API_ROOT} from "../constants";
 import {sessionService} from "redux-react-session";
+import _ from "lodash";
 
 class DisplayCalendar extends Component{
 
     constructor(props){
         super(props);
         this.state = {
-            scheduleData : []
+            scheduleTime : [],
+            availableTime : []
         }
     }
 
@@ -37,8 +39,10 @@ class DisplayCalendar extends Component{
         });
     isBanned = (value) => {
         let e;
-        for(e of eventu){
-            if ((value-e.start)*(value-e.end) <= 0) return false;
+        if (this.state.availableTime === [])
+            return true;
+        for(e of this.state.availableTime){
+            if ((value-parseInt(e.start))*(value-parseInt(e.end)) <= 0) return false;
         }
         return true;
     };
@@ -75,11 +79,21 @@ class DisplayCalendar extends Component{
     componentDidMount() {
 
         sessionService.loadSession()
-            .then(currentSession => this.fetchData(currentSession.token))
+            .then(currentSession => {
+                this.fetchScheduleData(currentSession.token);
+                this.fetchAvailableData(currentSession.token);
+            })
             .catch(err => console.log(err))
     };
-
-    fetchData(token) {
+    updateTime(data){
+        data.forEach((event) => {
+            if (parseInt(event.start))
+                event.start = new Date(parseInt(event.start));
+            if (parseInt(event.end))
+                event.end = new Date(parseInt(event.end));
+        });
+    }
+    fetchScheduleData(token) {
 
         fetch(`${API_ROOT}trainer/getSchedule`, {
             method: 'GET',
@@ -89,8 +103,28 @@ class DisplayCalendar extends Component{
             },
         }).then(res => res.json()).then(
             data => {
+                this.updateTime(data);
                 this.setState({
-                    scheduleData: data,
+                    scheduleTime: data,
+                });
+            }
+        ).catch((status) => {
+            window.alert(status);
+        });
+    };
+
+    fetchAvailableData(token) {
+
+        fetch(`${API_ROOT}trainer/availableTime`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8; Access-Control-Allow-Origin: *',
+                Authorization: token,
+            },
+        }).then(res => res.json()).then(
+            data => {
+                this.setState({
+                    availableTime: data,
                 });
             }
         ).catch((status) => {
@@ -100,16 +134,15 @@ class DisplayCalendar extends Component{
 
     MyCalendar() {
 
-        console.log(this.state.scheduleData);
-        console.log(events);
-        console.log(eventu);
+        console.log('schedule: ',this.state.scheduleTime);
+        console.log('Available: ',this.state.availableTime);
         return (
         <div className="calendar">
           <WrappedPopupForm/>
           <div className="calendar-wrapper">
             <Calendar
                 localizer={this.localizer}
-                events={events}
+                events={this.state.scheduleTime}
                 step={30}
                 defaultView="week"
                 views={{week:true, agenda:true}}

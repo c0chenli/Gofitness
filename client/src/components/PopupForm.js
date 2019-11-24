@@ -5,6 +5,7 @@ import '../styles/PopupForm.css';
 import moment from "moment";
 import {API_ROOT} from "../constants";
 import {withRouter} from "react-router";
+import {sessionService} from "redux-react-session";
 
 const { RangePicker } = DatePicker;
 
@@ -46,39 +47,53 @@ class PopupForm extends React.Component {
     });
   };
 
-  handleOk = e => {
+  handleOk = (e) => {
+
     this.setState({ loading: true });
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
-      if (!err) {
-        const rangeTimeValue = fieldsValue['date'];
-        const values = {
-          "start": rangeTimeValue[0].format('YYYY,MM,DD,HH,mm'),
-          "end": rangeTimeValue[1].format('YYYY,MM,DD,HH,mm'),
-        };
-        const send = JSON.stringify(values);
-        console.log(send);
-        fetch(`${API_ROOT}trainer/setSchedule`,{
-          method: 'POST',
-          headers: {'Content-Type':'application/json; charset=utf-8; Access-Control-Allow-Origin: *'},
-          body: send,
-        }).then(res => res.json()).then(
-          data => {
-            if (data.status === 'OK') {
-              message.success('Schedule Added Successfully');
-              setTimeout(() => {
-                this.setState({ loading: false, visible: false });
-              }, 3000);
-            } else {
-              return Promise.reject(data.msg);
+
+    sessionService.loadSession()
+        .then(currentSession => {
+
+          this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
+            if (!err) {
+              const rangeTimeValue = fieldsValue['date'];
+              const values = {
+                "start": rangeTimeValue[0].format('YYYY,MM,DD,HH,mm'),
+                "end": rangeTimeValue[1].format('YYYY,MM,DD,HH,mm'),
+              };
+              const send = JSON.stringify(values);
+              console.log(send);
+              fetch(`${API_ROOT}trainer/setSchedule`,{
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json; charset=utf-8; Access-Control-Allow-Origin: *',
+                  Authorization: currentSession.token,
+                },
+                body: send,
+              }).then(res => res.json()).then(
+                  data => {
+                    if (data.status === 'OK') {
+                      message.success('Schedule Added Successfully');
+                      setTimeout(() => {
+                        this.setState({ loading: false, visible: false });
+                      }, 3000);
+                    } else {
+                      return Promise.reject(data.msg);
+                    }
+                  }).catch((msg) => {
+                //message.error(msg);
+                this.props.history.push(`/signin`);
+              });
             }
-          }).catch((msg) => {
-          message.error(msg);
-          this.props.history.push(`/signin`);
-        });
-      }
-      this.setState({ loading: false });
-    });
+            this.setState({ loading: false });
+          });
+
+
+        })
+        .catch(err => console.log(err))
+
+
 
 
   };
