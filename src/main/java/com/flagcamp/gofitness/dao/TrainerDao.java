@@ -13,5 +13,7 @@ public interface TrainerDao {
 
 	void addSchedule(String trainerEmail, List<Schedule> schedules);
 	
+	void cancelReservation(String traineEmail, long start);
+	
 	void addTrainerReservation(String trainerEmail, TrainerReservation trainerReservation);
 }

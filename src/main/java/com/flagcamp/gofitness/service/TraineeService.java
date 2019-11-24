@@ -65,7 +65,8 @@ public interface TraineeService {
      *
      * @param traineeEmail
      * @param start
+     * @throws ParseException 
      */
-    void cancelReservation(String traineeEmail, long start);
+    void cancelReservation(String traineeEmail, long start) throws ParseException;
 
 }

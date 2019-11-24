@@ -1,6 +1,8 @@
 package com.flagcamp.gofitness.dao;
 
 import com.flagcamp.gofitness.model.Schedule;
+import com.flagcamp.gofitness.model.Trainee;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -12,6 +14,7 @@ import com.flagcamp.gofitness.model.TrainerReservation;
 
 import org.springframework.stereotype.Repository;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Repository
@@ -19,6 +22,8 @@ public class TrainerDaoImpl implements TrainerDao {
 	
 	 @Autowired
 	 MongoTemplate mongoTemplate;
+	 
+	 private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
 	 
 	 @Override
 	 public void addTrainer(Trainer trainer) {
@@ -48,6 +53,15 @@ public class TrainerDaoImpl implements TrainerDao {
 		update.addToSet("trainerReservations", trainerReservation);
 		mongoTemplate.upsert(query, update, Trainer.class);
 	}
+	
+    @Override
+    public void cancelReservation(String trainerEmail, long start) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is(trainerEmail).and("trainerReservations").elemMatch(Criteria.where("startTime").is(sf.format(start))));
+        Update update = new Update();
+        update.pull("trainerReservations", new Query().addCriteria(Criteria.where("startTime").is(sf.format(start))));
+        mongoTemplate.upsert(query, update, Trainer.class);
+    }
 
 
 }

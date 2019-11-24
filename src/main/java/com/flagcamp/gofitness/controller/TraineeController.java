@@ -104,7 +104,6 @@ public class TraineeController {
 	  //String endTime = param.get("end").replaceAll(",", "");
 	  long start = sf.parse(startTime).getTime();
 	  traineeService.cancelReservation(traineeEmail, start);
-	  //TODO 教练
 	  map.put("status", "success");
       return map;
     }

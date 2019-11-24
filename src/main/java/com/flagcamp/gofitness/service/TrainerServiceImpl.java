@@ -53,7 +53,6 @@ public class TrainerServiceImpl implements TrainerService {
         
         
 //        List<Schedule> schedules = new ArrayList<>();     		
-        //TODO 这里有时候会报错。不知道为什么
 //        schedules.addAll(trainer.getSchedules());
 //        Collections.sort(schedules, Comparator.comparing(Schedule::getStartTime));
 //        for (Schedule schedule : schedules) {
@@ -149,4 +148,6 @@ public class TrainerServiceImpl implements TrainerService {
     public void addNewTrainer(Trainer trainer) {
         trainerRepository.save(trainer);
     }
+    
+
 }

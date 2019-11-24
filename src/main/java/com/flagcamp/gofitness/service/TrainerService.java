@@ -77,4 +77,5 @@ public interface TrainerService {
      */
     void addNewTrainer(Trainer trainer);
     
+    
 }
