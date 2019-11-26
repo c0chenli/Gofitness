@@ -47,10 +47,10 @@ class PopupForm extends React.Component {
     });
   };
 
-  handleOk = (e) => {
+  handleOk = () => {
 
     this.setState({ loading: true });
-    e.preventDefault();
+    //e.preventDefault();
 
     sessionService.loadSession()
         .then(currentSession => {
@@ -77,7 +77,7 @@ class PopupForm extends React.Component {
                       message.success('Schedule Added Successfully');
                       setTimeout(() => {
                         this.setState({ loading: false, visible: false });
-                      }, 3000);
+                      }, 1000);
                     } else {
                       return Promise.reject(data.msg);
                     }
@@ -119,7 +119,9 @@ class PopupForm extends React.Component {
             <Button key="back" onClick={this.handleCancel}>
               Cancel
             </Button>,
-            <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
+            <Button key="submit" type="primary" loading={loading} onClick={() => {this.handleOk(); setTimeout(() => {
+              this.props.callBack()
+            }, 1000);}}>
               Submit
             </Button>,
           ]}

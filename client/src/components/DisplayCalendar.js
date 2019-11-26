@@ -13,21 +13,25 @@ import events from '../pages/event'
 import eventu from "../pages/UnavaliableTime";
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+//import '../styles/react-big-calendar.css'
 import '../styles/DisplayCalendar.css';
 import WrappedPopupForm from "./PopupForm"
 import {API_ROOT} from "../constants";
 import {sessionService} from "redux-react-session";
 import _ from "lodash";
+import {message} from "antd";
 
 class DisplayCalendar extends Component{
-
     constructor(props){
         super(props);
         this.state = {
             scheduleTime : [],
             availableTime : []
         }
+        this.updateAvailableTime = this.updateAvailableTime.bind(this);
     }
+
+
 
     // Setup the localizer by providing the moment (or globalize) Object
     // to the correct localizer.
@@ -42,7 +46,7 @@ class DisplayCalendar extends Component{
         if (this.state.availableTime === [])
             return true;
         for(e of this.state.availableTime){
-            if ((value-parseInt(e.start))*(value-parseInt(e.end)) <= 0) return false;
+            if ((value-parseInt(e.start))*(value-parseInt(e.end)+1) <= 0) return false;
         }
         return true;
     };
@@ -103,17 +107,24 @@ class DisplayCalendar extends Component{
             },
         }).then(res => res.json()).then(
             data => {
-                this.updateTime(data);
-                this.setState({
-                    scheduleTime: data,
-                });
+                if (!data.status){
+                    this.updateTime(data);
+                    this.setState({
+                        scheduleTime: data,
+                    });
+                }else{
+                    message.warning('Loading schedule data failed.');
+                    setTimeout(() => {
+                        this.setState({ loading: false, visible: false });
+                    }, 3000);
+                }
             }
         ).catch((status) => {
             window.alert(status);
         });
     };
 
-    fetchAvailableData(token) {
+     fetchAvailableData = (token) => {
 
         fetch(`${API_ROOT}trainer/availableTime`, {
             method: 'GET',
@@ -123,13 +134,28 @@ class DisplayCalendar extends Component{
             },
         }).then(res => res.json()).then(
             data => {
-                this.setState({
-                    availableTime: data,
-                });
+                if (!data.status){
+                    this.setState({
+                        availableTime: data,
+                    });
+                }else{
+                    message.warning('Loading available time data failed.');
+                    setTimeout(() => {
+                        this.setState({ loading: false, visible: false });
+                    }, 3000);
+                }
             }
         ).catch((status) => {
             window.alert(status);
         });
+    };
+
+    updateAvailableTime(){
+        console.log('called');
+        sessionService.loadSession()
+            .then(currentSession => {
+                this.fetchAvailableData(currentSession.token);
+            }).catch(err => console.log(err));
     };
 
     MyCalendar() {
@@ -138,7 +164,7 @@ class DisplayCalendar extends Component{
         console.log('Available: ',this.state.availableTime);
         return (
         <div className="calendar">
-          <WrappedPopupForm/>
+          <WrappedPopupForm callBack = {this.updateAvailableTime}/>
           <div className="calendar-wrapper">
             <Calendar
                 localizer={this.localizer}
