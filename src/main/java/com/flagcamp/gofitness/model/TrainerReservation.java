@@ -10,6 +10,7 @@ public class TrainerReservation implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String title;
     @Field("trainee_email")
     private String traineeEmail;
     @Field("trainee_name")
@@ -26,13 +27,22 @@ public class TrainerReservation implements Serializable {
 
     }
 
-    public TrainerReservation(String traineeEmail, String traineeName, String startTime, String endTime, int status) {
-        this.traineeEmail = traineeEmail;
+    public TrainerReservation(String title, String traineeEmail, String traineeName, String startTime, String endTime, int status) {
+        this.title = title;
+    	this.traineeEmail = traineeEmail;
         this.traineeName = traineeName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.status = status;
     }
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public String getTraineeEmail() {
 		return traineeEmail;

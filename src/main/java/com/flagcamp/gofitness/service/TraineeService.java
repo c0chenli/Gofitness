@@ -50,7 +50,24 @@ public interface TraineeService {
      * @param startTime
      * @param endTime
      */
-    void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, String startTime, String endTime);
+    void addTraineeReservation(String title, String traineeEmail, String trainerEmail, String trainerName, String startTime, String endTime);
+
+    /**
+     *
+     * @param trainerEmail
+     * @param startTime
+     * @param endTime
+     */
+    boolean checkTrainerTime(String trainerEmail, String startTime, String endTime);
+
+    /**
+     *
+     * @param traineeEmail
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    boolean checkTraineeTime(String traineeEmail, String startTime, String endTime);
 
     /**
      *

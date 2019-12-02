@@ -89,8 +89,9 @@ public class TrainerServiceImpl implements TrainerService {
      * @param endTime
      */
     @Override
-    public void addTrainerReservation(String trainerEmail, String traineeEmail, String traineeName, String startTime, String endTime) {
+    public void addTrainerReservation(String title, String trainerEmail, String traineeEmail, String traineeName, String startTime, String endTime) {
         TrainerReservation trainerReservation = new TrainerReservation();
+        trainerReservation.setTitle(title);
         trainerReservation.setTraineeEmail(traineeEmail);
         trainerReservation.setTraineeName(traineeName);
         trainerReservation.setStartTime(startTime);

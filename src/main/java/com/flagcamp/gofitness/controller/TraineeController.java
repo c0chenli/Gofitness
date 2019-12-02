@@ -50,14 +50,29 @@ public class TraineeController {
     public Map<String, String> reserveClass(@RequestBody Map<String, String> param, HttpServletRequest request) throws ParseException {
         Map<String, String> map = new HashMap<>();
         String traineeEmail = (String) request.getAttribute("userEmail");
-        
+
+        //@Todo add title
+        String title = param.get("title");
         String trainerEmail = param.get("trainer_email");
         String startTime = param.get("start").replaceAll(",", "");
         String endTime = param.get("end").replaceAll(",", "");
+
+        //check whether the selected time is valid
+        if (!traineeService.checkTraineeTime(traineeEmail, startTime, endTime)) {
+            map.put("status", "error");
+            map.put("msg", "selected time has collision with your reservations.");
+            return map;
+        }
+        if (!traineeService.checkTrainerTime(trainerEmail, startTime, endTime)) {
+            map.put("status", "error");
+            map.put("msg", "selected time has collision with trainer's schedules.");
+            return map;
+        }
+
         String traineeName = traineeService.getFullName(traineeEmail);
         String trainerName = trainerService.getFullName(trainerEmail);
-        traineeService.addTraineeReservation(traineeEmail, trainerEmail, trainerName, startTime, endTime);
-        trainerService.addTrainerReservation(trainerEmail, traineeEmail, traineeName, startTime, endTime);
+        traineeService.addTraineeReservation(title, traineeEmail, trainerEmail, trainerName, startTime, endTime);
+        trainerService.addTrainerReservation(title, trainerEmail, traineeEmail, traineeName, startTime, endTime);
         map.put("status", "OK");
         map.put("msg", "add schedule successful.");
         return map;
@@ -79,7 +94,7 @@ public class TraineeController {
         long endTime;
         for (TraineeReservation traineeReservation : reservations) {
             map = new HashMap<>();
-            map.put("title", traineeReservation.getTrainerName());
+            map.put("title", traineeReservation.getTitle());
             startTime = sf.parse(traineeReservation.getStartTime()).getTime();
             endTime = sf.parse(traineeReservation.getEndTime()).getTime();
             map.put("start", startTime);

@@ -2,9 +2,7 @@ package com.flagcamp.gofitness.service;
 
 import com.flagcamp.gofitness.dao.TraineeDao;
 import com.flagcamp.gofitness.dao.TrainerDao;
-import com.flagcamp.gofitness.model.Schedule;
-import com.flagcamp.gofitness.model.Trainee;
-import com.flagcamp.gofitness.model.TraineeReservation;
+import com.flagcamp.gofitness.model.*;
 import com.flagcamp.gofitness.repository.TraineeRepository;
 import com.flagcamp.gofitness.repository.TrainerRepository;
 
@@ -24,6 +22,8 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Autowired
     private TraineeRepository traineeRepository;
+    @Autowired
+    private TrainerRepository trainerRepository;
     @Autowired
     private TraineeDao traineeDao;
     @Autowired
@@ -88,15 +88,70 @@ public class TraineeServiceImpl implements TraineeService {
      * @param endTime
      */
     @Override
-    public void addTraineeReservation(String traineeEmail, String trainerEmail, String trainerName, String startTime, String endTime) {
+    public void addTraineeReservation(String title, String traineeEmail, String trainerEmail, String trainerName, String startTime, String endTime) {
         System.out.println(traineeEmail + " " + trainerEmail + " " + trainerName);
         TraineeReservation traineeReservation = new TraineeReservation();
+        traineeReservation.setTitle(title);
         traineeReservation.setTrainerEmail(trainerEmail);
         traineeReservation.setTrainerName(trainerName);
         traineeReservation.setStartTime(startTime);
         traineeReservation.setEndTime(endTime);
         traineeReservation.setStatus(0);
         traineeDao.addTraineeReservation(traineeEmail, traineeReservation);
+    }
+
+    /**
+     * @param trainerEmail
+     * @param startTime
+     * @param endTime
+     */
+    @Override
+    public boolean checkTrainerTime(String trainerEmail, String startTime, String endTime) {
+        Trainer trainer = trainerRepository.findTrainerByEmail(trainerEmail);
+        Set<Schedule> schedules = trainer.getSchedules();
+        Set<TrainerReservation> trainerReservations = trainer.getTrainerReservations();
+        if (checkSchedule(schedules, startTime, endTime) && checkReservation(trainerReservations, startTime, endTime)) {
+            return true;
+        }
+        return false;
+    }
+    private boolean checkSchedule(Set<Schedule> schedules, String startTime, String endTime) {
+        for (Schedule schedule : schedules) {
+            if (schedule.getStartTime().compareTo(startTime) <= 0 && schedule.getEndTime().compareTo(endTime) >= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean checkReservation(Set<TrainerReservation> trainerReservations, String startTime, String endTime) {
+        for (TrainerReservation trainerReservation : trainerReservations) {
+            if (startTime.compareTo(trainerReservation.getEndTime()) >= 0 || endTime.compareTo(trainerReservation.getStartTime()) <= 0) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param traineeEmail
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @Override
+    public boolean checkTraineeTime(String traineeEmail, String startTime, String endTime) {
+        Trainee trainee = traineeRepository.findTraineeByEmail(traineeEmail);
+        Set<TraineeReservation> traineeReservations = trainee.getTraineeReservations();
+        for (TraineeReservation traineeReservation : traineeReservations) {
+            if (startTime.compareTo(traineeReservation.getEndTime()) >= 0 || endTime.compareTo(traineeReservation.getStartTime()) <= 0) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
 

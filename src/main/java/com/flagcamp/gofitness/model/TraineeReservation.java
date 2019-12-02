@@ -1,16 +1,15 @@
 package com.flagcamp.gofitness.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class TraineeReservation implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String title;
     @Field("trainer_email")
     private String trainerEmail;
     @Field("trainer_name")
@@ -27,12 +26,21 @@ public class TraineeReservation implements Serializable {
 
     }
 
-    public TraineeReservation(String trainerEmail, String trainerName, String startTime, String endTime, int status) {
+    public TraineeReservation(String title, String trainerEmail, String trainerName, String startTime, String endTime, int status) {
+        this.title = title;
         this.trainerEmail = trainerEmail;
         this.trainerName = trainerName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.status = status;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getStatus() {

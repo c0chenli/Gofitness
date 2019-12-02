@@ -29,7 +29,7 @@ public class SignUpController {
 		String firstName = (String) jsonParam.get("firstname");
 		String lastName = (String) jsonParam.get("lastname");
 		String email = (String) jsonParam.get("email");
-		List<String> categories = null;
+		List<String> categories = new ArrayList<>();
 		Set<String> categorySet = new HashSet<>();
 		Trainee exist1 = traineeService.findTraineeByEmail(email);
 		if (exist1 != null) {
