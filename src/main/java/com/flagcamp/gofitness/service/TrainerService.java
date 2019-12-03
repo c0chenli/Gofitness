@@ -40,7 +40,7 @@ public interface TrainerService {
      * @param startTime
      * @param endTime
      */
-    void addTrainerReservation(String trainerEmail, String traineeEmail, String traineeName, String startTime, String endTime);
+    void addTrainerReservation(String title, String trainerEmail, String traineeEmail, String traineeName, String startTime, String endTime);
 
     /**
      *
