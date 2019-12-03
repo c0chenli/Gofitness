@@ -15,7 +15,8 @@ import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 //import '../styles/react-big-calendar.css'
 import '../styles/DisplayCalendar.css';
-import WrappedPopupForm from "./PopupForm"
+import WrappedPopupForm from "./PopupForm";
+import TraineeWrappedPopupForm from "./TraineeSetSchedulePopUpForm";
 import {API_ROOT} from "../constants";
 import {sessionService} from "redux-react-session";
 import _ from "lodash";
@@ -75,20 +76,43 @@ class DisplayCalendar extends Component{
             borderRadius:0
         },
     };
+
     eventRenderProps = (event, start, end, isSelected) => {
         return {
             style: event.status === 0 ? this.eventStyles.approve: (event.status === 1 ? this.eventStyles.tbd:this.eventStyles.reject)
         }
     };
+
     componentDidMount() {
 
-        sessionService.loadSession()
-            .then(currentSession => {
-                this.fetchScheduleData(currentSession.token);
-                this.fetchAvailableData(currentSession.token);
-            })
-            .catch(err => console.log(err))
+        if (this.props.act === 'TrainerDisplay'){
+            sessionService.loadSession()
+                .then(currentSession => {
+                    this.fetchScheduleData(currentSession.token);
+                    this.fetchAvailableData(currentSession.token);
+                })
+                .catch(err => console.log(err))
+        }else if(this.props.act === 'TraineeDisplay'){
+            sessionService.loadSession()
+                .then(currentSession => {
+                    this.fetchTraineeScheduleData(currentSession.token);
+                })
+                .catch(err => console.log(err))
+
+        }else if(this.props.act === 'TraineeSchedule'){
+            sessionService.loadSession()
+                .then(currentSession => {
+                    this.fetchTrainerScheduleData(currentSession.token);
+                    this.fetchTrainerAvailableData(currentSession.token);
+                })
+                .catch(err => console.log(err))
+
+        }else {
+
+        }
+
     };
+
     updateTime(data){
         data.forEach((event) => {
             if (parseInt(event.start))
@@ -97,6 +121,88 @@ class DisplayCalendar extends Component{
                 event.end = new Date(parseInt(event.end));
         });
     }
+
+
+    fetchTraineeScheduleData(token) {
+
+        fetch(`${API_ROOT}trainee/getReservation`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8; Access-Control-Allow-Origin: *',
+                Authorization: token,
+            },
+        }).then(res => res.json()).then(
+            data => {
+                if (!data.status){
+                    this.updateTime(data);
+                    this.setState({
+                        scheduleTime: data,
+                    });
+                }else{
+                    message.warning('Loading schedule data failed.');
+                    setTimeout(() => {
+                        this.setState({ loading: false, visible: false });
+                    }, 3000);
+                }
+            }
+        ).catch((status) => {
+            window.alert(status);
+        });
+    };
+
+    fetchTrainerScheduleData(token) {
+
+        fetch(`${API_ROOT}trainee/getTrainerSchedule`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8; Access-Control-Allow-Origin: *',
+                Authorization: token,
+            },
+        }).then(res => res.json()).then(
+            data => {
+                if (!data.status){
+                    this.updateTime(data);
+                    this.setState({
+                        scheduleTime: data,
+                    });
+                }else{
+                    message.warning('Loading schedule data failed.');
+                    setTimeout(() => {
+                        this.setState({ loading: false, visible: false });
+                    }, 3000);
+                }
+            }
+        ).catch((status) => {
+            window.alert(status);
+        });
+    };
+
+    fetchTrainerAvailableData = (token) => {
+
+        fetch(`${API_ROOT}trainee/getTrainerAvailableTime`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8; Access-Control-Allow-Origin: *',
+                Authorization: token,
+            },
+        }).then(res => res.json()).then(
+            data => {
+                if (!data.status){
+                    this.setState({
+                        availableTime: data,
+                    });
+                }else{
+                    message.warning('Loading available time data failed.');
+                    setTimeout(() => {
+                        this.setState({ loading: false, visible: false });
+                    }, 3000);
+                }
+            }
+        ).catch((status) => {
+            window.alert(status);
+        });
+    };
+
     fetchScheduleData(token) {
 
         fetch(`${API_ROOT}trainer/getSchedule`, {
@@ -151,14 +257,22 @@ class DisplayCalendar extends Component{
     };
 
     updateAvailableTime(){
-        console.log('called');
+        console.log('updating available time.');
         sessionService.loadSession()
             .then(currentSession => {
                 this.fetchAvailableData(currentSession.token);
             }).catch(err => console.log(err));
     };
 
-    MyCalendar() {
+    updateScheduleTime(){
+        console.log('updating schedule time.');
+        sessionService.loadSession()
+            .then(currentSession => {
+                this.fetchTraineeScheduleData(currentSession.token);
+            }).catch(err => console.log(err));
+    };
+
+    TrainerDisplayCalendar() {
 
         console.log('schedule: ',this.state.scheduleTime);
         console.log('Available: ',this.state.availableTime);
@@ -182,12 +296,81 @@ class DisplayCalendar extends Component{
         </div>
     );};
 
-    render(){
+    TraineeDisplayCalendar() {
+
+        console.log('schedule: ',this.state.scheduleTime);
+        console.log('Available: ',this.state.availableTime);
         return (
-            <div>
-                {this.MyCalendar()}
+            <div className="calendar">
+                <div className="calendar-wrapper">
+                    <Calendar
+                        localizer={this.localizer}
+                        events={this.state.scheduleTime}
+                        step={30}
+                        defaultView="week"
+                        views={{week:true, agenda:true}}
+                        defaultDate={new Date()}
+                        startAccessor="start"
+                        endAccessor="end"
+                        eventPropGetter={this.eventRenderProps}
+                    />
+                </div>
             </div>
-        );
+        );};
+
+    TraineeScheduleCalendar() {
+
+        console.log('schedule: ',this.state.scheduleTime);
+        console.log('Available: ',this.state.availableTime);
+        return (
+            <div className="calendar">
+                <TraineeWrappedPopupForm callBack = {this.updateScheduleTime}/>
+                <div className="calendar-wrapper">
+                    <Calendar
+                        localizer={this.localizer}
+                        events={this.state.scheduleTime}
+                        step={30}
+                        defaultView="week"
+                        views={{week:true, agenda:true}}
+                        defaultDate={new Date()}
+                        startAccessor="start"
+                        endAccessor="end"
+                        eventPropGetter={this.eventRenderProps}
+                        components={{ timeSlotWrapper: this.TimeSlotWrapper }}
+                    />
+                </div>
+            </div>
+        );};
+
+    render(){
+        console.log(this.props.act);
+        if (this.props.act === 'TrainerDisplay'){
+            return (
+                <div>
+                    {this.TrainerDisplayCalendar()}
+                </div>
+            );
+
+        }else if(this.props.act === 'TraineeDisplay'){
+            return (
+                <div>
+                    {this.TraineeDisplayCalendar()}
+                </div>
+            );
+
+        }else if(this.props.act === 'TraineeSchedule'){
+            return (
+                <div>
+                    {this.TraineeScheduleCalendar()}
+                </div>
+            );
+        }else {
+            return (
+                <div>
+                    Error
+                </div>
+            );
+        }
     }
 };
 

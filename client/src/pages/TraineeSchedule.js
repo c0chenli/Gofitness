@@ -7,7 +7,7 @@ const TraineeSchedule = () =>{
         return (
             <div>
             <TopMenuBarAuth/>
-            <DisplayCalendar/>
+            <DisplayCalendar act={'TraineeDisplay'}/>
             <Footer/>
             </div>
         );

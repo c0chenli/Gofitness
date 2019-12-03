@@ -10,7 +10,7 @@ const TrainerHome = () =>{
         <div>
           <TopMenuBarAuth/>
           <TrainerBanner/>
-          <DisplayCalendar/>
+          <DisplayCalendar act={'TrainerDisplay'}/>
           <Footer/>
         </div>
     );
