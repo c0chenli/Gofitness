@@ -48,12 +48,12 @@ public class TraineeController {
     }
     
     @RequestMapping(value = "/getTrainerSchedule", method = RequestMethod.GET)
-    public List<Map<String, Object>> getTrainerSchedule(@RequestBody Map<String, String> param, HttpServletRequest request) throws ParseException {
+    public List<Map<String, Object>> getTrainerSchedule(@RequestParam(value="trainer_email")String param, HttpServletRequest request) throws ParseException {
         String role = (String) request.getAttribute("role");
         if (!role.equals("trainee")) {
             return null;
         }
-        String trainerEmail = param.get("trainer_email");
+        String trainerEmail = param;
         List<Map<String, Object>> result = new ArrayList<>();
         Map<String, Object> map;
         Date date = new Date();
@@ -78,12 +78,12 @@ public class TraineeController {
     }
     
     @RequestMapping(value = "/getTrainerAvailableTime", method = RequestMethod.GET)
-    public List<Map<String, Object>> getTrainerAvailableTime(@RequestBody Map<String, String> param, HttpServletRequest request) throws ParseException {
+    public List<Map<String, Object>> getTrainerAvailableTime(@RequestParam(value="trainer_email")String param, HttpServletRequest request) throws ParseException {
         String role = (String) request.getAttribute("role");
         if (!role.equals("trainee")) {
             return null;
         }
-        String trainerEmail = param.get("trainer_email");
+        String trainerEmail = param;
         Date date = new Date();
         String now = sf.format(date);
         List<Map<String, Object>> result = new ArrayList<>();
