@@ -8,7 +8,7 @@ import com.flagcamp.gofitness.model.Trainer;
 import com.flagcamp.gofitness.model.TrainerReservation;
 import com.flagcamp.gofitness.service.TraineeService;
 import com.flagcamp.gofitness.service.TrainerService;
-import com.opentok.exception.OpenTokException;
+//import com.opentok.exception.OpenTokException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
@@ -20,10 +20,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.opentok.OpenTok;
-import com.opentok.Session;
-import com.opentok.TokenOptions;
-import com.opentok.Role;
+//import com.opentok.OpenTok;
+//import com.opentok.Session;
+//import com.opentok.TokenOptions;
+//import com.opentok.Role;
 
 @RestController
 @RequestMapping("/trainee")
@@ -46,32 +46,32 @@ public class TraineeController {
         return traineeService.findTraineeByEmail(traineeEmail);
     }
 
-    @RequestMapping(value = "/getVideoConfig", method = RequestMethod.GET)
-    public Map<String, Object> getVideoConfig(HttpServletRequest request) throws OpenTokException {
-        String traineeEmail = (String) request.getAttribute("userEmail");
-        Map<String, Object> map = new HashMap<>();
-        if (traineeEmail == null || traineeEmail.length() == 0) {
-            map.put("status", "error");
-            map.put("msg", "login expired, please signin again.");
-            return map;
-        }
-        // inside a class or method...
-        OpenTok opentok = new OpenTok(apiKey, apiSecret);
-        // A session that attempts to stream media directly between clients:
-        Session session = opentok.createSession();
-        String sessionId = session.getSessionId();
-        // Set some options in a token
-        String token = session.generateToken(new TokenOptions.Builder()
-                .role(Role.SUBSCRIBER)
-                .expireTime((System.currentTimeMillis() / 1000L) + (7 * 24 * 60 * 60)) // in one week
-                .data("email=" + traineeEmail)
-                .build());
-        map.put("status", "OK");
-        map.put("apiKey", apiKey);
-        map.put("sessionId", sessionId);
-        map.put("token", token);
-        return map;
-    }
+//    @RequestMapping(value = "/getVideoConfig", method = RequestMethod.GET)
+//    public Map<String, Object> getVideoConfig(HttpServletRequest request) throws OpenTokException {
+//        String traineeEmail = (String) request.getAttribute("userEmail");
+//        Map<String, Object> map = new HashMap<>();
+//        if (traineeEmail == null || traineeEmail.length() == 0) {
+//            map.put("status", "error");
+//            map.put("msg", "login expired, please signin again.");
+//            return map;
+//        }
+//        // inside a class or method...
+//        OpenTok opentok = new OpenTok(apiKey, apiSecret);
+//        // A session that attempts to stream media directly between clients:
+//        Session session = opentok.createSession();
+//        String sessionId = session.getSessionId();
+//        // Set some options in a token
+//        String token = session.generateToken(new TokenOptions.Builder()
+//                .role(Role.SUBSCRIBER)
+//                .expireTime((System.currentTimeMillis() / 1000L) + (7 * 24 * 60 * 60)) // in one week
+//                .data("email=" + traineeEmail)
+//                .build());
+//        map.put("status", "OK");
+//        map.put("apiKey", apiKey);
+//        map.put("sessionId", sessionId);
+//        map.put("token", token);
+//        return map;
+//    }
 
     @RequestMapping(value = "/getAllTrainer", method = RequestMethod.GET)
     public List<Trainer> getAllTrainer(HttpServletRequest request) {
