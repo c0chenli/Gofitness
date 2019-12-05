@@ -4,6 +4,11 @@ import com.flagcamp.gofitness.model.Schedule;
 import com.flagcamp.gofitness.model.Trainer;
 import com.flagcamp.gofitness.model.TrainerReservation;
 import com.flagcamp.gofitness.service.TrainerService;
+import com.opentok.OpenTok;
+import com.opentok.Role;
+import com.opentok.Session;
+import com.opentok.TokenOptions;
+import com.opentok.exception.OpenTokException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +28,40 @@ public class TrainerController {
     private TrainerService trainerService;
     private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
     private static final long TWENTY_FOUR_HOUR = 60 * 24 * 60 * 1000;
+    private static final int apiKey = 46471732;
+    private static final String apiSecret = "a6f2b1bf0fc61dc6ff7b831e5423bc75cfd74988";
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public Trainer getUserByEmail(HttpServletRequest request) {
         String trainerEmail = (String) request.getAttribute("userEmail");
         return trainerService.findTrainerByEmail(trainerEmail);
+    }
+
+    @RequestMapping(value = "/getVideoConfig", method = RequestMethod.GET)
+    public Map<String, Object> getVideoConfig(HttpServletRequest request) throws OpenTokException {
+        String trainerEmail = (String) request.getAttribute("userEmail");
+        Map<String, Object> map = new HashMap<>();
+        if (trainerEmail == null || trainerEmail.length() == 0) {
+            map.put("status", "error");
+            map.put("msg", "login expired, please signin again.");
+            return map;
+        }
+        // inside a class or method...
+        OpenTok opentok = new OpenTok(apiKey, apiSecret);
+        // A session that attempts to stream media directly between clients:
+        Session session = opentok.createSession();
+        String sessionId = session.getSessionId();
+        // Set some options in a token
+        String token = session.generateToken(new TokenOptions.Builder()
+                .role(Role.PUBLISHER)
+                .expireTime((System.currentTimeMillis() / 1000L) + (7 * 24 * 60 * 60)) // in one week
+                .data("email=" + trainerEmail)
+                .build());
+        map.put("status", "OK");
+        map.put("apiKey", apiKey);
+        map.put("sessionId", sessionId);
+        map.put("token", token);
+        return map;
     }
 
     @PostMapping(value = "/setSchedule")

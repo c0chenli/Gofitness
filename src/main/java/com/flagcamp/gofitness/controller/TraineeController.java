@@ -8,18 +8,23 @@ import com.flagcamp.gofitness.model.Trainer;
 import com.flagcamp.gofitness.model.TrainerReservation;
 import com.flagcamp.gofitness.service.TraineeService;
 import com.flagcamp.gofitness.service.TrainerService;
+import com.opentok.exception.OpenTokException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.opentok.OpenTok;
+import com.opentok.Session;
+import com.opentok.TokenOptions;
+import com.opentok.Role;
+
 @RestController
 @RequestMapping("/trainee")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -32,10 +37,40 @@ public class TraineeController {
 
     private SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmm");
 
+    private static final int apiKey = 46471732;
+    private static final String apiSecret = "a6f2b1bf0fc61dc6ff7b831e5423bc75cfd74988";
+
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public Trainee getTraineeInfo(HttpServletRequest request) {
         String traineeEmail = (String) request.getAttribute("userEmail");
         return traineeService.findTraineeByEmail(traineeEmail);
+    }
+
+    @RequestMapping(value = "/getVideoConfig", method = RequestMethod.GET)
+    public Map<String, Object> getVideoConfig(HttpServletRequest request) throws OpenTokException {
+        String traineeEmail = (String) request.getAttribute("userEmail");
+        Map<String, Object> map = new HashMap<>();
+        if (traineeEmail == null || traineeEmail.length() == 0) {
+            map.put("status", "error");
+            map.put("msg", "login expired, please signin again.");
+            return map;
+        }
+        // inside a class or method...
+        OpenTok opentok = new OpenTok(apiKey, apiSecret);
+        // A session that attempts to stream media directly between clients:
+        Session session = opentok.createSession();
+        String sessionId = session.getSessionId();
+        // Set some options in a token
+        String token = session.generateToken(new TokenOptions.Builder()
+                .role(Role.SUBSCRIBER)
+                .expireTime((System.currentTimeMillis() / 1000L) + (7 * 24 * 60 * 60)) // in one week
+                .data("email=" + traineeEmail)
+                .build());
+        map.put("status", "OK");
+        map.put("apiKey", apiKey);
+        map.put("sessionId", sessionId);
+        map.put("token", token);
+        return map;
     }
 
     @RequestMapping(value = "/getAllTrainer", method = RequestMethod.GET)
