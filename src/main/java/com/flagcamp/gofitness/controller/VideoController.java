@@ -20,7 +20,7 @@ public class VideoController {
     @Autowired
     private VideoDao videoDao;
 
-    @RequestMapping(value = "/getVideoId", method = RequestMethod.GET)
+    @RequestMapping(value = "/getRoomId", method = RequestMethod.GET)
     public Map<String, String> getVideo(@RequestParam String traineeEmail, String trainerEmail, HttpServletRequest request) {
         Video video = videoRepository.findVideoByTraineeEmailAndAndTrainerEmail(traineeEmail, trainerEmail);
         Map<String, String> map = new HashMap<>();
@@ -33,7 +33,7 @@ public class VideoController {
             id = video.getId();
         }
         map.put("status", "OK");
-        map.put("video_id", id.toString());
+        map.put("room_id", id.toString());
         return map;
     }
 
