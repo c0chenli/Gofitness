@@ -49,7 +49,7 @@ public class JWTFilter extends GenericFilterBean {
 
     public boolean allowRequestWithoutToken(HttpServletRequest request) {
         System.out.println(request.getRequestURI());
-        if (request.getRequestURI().contains("/getVideoId") || request.getRequestURI().contains("/signup") || request.getRequestURI().contains("/signin") || request.getRequestURI().contains("/getAllTrainerDemo")) {
+        if (request.getRequestURI().contains("/getRoomId") || request.getRequestURI().contains("/signup") || request.getRequestURI().contains("/signin") || request.getRequestURI().contains("/getAllTrainerDemo")) {
             return true;
         }
         return false;
