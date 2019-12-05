@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,16 +21,20 @@ public class VideoController {
     private VideoDao videoDao;
 
     @RequestMapping(value = "/getVideoId", method = RequestMethod.GET)
-    public String getVideo(@RequestParam String traineeEmail, String trainerEmail, HttpServletRequest request) {
+    public Map<String, String> getVideo(@RequestParam String traineeEmail, String trainerEmail, HttpServletRequest request) {
         Video video = videoRepository.findVideoByTraineeEmailAndAndTrainerEmail(traineeEmail, trainerEmail);
+        Map<String, String> map = new HashMap<>();
+        ObjectId id;
         if (video == null) {
-            ObjectId id = new ObjectId();
+            id = new ObjectId();
             Video newVideo = new Video(id, traineeEmail, trainerEmail);
             videoDao.addVideo(newVideo);
-            return id.toString();
         } else {
-            return video.getId().toString();
+            id = video.getId();
         }
+        map.put("status", "OK");
+        map.put("video_id", id.toString());
+        return map;
     }
 
 }
