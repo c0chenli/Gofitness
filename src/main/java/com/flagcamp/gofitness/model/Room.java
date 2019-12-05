@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 @Component
-public class Video implements Serializable {
+public class Room implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,10 +19,10 @@ public class Video implements Serializable {
     @Field("trainer_email")
     private String trainerEmail;
 
-    public Video() {
+    public Room() {
 
     }
-    public Video(ObjectId id, String traineeEmail, String trainerEmail) {
+    public Room(ObjectId id, String traineeEmail, String trainerEmail) {
         this.id = id;
         this.traineeEmail = traineeEmail;
         this.trainerEmail = trainerEmail;

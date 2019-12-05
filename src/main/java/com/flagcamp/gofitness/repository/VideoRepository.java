@@ -1,9 +1,9 @@
 package com.flagcamp.gofitness.repository;
 
-import com.flagcamp.gofitness.model.Video;
+import com.flagcamp.gofitness.model.Room;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface VideoRepository extends MongoRepository<Video, String> {
+public interface VideoRepository extends MongoRepository<Room, String> {
 
-    Video findVideoByTraineeEmailAndAndTrainerEmail(String traineeEmail, String trainerEmail);
+    Room findRoomByTraineeEmailAndAndTrainerEmail(String traineeEmail, String trainerEmail);
 }

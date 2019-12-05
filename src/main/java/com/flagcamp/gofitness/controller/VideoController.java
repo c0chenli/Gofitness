@@ -1,7 +1,7 @@
 package com.flagcamp.gofitness.controller;
 
-import com.flagcamp.gofitness.dao.VideoDao;
-import com.flagcamp.gofitness.model.Video;
+import com.flagcamp.gofitness.dao.RoomDao;
+import com.flagcamp.gofitness.model.Room;
 import com.flagcamp.gofitness.repository.VideoRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +18,19 @@ public class VideoController {
     @Autowired
     private VideoRepository videoRepository;
     @Autowired
-    private VideoDao videoDao;
+    private RoomDao roomDao;
 
     @RequestMapping(value = "/getRoomId", method = RequestMethod.GET)
     public Map<String, String> getVideo(@RequestParam String traineeEmail, String trainerEmail, HttpServletRequest request) {
-        Video video = videoRepository.findVideoByTraineeEmailAndAndTrainerEmail(traineeEmail, trainerEmail);
+        Room room = videoRepository.findRoomByTraineeEmailAndAndTrainerEmail(traineeEmail, trainerEmail);
         Map<String, String> map = new HashMap<>();
         ObjectId id;
-        if (video == null) {
+        if (room == null) {
             id = new ObjectId();
-            Video newVideo = new Video(id, traineeEmail, trainerEmail);
-            videoDao.addVideo(newVideo);
+            Room newRoom = new Room(id, traineeEmail, trainerEmail);
+            roomDao.addRoom(newRoom);
         } else {
-            id = video.getId();
+            id = room.getId();
         }
         map.put("status", "OK");
         map.put("room_id", id.toString());
