@@ -14,18 +14,18 @@ public class Room implements Serializable {
 
     @Id
     private ObjectId id;
-    @Field("trainee_email")
-    private String traineeEmail;
-    @Field("trainer_email")
-    private String trainerEmail;
+    @Field("email_one")
+    private String emailOne;
+    @Field("email_two")
+    private String emailTwo;
 
     public Room() {
 
     }
-    public Room(ObjectId id, String traineeEmail, String trainerEmail) {
+    public Room(ObjectId id, String emailOne, String emailTwo) {
         this.id = id;
-        this.traineeEmail = traineeEmail;
-        this.trainerEmail = trainerEmail;
+        this.emailOne = emailOne;
+        this.emailTwo = emailTwo;
     }
 
     public ObjectId getId() {
@@ -36,19 +36,19 @@ public class Room implements Serializable {
         this.id = id;
     }
 
-    public String getTraineeEmail() {
-        return traineeEmail;
+    public String getEmailOne() {
+        return emailOne;
     }
 
-    public void setTraineeEmail(String traineeEmail) {
-        this.traineeEmail = traineeEmail;
+    public void setEmailOne(String emailOne) {
+        this.emailOne = emailOne;
     }
 
-    public String getTrainerEmail() {
-        return trainerEmail;
+    public String getEmailTwo() {
+        return emailTwo;
     }
 
-    public void setTrainerEmail(String trainerEmail) {
-        this.trainerEmail = trainerEmail;
+    public void setEmailTwo(String emailTwo) {
+        this.emailTwo = emailTwo;
     }
 }
