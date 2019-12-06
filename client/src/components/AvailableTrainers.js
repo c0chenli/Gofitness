@@ -13,6 +13,7 @@ class AvailableTrainers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      role: '',
       activatedFilter: "",
       trainerData: [],
       trainers: [],
@@ -35,6 +36,11 @@ class AvailableTrainers extends React.Component {
     sessionService.loadSession()
         .then(currentSession => this.fetchData(currentSession.token))
         .catch(err => console.log(err)) : this.fetchDemoData();
+
+    sessionService.loadUser()
+        .then(currentUser =>
+            this.setState({ role: currentUser.role}))
+        .catch(err => console.log(err))
 
   }
   fetchDemoData(){
@@ -123,7 +129,10 @@ class AvailableTrainers extends React.Component {
               {categories.map(category =>
                 <p className="trainerState">{category}</p>
               )}
-              <div><Link to={`/chat/${email}`} className="chatBtn btn-learn">Chat</Link></div>
+
+
+              {this.state.role === 'trainee' ?
+                  <div><Link to={`/chat/${email}`} className="chatBtn btn-learn">Schedule Class</Link></div> : <div></div>}
             </Col>
           )}
         </Row>

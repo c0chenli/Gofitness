@@ -20,17 +20,22 @@ import TraineeWrappedPopupForm from "./TraineeSetSchedulePopUpForm";
 import {API_ROOT} from "../constants";
 import {sessionService} from "redux-react-session";
 import _ from "lodash";
-import {message} from "antd";
+import {Button, Form, message} from "antd";
+import { Redirect } from 'react-router-dom';
 
 class DisplayCalendar extends Component{
     constructor(props){
         super(props);
         this.state = {
+            redirect: false,
+            email1: '',
+            email2: '',
             scheduleTime : [],
             availableTime : []
-        }
+        };
         this.updateAvailableTime = this.updateAvailableTime.bind(this);
         this.updateScheduleTime = this.updateScheduleTime.bind(this);
+        this.handleSelectEvent= this.handleSelectEvent.bind(this)
     }
 
 
@@ -291,26 +296,41 @@ class DisplayCalendar extends Component{
             }).catch(err => console.log(err));
     };
 
+    handleSelectEvent(event) {
+        console.log("handleSelectEvent's event=",event);
+
+        sessionService.loadUser()
+            .then(currentUser =>
+                this.setState({ redirect: true , email1: event.title, email2: currentUser.email}))
+            .catch(err => console.log(err));
+    }
+
     TrainerDisplayCalendar() {
 
         console.log('schedule: ',this.state.scheduleTime);
         console.log('Available: ',this.state.availableTime);
+
         return (
         <div className="calendar">
           <WrappedPopupForm callBack = {this.updateAvailableTime}/>
           <div className="calendar-wrapper">
-            <Calendar
-                localizer={this.localizer}
-                events={this.state.scheduleTime}
-                step={30}
-                defaultView="week"
-                views={{week:true, agenda:true}}
-                defaultDate={new Date()}
-                startAccessor="start"
-                endAccessor="end"
-                eventPropGetter={this.eventRenderProps}
-                components={{ timeSlotWrapper: this.TimeSlotWrapper }}
-            />
+
+              <Calendar
+                  localizer={this.localizer}
+                  events={this.state.scheduleTime}
+                  step={30}
+                  defaultView="week"
+                  views={{week:true, agenda:true}}
+                  defaultDate={new Date()}
+                  startAccessor="start"
+                  endAccessor="end"
+                  eventPropGetter={this.eventRenderProps}
+                  components={{ timeSlotWrapper: this.TimeSlotWrapper }}
+                  onSelectEvent = {(event)=> {
+                      console.log("clicked!!!");
+                      this.handleSelectEvent(event)
+                  }
+                  }/>
           </div>
         </div>
     );};
@@ -363,6 +383,22 @@ class DisplayCalendar extends Component{
 
     render(){
         console.log(this.props.act);
+
+        const { redirect } = this.state;
+
+        if (redirect) {
+            return (
+                <Redirect
+                    to={{
+                        pathname: "/classroom",
+                        search: `?${this.state.email1}&${this.state.email2}`,
+                        state: { email1: this.state.email1, email2: this.state.email2  }
+                    }}
+                />
+            );
+        }
+
+
         if (this.props.act === 'TrainerDisplay'){
             return (
                 <div>
