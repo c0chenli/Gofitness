@@ -65,7 +65,7 @@ export class Main extends React.Component {
           {this.props.checked && <PrivateRoute exact path="/trainer" component={TrainerHome} authenticated={this.props.authenticated}/>}
           {this.props.checked && <PrivateRoute path={'/trainee'} exact component={TraineeHome} authenticated={this.props.authenticated}/>}
           {this.props.checked && <PrivateRoute path={'/traineeschedule'} component={TraineeSchedule} authenticated={this.props.authenticated}/>}
-          {this.props.checked && <PrivateRoute path={'/chat'} exact component={Chat} authenticated={this.props.authenticated}/>}
+          {this.props.checked && <PrivateRoute path={'/chat/:value'} exact component={Chat} authenticated={this.props.authenticated}/>}
           {this.props.checked && <PrivateRoute path={'/classroom'} exact component={Classroom} authenticated={this.props.authenticated}/>}
           {/*<Route path={'/trainee'} exact component={TraineeHome}/>
           <Route path={'/traineeschedule'} exact render={()=><TraineeSchedule authenticated={this.props.authenticated}/>}/>

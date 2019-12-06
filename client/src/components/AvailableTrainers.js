@@ -112,7 +112,7 @@ class AvailableTrainers extends React.Component {
           </ul>
         </Row>
         <Row id="trainer-block">
-          {trainers.map(({firstname, lastname, categories}) =>
+          {trainers.map(({firstname, lastname, categories,email}) =>
             <Col xs={6} sm={4} md={3} className="trainerInfo">
               <img
                 className="trainerImg"
@@ -123,7 +123,7 @@ class AvailableTrainers extends React.Component {
               {categories.map(category =>
                 <p className="trainerState">{category}</p>
               )}
-              <div><Link to="/chat" className="chatBtn btn-learn">Chat</Link></div>
+              <div><Link to={`/chat/${email}`} className="chatBtn btn-learn">Chat</Link></div>
             </Col>
           )}
         </Row>

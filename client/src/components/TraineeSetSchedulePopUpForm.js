@@ -6,6 +6,7 @@ import moment from "moment";
 import {API_ROOT} from "../constants";
 import {withRouter} from "react-router";
 import {sessionService} from "redux-react-session";
+import { Radio } from 'antd';
 
 const { RangePicker } = DatePicker;
 
@@ -37,9 +38,15 @@ class PopupForm extends React.Component {
     state = {
         loading: false,
         visible: false,
+        value: 1,
     };
 
-
+    onValueChange = e => {
+        console.log('radio checked', e.target.value);
+        this.setState({
+            value: e.target.value,
+        });
+    };
 
     showModal = () => {
         this.setState({
@@ -57,14 +64,15 @@ class PopupForm extends React.Component {
 
                 this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
                     if (!err) {
-                        const rangeTimeValue = fieldsValue['date'];
+                        const rangeTimeValue = fieldsValue['starttime'];
                         const values = {
-                            "start": rangeTimeValue[0].format('YYYY,MM,DD,HH,mm'),
-                            "end": rangeTimeValue[1].format('YYYY,MM,DD,HH,mm'),
+                            trainer_email:this.props.target,
+                            "start": rangeTimeValue.format('YYYY,MM,DD,HH,mm'),
+                            "end": rangeTimeValue.add(60*this.state.value,'minutes').format('YYYY,MM,DD,HH,mm')
                         };
                         const send = JSON.stringify(values);
                         console.log(send);
-                        fetch(`${API_ROOT}trainer/setSchedule`,{
+                        fetch(`${API_ROOT}trainee/reserve`,{
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json; charset=utf-8; Access-Control-Allow-Origin: *',
@@ -74,7 +82,7 @@ class PopupForm extends React.Component {
                         }).then(res => res.json()).then(
                             data => {
                                 if (data.status === 'OK') {
-                                    message.success('Schedule Added Successfully');
+                                    message.success('Class Added Successfully');
                                     setTimeout(() => {
                                         this.setState({ loading: false, visible: false });
                                     }, 1000);
@@ -108,11 +116,11 @@ class PopupForm extends React.Component {
         return (
             <div>
                 <Button type="primary" onClick={this.showModal}>
-                    Edit your schedule
+                    Add Class
                 </Button>
                 <Modal
                     visible={visible}
-                    title="Select your available time"
+                    title="Add Class"
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     footer={[
@@ -130,25 +138,22 @@ class PopupForm extends React.Component {
                         <Form>
                             <Form.Item
                                 className="popup-input"
-                                label="Available Date"
+                                label="Start Time"
                             >
-                                {getFieldDecorator("date",  {
-                                    rules: [{ required: true, message: 'Please select your available date!'}],
+                                {getFieldDecorator("starttime",  {
+                                    rules: [{ required: true, message: 'Please select your available time!'}],
                                 })(
-                                    <RangePicker
-                                        disabledDate={disabledDate}
-                                        disabledTime={disabledDateTime}
-                                        showTime={{
-                                            format: 'HH:mm',
-                                            minuteStep: 30,
-                                            defaultValue: [moment('09:00', 'HH:mm'), moment('09:30', 'HH:mm')]
-                                        } }
-                                        format="YYYY-MM-DD HH:mm"
-                                        placeholder={['Start Time', 'End Time']}
-                                        onChange={onChange}
-                                    />,
+                                    <DatePicker showTime={{ format: 'HH:mm', minuteStep: 30,  }}
+                                                format="YYYY-MM-DD HH:mm"
+                                                disabledDate={disabledDate}
+                                                disabledTime={disabledDateTime}
+                                                placeholder="Select Time" onChange={onChange} onOk={[]} />
                                 )}
                             </Form.Item>
+                            <Radio.Group onChange={this.onValueChange} value={this.state.value}>
+                                <Radio value={1}>1 hour</Radio>
+                                <Radio value={2}>2 hours</Radio>
+                            </Radio.Group>
                         </Form>
                     </div>
                 </Modal>

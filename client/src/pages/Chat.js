@@ -4,11 +4,11 @@ import Footer from "../components/Footer"
 import TrainerBanner from "../components/TrainerBanner";
 import DisplayCalendar from "../components/DisplayCalendar";
 
-const Chat = () =>{
+const Chat = (props) =>{
     return (
         <div>
             <TopMenuBarAuth/>
-            <DisplayCalendar act={'TraineeSchedule'}/>
+            <DisplayCalendar act={'TraineeSchedule'} target = {props.match.params.value}/>
             <Footer/>
         </div>
     );

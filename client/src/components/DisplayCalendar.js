@@ -51,6 +51,15 @@ class DisplayCalendar extends Component{
         }
         return true;
     };
+    hasSchedule = (value) => {
+        let e;
+        if (this.state.scheduleTime === [])
+            return false;
+        for(e of this.state.scheduleTime){
+            if ((value-(e.start.getTime()))*(value-(e.end.getTime())+1) <= 0) return true;
+        }
+        return false;
+    };
     TimeSlotWrapper = (props: { children: React.ReactNode, resource: null /* grid */ | undefined /* gutter */, value: Date }) => {
         if (props.resource === undefined /* gutter */ || !this.isBanned(props.value.getTime())) {
             return props.children;
@@ -59,6 +68,16 @@ class DisplayCalendar extends Component{
         const child = React.Children.only(props.children);
         return React.cloneElement(child, { className: child.props.className + ' rbc-off-range-bg' });
     };
+    TraineeTimeSlotWrapper = (props: { children: React.ReactNode, resource: null /* grid */ | undefined /* gutter */, value: Date }) => {
+        if (props.resource === undefined /* gutter */ || !this.isBanned(props.value.getTime())) {
+            if (!this.hasSchedule(props.value.getTime()))
+                return props.children;
+        }
+
+        const child = React.Children.only(props.children);
+        return React.cloneElement(child, { className: child.props.className + ' rbc-off-range-bg' });
+    };
+
     eventStyles = {
         reject: {
             backgroundColor:'red',
@@ -152,7 +171,7 @@ class DisplayCalendar extends Component{
 
     fetchTrainerScheduleData(token) {
 
-        fetch(`${API_ROOT}trainee/getTrainerSchedule`, {
+        fetch(`${API_ROOT}trainee/getTrainerSchedule?trainer_email=${this.props.target}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8; Access-Control-Allow-Origin: *',
@@ -178,8 +197,7 @@ class DisplayCalendar extends Component{
     };
 
     fetchTrainerAvailableData = (token) => {
-
-        fetch(`${API_ROOT}trainee/getTrainerAvailableTime`, {
+        fetch(`${API_ROOT}trainee/getTrainerAvailableTime?trainer_email=${this.props.target}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8; Access-Control-Allow-Origin: *',
@@ -324,11 +342,11 @@ class DisplayCalendar extends Component{
         console.log('Available: ',this.state.availableTime);
         return (
             <div className="calendar">
-                <TraineeWrappedPopupForm callBack = {this.updateScheduleTime}/>
+                <TraineeWrappedPopupForm callBack = {this.updateScheduleTime} target = {this.props.target}/>
                 <div className="calendar-wrapper">
                     <Calendar
                         localizer={this.localizer}
-                        events={this.state.scheduleTime}
+                        events={[]}
                         step={30}
                         defaultView="week"
                         views={{week:true, agenda:true}}
@@ -336,7 +354,7 @@ class DisplayCalendar extends Component{
                         startAccessor="start"
                         endAccessor="end"
                         eventPropGetter={this.eventRenderProps}
-                        components={{ timeSlotWrapper: this.TimeSlotWrapper }}
+                        components={{ timeSlotWrapper: this.TraineeTimeSlotWrapper }}
                     />
                 </div>
             </div>
