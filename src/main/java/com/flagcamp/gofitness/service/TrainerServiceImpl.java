@@ -71,13 +71,20 @@ public class TrainerServiceImpl implements TrainerService {
     public List<TrainerReservation> getReservation(String trainerEmail, String now) {
         Trainer trainer = trainerRepository.findTrainerByEmail(trainerEmail);
         List<TrainerReservation> reservations = new ArrayList<>();
-        reservations.addAll(trainer.getTrainerReservations());
-        Collections.sort(reservations, Comparator.comparing(TrainerReservation::getStartTime));
-        for (TrainerReservation reservation : reservations) {
-            if (reservation.getStartTime().compareTo(now) < 0) {
-                reservations.remove(reservation);
+//        reservations.addAll(trainer.getTrainerReservations());
+//        Collections.sort(reservations, Comparator.comparing(TrainerReservation::getStartTime));
+//        for (TrainerReservation reservation : reservations) {
+//            if (reservation.getStartTime().compareTo(now) < 0) {
+//                reservations.remove(reservation);
+//            }
+//        }
+        Set<TrainerReservation> trainerReservations = trainer.getTrainerReservations();
+        for (TrainerReservation trainerReservation : trainerReservations) {
+            if (trainerReservation.getStartTime().compareTo(now) >= 0) {
+                reservations.add(trainerReservation);
             }
         }
+        Collections.sort(reservations, Comparator.comparing(TrainerReservation::getStartTime));
         return reservations;
     }
 

@@ -110,7 +110,7 @@ public class TrainerController {
         long endTime;
         for (TrainerReservation trainerReservation : reservations) {
             map = new HashMap<>();
-            map.put("title", trainerReservation.getTitle());
+            map.put("title", trainerReservation.getTraineeEmail());
             startTime = sf.parse(trainerReservation.getStartTime()).getTime();
             endTime = sf.parse(trainerReservation.getEndTime()).getTime();
             map.put("start", startTime);

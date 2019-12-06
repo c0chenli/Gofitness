@@ -186,7 +186,7 @@ public class TraineeController {
         long endTime;
         for (TraineeReservation traineeReservation : reservations) {
             map = new HashMap<>();
-            map.put("title", traineeReservation.getTitle());
+            map.put("title", traineeReservation.getTrainerEmail());
             startTime = sf.parse(traineeReservation.getStartTime()).getTime();
             endTime = sf.parse(traineeReservation.getEndTime()).getTime();
             map.put("start", startTime);

@@ -8,11 +8,7 @@ import com.flagcamp.gofitness.repository.TrainerRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -180,6 +176,7 @@ public class TraineeServiceImpl implements TraineeService {
         	System.out.println("Oops, list<TraineeReservation> is null");
         }
         System.out.println("list is fine");
+        Collections.sort(result, Comparator.comparing(TraineeReservation::getStartTime));
         return result;
 //    	List<TraineeReservation> list = new ArrayList<>();
 //    	for (TraineeReservation traineeReservation: trainee.getTraineeReservations()) {
