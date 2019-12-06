@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface RoomRepository extends MongoRepository<Room, String> {
 
-    Room findRoomByEmailOneOrEmailTwo(String emailOne, String emailTwo);
+    Room findRoomByEmailOneAndEmailTwo(String emailOne, String emailTwo);
 }

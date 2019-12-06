@@ -22,15 +22,16 @@ public class RoomController {
 
     @RequestMapping(value = "/getRoomId", method = RequestMethod.GET)
     public Map<String, String> getVideo(@RequestParam(value = "email_1") String emailOne, @RequestParam(value = "email_2") String emailTwo, HttpServletRequest request) {
-        Room room = roomRepository.findRoomByEmailOneOrEmailTwo(emailOne, emailTwo);
+        Room roomOne = roomRepository.findRoomByEmailOneAndEmailTwo(emailOne, emailTwo);
+        Room roomTwo = roomRepository.findRoomByEmailOneAndEmailTwo(emailTwo, emailOne);
         Map<String, String> map = new HashMap<>();
         ObjectId id;
-        if (room == null) {
+        if (roomOne == null && roomTwo == null) {
             id = new ObjectId();
             Room newRoom = new Room(id, emailOne, emailTwo);
             roomDao.addRoom(newRoom);
         } else {
-            id = room.getId();
+            id = roomOne == null ? roomTwo.getId() : roomOne.getId();
         }
         map.put("status", "OK");
         map.put("room_id", id.toString());
