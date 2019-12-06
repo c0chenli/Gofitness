@@ -90,6 +90,7 @@ class PopupForm extends React.Component {
                                     return Promise.reject(data.msg);
                                 }
                             }).catch((msg) => {
+                                console.log(msg);
                             //message.error(msg);
                             this.props.history.push(`/signin`);
                         });

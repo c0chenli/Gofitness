@@ -7,7 +7,7 @@ import AvailableTrainers from "../components/AvailableTrainers"
 const TraineeHome = (props) =>{
     return (
         <div>
-            <TopMenuBarAuth/>
+            <TopMenuBarAuth role={'trainee'}/>
             <TraineeBanner/>
             <AvailableTrainers authenticated = {props.authenticated}/>
             <Footer/>

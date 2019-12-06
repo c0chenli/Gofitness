@@ -30,6 +30,7 @@ class DisplayCalendar extends Component{
             availableTime : []
         }
         this.updateAvailableTime = this.updateAvailableTime.bind(this);
+        this.updateScheduleTime = this.updateScheduleTime.bind(this);
     }
 
 

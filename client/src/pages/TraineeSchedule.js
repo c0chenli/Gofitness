@@ -6,7 +6,7 @@ import Footer from "../components/Footer"
 const TraineeSchedule = () =>{
         return (
             <div>
-            <TopMenuBarAuth/>
+            <TopMenuBarAuth role={'trainee'}/>
             <DisplayCalendar act={'TraineeDisplay'}/>
             <Footer/>
             </div>

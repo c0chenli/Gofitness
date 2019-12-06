@@ -7,7 +7,7 @@ import DisplayCalendar from "../components/DisplayCalendar";
 const Chat = (props) =>{
     return (
         <div>
-            <TopMenuBarAuth/>
+            <TopMenuBarAuth role={'trainee'}/>
             <DisplayCalendar act={'TraineeSchedule'} target = {props.match.params.value}/>
             <Footer/>
         </div>

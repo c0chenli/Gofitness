@@ -8,7 +8,7 @@ const TrainerHome = () =>{
 
     return (
         <div>
-          <TopMenuBarAuth/>
+          <TopMenuBarAuth role={'trainer'}/>
           <TrainerBanner/>
           <DisplayCalendar act={'TrainerDisplay'}/>
           <Footer/>
