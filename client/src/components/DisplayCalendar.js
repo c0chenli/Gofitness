@@ -22,6 +22,8 @@ import {sessionService} from "redux-react-session";
 import _ from "lodash";
 import {Button, Form, message} from "antd";
 import { Redirect } from 'react-router-dom';
+import TopMenuBarAuth from "./TopMenuBarAuth";
+import TrainerBanner from "./TrainerBanner";
 
 class DisplayCalendar extends Component{
     constructor(props){
@@ -312,6 +314,7 @@ class DisplayCalendar extends Component{
 
         return (
         <div className="calendar">
+            <TrainerBanner/>
           <WrappedPopupForm callBack = {this.updateAvailableTime}/>
           <div className="calendar-wrapper">
 
@@ -329,8 +332,7 @@ class DisplayCalendar extends Component{
                   onSelectEvent = {(event)=> {
                       console.log("clicked!!!");
                       this.handleSelectEvent(event)
-                  }
-                  }/>
+                  }}/>
           </div>
         </div>
     );};
@@ -352,6 +354,10 @@ class DisplayCalendar extends Component{
                         startAccessor="start"
                         endAccessor="end"
                         eventPropGetter={this.eventRenderProps}
+                        onSelectEvent = {(event)=> {
+                            console.log("clicked!!!");
+                            this.handleSelectEvent(event)
+                        }}/>
                     />
                 </div>
             </div>
@@ -391,7 +397,7 @@ class DisplayCalendar extends Component{
                 <Redirect
                     to={{
                         pathname: "/classroom",
-                        search: `?${this.state.email1}&${this.state.email2}`,
+                        search: `?email_1=${this.state.email1}&email_2=${this.state.email2}`,
                         state: { email1: this.state.email1, email2: this.state.email2  }
                     }}
                 />

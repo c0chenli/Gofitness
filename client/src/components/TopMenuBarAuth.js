@@ -38,8 +38,11 @@ class TopMenuBarAuth extends React.Component {
                 <li><Link to="/classroom">{'Classroom'}</Link></li>*/}
                 <li><Link to="/about">{'About'}</Link></li>
                 { this.state.role === 'trainer' ?
-                    <li><Link to="/trainer">{'My Account'}</Link></li> :
-                    <li><Link to="/trainee">{'My Account'}</Link></li>}
+                     null :
+                    <li><Link to="/traineeSchedule">{'Class Schedule'}</Link></li>}
+                { this.state.role === 'trainer' ?
+                    <li><Link to="/trainer">{'My Trainer Account'}</Link></li> :
+                    <li><Link to="/trainee">{'My Trainee Account'}</Link></li>}
                 <li><LogoutButton /></li>
               </ul>
             </Col>
