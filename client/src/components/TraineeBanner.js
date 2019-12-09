@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row } from "react-bootstrap";
 import bannerbg from '../assets/img/banner-bg.png';
 import '../styles/Banner.css';
+import {Link} from "react-router-dom";
 
 class TraineeBanner extends React.Component {
 
@@ -19,10 +20,12 @@ class TraineeBanner extends React.Component {
         <Container className="banner-div">
           <Row>
             <div className="col-sm-10">
-              <h1 className="banner-title">Available Trainers</h1>
-              <p className="banner-right">Next Class:</p>
+                <h1 className="banner-title">Available Trainers</h1>
             </div>
-            <p className="appointment">Time/Date</p>
+
+              {/*<Link to="/traineeSchedule">
+                  <p className="appointment">Your schedule</p>
+              </Link>*/}
           </Row>
         </Container>
       </div>

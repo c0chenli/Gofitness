@@ -24,6 +24,7 @@ import {Button, Form, message} from "antd";
 import { Redirect } from 'react-router-dom';
 import TopMenuBarAuth from "./TopMenuBarAuth";
 import TrainerBanner from "./TrainerBanner";
+import TraineeBanner from "./TraineeBanner";
 
 class DisplayCalendar extends Component{
     constructor(props){
@@ -33,7 +34,8 @@ class DisplayCalendar extends Component{
             email1: '',
             email2: '',
             scheduleTime : [],
-            availableTime : []
+            availableTime : [],
+            TraineeScheduleTime : []
         };
         this.updateAvailableTime = this.updateAvailableTime.bind(this);
         this.updateScheduleTime = this.updateScheduleTime.bind(this);
@@ -131,6 +133,7 @@ class DisplayCalendar extends Component{
                 .then(currentSession => {
                     this.fetchTrainerScheduleData(currentSession.token);
                     this.fetchTrainerAvailableData(currentSession.token);
+                    this.fetchTraineeScheduleData(currentSession.token);
                 })
                 .catch(err => console.log(err))
 
@@ -163,7 +166,7 @@ class DisplayCalendar extends Component{
                 if (!data.status){
                     this.updateTime(data);
                     this.setState({
-                        scheduleTime: data,
+                        TraineeScheduleTime: data,
                     });
                 }else{
                     message.warning('Loading schedule data failed.');
@@ -311,54 +314,61 @@ class DisplayCalendar extends Component{
 
         console.log('schedule: ',this.state.scheduleTime);
         console.log('Available: ',this.state.availableTime);
+        console.log('Available: ',this.state.TraineeScheduleTime);
 
         return (
-        <div className="calendar">
-            <TrainerBanner/>
-          <WrappedPopupForm callBack = {this.updateAvailableTime}/>
-          <div className="calendar-wrapper">
+            <div>
+                <TrainerBanner start = {this.state.scheduleTime}/>
+                <div className="calendar">
+                  <WrappedPopupForm callBack = {this.updateAvailableTime}/>
+                  <div className="calendar-wrapper">
 
-              <Calendar
-                  localizer={this.localizer}
-                  events={this.state.scheduleTime}
-                  step={30}
-                  defaultView="week"
-                  views={{week:true, agenda:true}}
-                  defaultDate={new Date()}
-                  startAccessor="start"
-                  endAccessor="end"
-                  eventPropGetter={this.eventRenderProps}
-                  components={{ timeSlotWrapper: this.TimeSlotWrapper }}
-                  onSelectEvent = {(event)=> {
-                      console.log("clicked!!!");
-                      this.handleSelectEvent(event)
-                  }}/>
-          </div>
-        </div>
+                      <Calendar
+                          localizer={this.localizer}
+                          events={this.state.scheduleTime}
+                          step={30}
+                          defaultView="week"
+                          views={{week:true, agenda:true}}
+                          defaultDate={new Date()}
+                          startAccessor="start"
+                          endAccessor="end"
+                          eventPropGetter={this.eventRenderProps}
+                          components={{ timeSlotWrapper: this.TimeSlotWrapper }}
+                          onSelectEvent = {(event)=> {
+                              console.log("clicked!!!");
+                              this.handleSelectEvent(event)
+                          }}/>
+                  </div>
+                </div>
+            </div>
     );};
 
     TraineeDisplayCalendar() {
 
         console.log('schedule: ',this.state.scheduleTime);
         console.log('Available: ',this.state.availableTime);
+        console.log('Available: ',this.state.TraineeScheduleTime);
         return (
-            <div className="calendar">
-                <div className="calendar-wrapper">
-                    <Calendar
-                        localizer={this.localizer}
-                        events={this.state.scheduleTime}
-                        step={30}
-                        defaultView="week"
-                        views={{week:true, agenda:true}}
-                        defaultDate={new Date()}
-                        startAccessor="start"
-                        endAccessor="end"
-                        eventPropGetter={this.eventRenderProps}
-                        onSelectEvent = {(event)=> {
-                            console.log("clicked!!!");
-                            this.handleSelectEvent(event)
-                        }}/>
-                    />
+            <div>
+                <TrainerBanner start = {this.state.TraineeScheduleTime}/>
+                <div className="calendar">
+                    <div className="calendar-wrapper">
+                        <Calendar
+                            localizer={this.localizer}
+                            events={this.state.TraineeScheduleTime}
+                            step={30}
+                            defaultView="week"
+                            views={{week:true, agenda:true}}
+                            defaultDate={new Date()}
+                            startAccessor="start"
+                            endAccessor="end"
+                            eventPropGetter={this.eventRenderProps}
+                            onSelectEvent = {(event)=> {
+                                console.log("clicked!!!");
+                                this.handleSelectEvent(event)
+                            }}/>
+                        />
+                    </div>
                 </div>
             </div>
         );};
@@ -367,22 +377,26 @@ class DisplayCalendar extends Component{
 
         console.log('schedule: ',this.state.scheduleTime);
         console.log('Available: ',this.state.availableTime);
+        console.log('Available: ',this.state.TraineeScheduleTime);
         return (
-            <div className="calendar">
-                <TraineeWrappedPopupForm callBack = {this.updateScheduleTime} target = {this.props.target}/>
-                <div className="calendar-wrapper">
-                    <Calendar
-                        localizer={this.localizer}
-                        events={[]}
-                        step={30}
-                        defaultView="week"
-                        views={{week:true, agenda:true}}
-                        defaultDate={new Date()}
-                        startAccessor="start"
-                        endAccessor="end"
-                        eventPropGetter={this.eventRenderProps}
-                        components={{ timeSlotWrapper: this.TraineeTimeSlotWrapper }}
-                    />
+            <div>
+                <TrainerBanner start = {this.state.TraineeScheduleTime}/>
+                <div className="calendar">
+                    <TraineeWrappedPopupForm callBack = {this.updateScheduleTime} target = {this.props.target}/>
+                    <div className="calendar-wrapper">
+                        <Calendar
+                            localizer={this.localizer}
+                            events={this.state.TraineeScheduleTime}
+                            step={30}
+                            defaultView="week"
+                            views={{week:true, agenda:true}}
+                            defaultDate={new Date()}
+                            startAccessor="start"
+                            endAccessor="end"
+                            eventPropGetter={this.eventRenderProps}
+                            components={{ timeSlotWrapper: this.TraineeTimeSlotWrapper }}
+                        />
+                    </div>
                 </div>
             </div>
         );};
@@ -408,7 +422,7 @@ class DisplayCalendar extends Component{
         if (this.props.act === 'TrainerDisplay'){
             return (
                 <div>
-                    {this.TrainerDisplayCalendar()}
+                        {this.TrainerDisplayCalendar()}
                 </div>
             );
 

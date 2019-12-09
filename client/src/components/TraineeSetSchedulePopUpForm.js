@@ -92,7 +92,10 @@ class PopupForm extends React.Component {
                             }).catch((msg) => {
                                 console.log(msg);
                             //message.error(msg);
-                            this.props.history.push(`/signin`);
+                            message.warning('Error Adding Class, Check conflict and try again.');
+                            setTimeout(() => {
+                                this.setState({ loading: false, visible: false });
+                            }, 1000);
                         });
                     }
                     this.setState({ loading: false });
