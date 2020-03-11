@@ -12,6 +12,7 @@ class GofitnessApplicationTests {
 
     @Test
     void addClass() {
+        return;
     }
 
 }
